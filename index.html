@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TNBS Lab — Translational Neurophysiology &amp; Brain Stimulation</title>
 <meta name="description" content="TNBS Lab at the Krembil Brain Institute, University Health Network and University of Toronto: single-neuron recordings, deep brain stimulation and neuromodulation research.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <style>
 body{margin:0;background:#0A0D12}
 html{scroll-behavior:smooth}
@@ -56,23 +56,50 @@ section{scroll-margin-top:72px}
 .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 24%}
 @keyframes rv{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
 }
+@media (max-width: 900px){
+.navin{padding:0 20px !important;height:64px !important}
+.navlinks{gap:0 !important}
+.navlinks .nl,.navsub{display:none}
+section[id]:not(#top){padding:88px 20px !important}
+#join{padding:96px 20px !important}
+footer{padding:64px 20px 32px !important}
+#top{min-height:0 !important}
+#top .cv{width:100% !important;height:340px !important}
+.herobody{padding:330px 20px 36px !important;gap:22px !important}
+.herobody p{font-size:16px !important}
+#top [style*="padding: 26px 40px"]{padding:22px 20px !important;gap:12px 24px !important;font-size:11px !important}
+[style*="gap: 80px"]{gap:48px !important}
+[style*="gap: 64px"]{gap:36px !important}
+[style*="repeat(3, minmax(0, 1fr))"],#facilities [style*="repeat(2, minmax(0, 1fr))"]{grid-template-columns:minmax(0,1fr) !important}
+#about [style*="repeat(3, minmax(0, 1fr))"]{gap:28px !important}
+#team [style*="repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:28px 16px !important}
+[style*="grid-template-columns: 220px"]{grid-template-columns:minmax(0,1fr) !important;gap:8px !important}
+[style*="grid-template-columns: 220px"]>span:empty{display:none}
+[style*="padding: 48px 48px 44px"]{padding:28px 22px !important}
+[style*="flex: 1 1 540px"],[style*="flex: 1 1 440px"],[style*="flex: 1 1 380px"]{flex-basis:100% !important}
+#team h3{font-size:40px !important}
+.pr{grid-template-columns:auto minmax(0,1fr) !important;gap:6px 16px !important;padding:22px 0 !important}
+.pr>:nth-child(3),.pr>:nth-child(4){grid-column:1/-1}
+.pr>:nth-child(5){display:none}
+.pr::before{left:-8px;right:-8px}
+}
 @media (prefers-reduced-motion: reduce){.in,.mq,.ring,.blink,.rv{animation:none !important}html{scroll-behavior:auto}}
 </style>
 <style>.yr{display:contents}.yr[hidden]{display:none}</style>
 </head>
 <body>
-<div data-ref="setRoot" style="width: 100%; background: #F3F0E8; color: #11151C; font-family: 'Geist', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+<div data-ref="setRoot" style="width: 100%; background: #F3F0E8; color: #11151C; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased">
 
 <nav style="position: sticky; top: 0; z-index: 40; background: rgba(10,13,18,0.82); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-bottom: 1px solid #1E2530; color: #AEB6C3">
-<div style="max-width: 1240px; margin: 0 auto; padding: 0 40px; height: 72px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<div class="navin" style="max-width: 1240px; margin: 0 auto; padding: 0 40px; height: 72px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 24px">
 <a href="#top" aria-label="TNBS Lab home" style="display: flex; align-items: center; gap: 12px; color: #ECE8DE">
 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M12 18L4.5 10.5M12 18L3.5 21M12 18l2.5 9M12 18l7-2.5M4.5 10.5L3 6.5M4.5 10.5L1.5 11.5" stroke="#ECE8DE" stroke-width="1.2" stroke-linecap="round"></path><circle cx="12" cy="18" r="3.2" fill="#ECE8DE"></circle><path d="M27 2.5L15.2 15.6" stroke="#E9A23B" stroke-width="1.8" stroke-linecap="round"></path></svg>
 <span style="display: flex; flex-direction: column; gap: 3px; line-height: 1">
 <span style="font-weight: 600; font-size: 15px; letter-spacing: 0.18em">TNBS</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.04em; color: #9AA3B2">Neurophysiology &amp; Brain Stimulation</span>
+<span class="navsub" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.04em; color: #9AA3B2">Neurophysiology &amp; Brain Stimulation</span>
 </span>
 </a>
-<div style="display: flex; align-items: center; gap: 30px; font-size: 14px">
+<div class="navlinks" style="display: flex; align-items: center; gap: 30px; font-size: 14px">
 <a class="nl" data-nav="about" href="#about">About</a>
 <a class="nl" data-nav="research" href="#research">Research</a>
 <a class="nl" data-nav="facilities" href="#facilities">Facilities</a>
@@ -88,27 +115,9 @@ section{scroll-margin-top:72px}
 
 <section id="top" data-ref="setHero" data-on-pointermove="onHeroMove" data-on-pointerleave="onHeroLeave" data-on-pointerdown="onDown" data-on-pointerup="onUp" style="position: relative; overflow: hidden; background: #0A0D12; color: #ECE8DE; min-height: 960px; display: flex; flex-direction: column">
 <svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none"><defs><pattern id="hgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#121821" stroke-width="1"></path></pattern></defs><rect width="100%" height="100%" fill="url(#hgrid)"></rect></svg>
-<canvas class="cv" data-ref="setCanvas" role="img" aria-label="Interactive 3D model of a neuron being recorded by a microelectrode" style="position: absolute; top: 0; right: 0; width: 60%; height: calc(100% - 214px); display: block; touch-action: pan-y; z-index: 1"></canvas>
-<div aria-hidden="true" style="position: absolute; z-index: 2; top: 36px; right: 40px; width: calc(60% - 80px); height: calc(100% - 290px); pointer-events: none; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
-<span style="position: absolute; top: 0; left: 0; width: 18px; height: 18px; border-top: 1px solid #3A4352; border-left: 1px solid #3A4352"></span>
-<span style="position: absolute; top: 0; right: 0; width: 18px; height: 18px; border-top: 1px solid #3A4352; border-right: 1px solid #3A4352"></span>
-<span style="position: absolute; bottom: 0; left: 0; width: 18px; height: 18px; border-bottom: 1px solid #3A4352; border-left: 1px solid #3A4352"></span>
-<span style="position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; border-bottom: 1px solid #3A4352; border-right: 1px solid #3A4352"></span>
-<div style="position: absolute; top: 12px; left: 28px">FIG. 00 — SINGLE NEURON · SIMULATED</div>
-<div style="position: absolute; top: 12px; right: 28px; display: flex; align-items: center; gap: 8px"><span class="blink" style="width: 6px; height: 6px; border-radius: 50%; background: #E5484D"></span>REC · TORONTO <span data-bind="clock">--:--</span></div>
-<div style="position: absolute; bottom: 12px; left: 28px; display: flex; gap: 22px">
-<span>RATE <span style="color: #ECE8DE"><span data-bind="rate">0.0</span></span> HZ</span>
-<span>SPIKES <span style="color: #ECE8DE"><span data-bind="spikes">000</span></span></span>
-<span>AZ <span style="color: #ECE8DE"><span data-bind="az">000</span></span>°</span>
-</div>
-<div style="position: absolute; bottom: 12px; right: 28px; display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M2 8l3-3M2 8l3 3M14 8l-3-3M14 8l-3 3" stroke="#7F8898" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>DRAG TO ROTATE</div>
-</div>
-<div style="position: relative; z-index: 3; flex-grow: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: 100px 40px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 28px; pointer-events: none">
-<div class="in d1" style="display: flex; align-items: center; gap: 12px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
-<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
-<span>KREMBIL BRAIN INSTITUTE · TORONTO WESTERN HOSPITAL</span>
-</div>
-<h1 class="in d2" style="margin: 0; max-width: 11ch; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(56px, 6.8vw, 104px); line-height: 0.96; letter-spacing: -0.015em">Listening to the brain, <em style="font-style: italic; color: #E9A23B">one neuron</em> at a time.</h1>
+<canvas class="cv" data-ref="setCanvas" role="img" aria-label="Interactive 3D model of a neuron being recorded by a microelectrode" style="position: absolute; top: 0; right: 0; width: 60%; height: calc(100% - 150px); display: block; touch-action: pan-y; z-index: 1"></canvas>
+<div class="herobody" style="position: relative; z-index: 3; flex-grow: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: 100px 40px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 28px; pointer-events: none">
+<h1 class="in d2" style="margin: 0; max-width: 11ch; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(44px, 6.4vw, 96px); line-height: 1; letter-spacing: -0.03em">Listening to the brain, <em style="font-style: italic; color: #E9A23B">one neuron</em> at a time.</h1>
 <p class="in d3" style="margin: 0; max-width: 44ch; font-size: 18px; line-height: 1.65; color: #B8BFCB; font-weight: 300">The Translational Neurophysiology &amp; Brain Stimulation lab studies human brain function and dysfunction, and develops new brain stimulation methods to improve the lives of people with neurological disease.</p>
 <div class="in d4" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; pointer-events: auto">
 <a class="btn" href="#research" style="display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 26px; border-radius: 999px; background: #E9A23B; color: #0A0D12; font-weight: 600; font-size: 15px">Explore our research
@@ -116,22 +125,12 @@ section{scroll-margin-top:72px}
 </a>
 <a class="ghost" href="#join" style="display: inline-flex; align-items: center; height: 54px; padding: 0 26px; border-radius: 999px; border: 1px solid #3A4352; color: #ECE8DE; font-weight: 500; font-size: 15px">Prospective students</a>
 </div>
-<div class="in d5" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #C9CFD9">
-<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">Single-neuron</span>
-<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">Local field potential</span>
-<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">ECoG</span>
-<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">MEG</span>
-</div>
 </div>
 <div style="position: relative; z-index: 3">
-<div style="max-width: 1240px; margin: 0 auto; padding: 0 40px 10px; box-sizing: border-box; display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
-<span>CH 01 · EXTRACELLULAR SINGLE-UNIT · SIMULATED</span>
-<span style="display: flex; gap: 20px"><span style="color: #E9A23B">- - THRESHOLD</span><span>5 S WINDOW</span></span>
-</div>
 <canvas data-ref="setScope" aria-hidden="true" style="display: block; width: 100%; height: 96px"></canvas>
 </div>
 <div style="position: relative; z-index: 3; margin-top: 22px; border-top: 1px solid #1E2530">
-<div style="max-width: 1240px; margin: 0 auto; padding: 26px 40px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 32px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #8993A3">
+<div style="max-width: 1240px; margin: 0 auto; padding: 26px 40px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 32px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #8993A3">
 <span>KREMBIL BRAIN INSTITUTE</span>
 <span>UNIVERSITY HEALTH NETWORK</span>
 <span>UNIVERSITY OF TORONTO</span>
@@ -144,14 +143,14 @@ section{scroll-margin-top:72px}
 
 <section id="about" style="position: relative; background: #F3F0E8; padding: 150px 40px 140px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 80px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>01 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
 <span>ABOUT THE LAB</span>
 </div>
 <div class="rv" style="display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start">
-<h2 style="margin: 0; flex: 1 1 540px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04; letter-spacing: -0.01em">Toronto Western Hospital is a pioneering centre for deep brain stimulation. <em style="font-style: italic; color: #5A6170">The operating room is where our research begins.</em></h2>
+<h2 style="margin: 0; flex: 1 1 540px; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">Toronto Western Hospital is a pioneering centre for deep brain stimulation. <em style="font-style: italic; color: #5A6170">The operating room is where our research begins.</em></h2>
 <div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 22px; font-size: 17px; line-height: 1.7; color: #3F4552">
 <p style="margin: 0">Deep brain stimulation (DBS) is a standard of care for people with Parkinson&rsquo;s disease, essential tremor and dystonia, and is drawing attention for many other refractory neurological disorders.</p>
 <p style="margin: 0">Our team records the activity of individual neurons deep within the brain during awake neurosurgery. These recordings are part of routine clinical care, generating a &ldquo;map&rdquo; of the brain that ensures each intervention reaches the correct location.</p>
@@ -160,20 +159,20 @@ section{scroll-margin-top:72px}
 <div class="rv" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; border-top: 1px solid #D8D2C4">
 <div style="position: relative; padding-top: 34px; display: flex; flex-direction: column; gap: 14px">
 <span style="position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: #E9A23B"></span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 01</span>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.1">Awake neurosurgery</h3>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 01</span>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 30px; line-height: 1.1">Awake neurosurgery</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Patients undergoing deep brain stimulation surgery remain awake during the procedure.</p>
 </div>
 <div style="position: relative; padding-top: 34px; display: flex; flex-direction: column; gap: 14px">
 <span style="position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: #11151C"></span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 02</span>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.1">Single-neuron recordings</h3>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 02</span>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 30px; line-height: 1.1">Single-neuron recordings</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Microelectrodes record individual neurons from deep within the brain as part of standard clinical care.</p>
 </div>
 <div style="position: relative; padding-top: 34px; display: flex; flex-direction: column; gap: 14px">
 <span style="position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: #11151C"></span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 03</span>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.1">A map of the brain</h3>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 03</span>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 30px; line-height: 1.1">A map of the brain</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">The recordings confirm each intervention reaches the right location, and open a unique window for research.</p>
 </div>
 </div>
@@ -181,7 +180,7 @@ section{scroll-margin-top:72px}
 <div style="position: relative; aspect-ratio: 16 / 7; width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF">
 <div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5C5446">
 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#5C5446" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#5C5446" stroke-width="1.4"></circle></svg>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · DBS IMPLANTATION SURGERY</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · DBS IMPLANTATION SURGERY</span>
 <span style="font-size: 13px">Replace with photo from the current site</span>
 </div>
 <span style="position: absolute; top: 14px; left: 14px; width: 14px; height: 14px; border-top: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
@@ -189,7 +188,7 @@ section{scroll-margin-top:72px}
 <span style="position: absolute; bottom: 14px; left: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
 <span style="position: absolute; bottom: 14px; right: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-right: 1.5px solid #11151C"></span>
 </div>
-<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">
+<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">
 <span>FIG. 01 — DBS IMPLANTATION SURGERY</span>
 <span>TORONTO WESTERN HOSPITAL</span>
 </div>
@@ -198,7 +197,7 @@ section{scroll-margin-top:72px}
 </section>
 
 <div class="mqw" aria-hidden="true" style="background: #0A0D12; color: #ECE8DE; overflow: hidden; border-bottom: 1px solid #1E2530; padding: 36px 0">
-<div class="mq" style="display: flex; width: max-content; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 46px; line-height: 1; white-space: nowrap">
+<div class="mq" style="display: flex; width: max-content; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 46px; line-height: 1; white-space: nowrap">
 <div style="display: flex; align-items: center; gap: 44px; padding-right: 44px">
 <span>Deep brain stimulation</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>Single-neuron recordings</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
@@ -224,14 +223,14 @@ section{scroll-margin-top:72px}
 
 <section id="video" style="background: #0A0D12; color: #ECE8DE; padding: 130px 40px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>02 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #1E2530"></span>
 <span>INSIDE THE OPERATING ROOM</span>
 </div>
 <div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
-<h2 style="margin: 0; max-width: 16ch; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">A unique window into the <em style="font-style: italic; color: #E9A23B">living</em> human brain.</h2>
+<h2 style="margin: 0; max-width: 16ch; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">A unique window into the <em style="font-style: italic; color: #E9A23B">living</em> human brain.</h2>
 <p style="margin: 0; max-width: 42ch; font-size: 17px; line-height: 1.7; color: #B8BFCB; font-weight: 300">Recordings from awake, behaving patients let us study human physiology, brain stimulation mechanisms and synaptic plasticity in vivo.</p>
 </div>
 <div class="rv fx" style="display: flex; flex-direction: column; gap: 14px">
@@ -244,10 +243,10 @@ section{scroll-margin-top:72px}
 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="#ECE8DE"></path></svg>
 </button>
 </div>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">VIDEO · FROM THE CURRENT SITE</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em">VIDEO · FROM THE CURRENT SITE</span>
 <span style="font-size: 13px">Replace with the lab&rsquo;s video file</span>
 </div>
-<div style="position: absolute; top: 20px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
+<div style="position: absolute; top: 20px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
 <span style="display: flex; align-items: center; gap: 8px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #E5484D"></span>CAM 01</span>
 <span>00:00:00:00</span>
 </div>
@@ -256,7 +255,7 @@ section{scroll-margin-top:72px}
 <span style="position: absolute; bottom: 24px; left: 24px; width: 14px; height: 14px; border-bottom: 1.5px solid #3A4352; border-left: 1.5px solid #3A4352"></span>
 <span style="position: absolute; bottom: 24px; right: 24px; width: 14px; height: 14px; border-bottom: 1.5px solid #3A4352; border-right: 1.5px solid #3A4352"></span>
 </div>
-<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
+<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
 <span>FIG. 02 — INSIDE THE OPERATING ROOM</span>
 <span>CRANIA NEUROMODULATION SUITE</span>
 </div>
@@ -266,67 +265,67 @@ section{scroll-margin-top:72px}
 
 <section id="research" style="background: #F3F0E8; padding: 150px 40px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>03 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
 <span>RESEARCH</span>
 </div>
 <div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
-<h2 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">From bench <em style="font-style: italic; color: #5A6170">to</em> bedside.</h2>
+<h2 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">From bench <em style="font-style: italic; color: #5A6170">to</em> bedside.</h2>
 <p style="margin: 0; max-width: 48ch; font-size: 17px; line-height: 1.7; color: #3F4552">Our projects span the complete translational continuum. We apply biomedical signal processing, machine learning and computational modelling to understand how the brain behaves and how it responds to stimulation.</p>
 </div>
 <div class="rv" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D8D2C4; border: 1px solid #D8D2C4; border-radius: 6px; overflow: hidden">
 <div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
 <span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
-<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12h4l2-6 3 12 2.5-8 1.5 2h7" stroke="#11151C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.01</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12h4l2-6 3 12 2.5-8 1.5 2h7" stroke="#11151C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">R.01</span></div>
 <h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Intraoperative neurophysiology</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Single-neuron, local field potential and electrocorticography recordings from patients during awake DBS surgery.</p>
-<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">SUA · LFP · ECOG</span>
+<span style="margin-top: auto; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">SUA · LFP · ECOG</span>
 </div>
 <div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
 <span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
-<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v13" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M10.5 15.5h3M10.5 18h3M10.5 20.5h3" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><circle cx="12" cy="18" r="5.5" stroke="#11151C" stroke-width="1" stroke-dasharray="2 2"></circle></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.02</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v13" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M10.5 15.5h3M10.5 18h3M10.5 20.5h3" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><circle cx="12" cy="18" r="5.5" stroke="#11151C" stroke-width="1" stroke-dasharray="2 2"></circle></svg></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">R.02</span></div>
 <h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Mechanisms of brain stimulation</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">How deep brain stimulation acts on neural circuits, and how those effects can be refined into better therapies.</p>
-<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">DBS · CIRCUITS</span>
+<span style="margin-top: auto; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">DBS · CIRCUITS</span>
 </div>
 <div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
 <span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
-<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="7" r="3" stroke="#11151C" stroke-width="1.4"></circle><circle cx="18" cy="17" r="3" stroke="#11151C" stroke-width="1.4"></circle><path d="M8.5 9l3 3M15.5 14.5l-2-2" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M11 13.5l2-2" stroke="#11151C" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1 2"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.03</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="7" r="3" stroke="#11151C" stroke-width="1.4"></circle><circle cx="18" cy="17" r="3" stroke="#11151C" stroke-width="1.4"></circle><path d="M8.5 9l3 3M15.5 14.5l-2-2" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M11 13.5l2-2" stroke="#11151C" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1 2"></path></svg></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">R.03</span></div>
 <h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Synaptic plasticity</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Understanding and harnessing plasticity in basal ganglia circuits for sustained improvement in Parkinson&rsquo;s disease.</p>
-<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">PLASTICITY · PARKINSON&rsquo;S</span>
+<span style="margin-top: auto; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">PLASTICITY · PARKINSON&rsquo;S</span>
 </div>
 <div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
 <span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
-<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12c2-5 4-5 6 0s4 5 6 0 4-5 6 0" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M2 18c2-2.5 4-2.5 6 0s4 2.5 6 0 4-2.5 6 0" stroke="#11151C" stroke-width="1" stroke-linecap="round"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.04</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12c2-5 4-5 6 0s4 5 6 0 4-5 6 0" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M2 18c2-2.5 4-2.5 6 0s4 2.5 6 0 4-2.5 6 0" stroke="#11151C" stroke-width="1" stroke-linecap="round"></path></svg></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">R.04</span></div>
 <h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Non-invasive brain recordings</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Electroencephalography and magnetoencephalography with patients outside the operating room environment.</p>
-<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">EEG · MEG</span>
+<span style="margin-top: auto; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">EEG · MEG</span>
 </div>
 <div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
 <span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
-<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="5" cy="6" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="5" cy="18" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="12" cy="12" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="19" cy="7" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="19" cy="17" r="2" stroke="#11151C" stroke-width="1.4"></circle><path d="M7 7l3 4M7 17l3-4M14 11l3-3M14 13l3 3" stroke="#11151C" stroke-width="1.2" stroke-linecap="round"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.05</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="5" cy="6" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="5" cy="18" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="12" cy="12" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="19" cy="7" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="19" cy="17" r="2" stroke="#11151C" stroke-width="1.4"></circle><path d="M7 7l3 4M7 17l3-4M14 11l3-3M14 13l3 3" stroke="#11151C" stroke-width="1.2" stroke-linecap="round"></path></svg></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">R.05</span></div>
 <h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Computational methods</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Signal processing, machine learning and computational modelling to decode neural activity and its responses to stimuli.</p>
-<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">SIGNAL PROCESSING · ML</span>
+<span style="margin-top: auto; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">SIGNAL PROCESSING · ML</span>
 </div>
 <div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
 <span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
-<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 2.5h6M10 2.5v6.5l-5 8.5a2.8 2.8 0 0 0 2.4 4.2h9.2a2.8 2.8 0 0 0 2.4-4.2l-5-8.5V2.5" stroke="#11151C" stroke-width="1.4" stroke-linejoin="round"></path><path d="M7.5 15h9" stroke="#11151C" stroke-width="1.2"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.06</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 2.5h6M10 2.5v6.5l-5 8.5a2.8 2.8 0 0 0 2.4 4.2h9.2a2.8 2.8 0 0 0 2.4-4.2l-5-8.5V2.5" stroke="#11151C" stroke-width="1.4" stroke-linejoin="round"></path><path d="M7.5 15h9" stroke="#11151C" stroke-width="1.2"></path></svg></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">R.06</span></div>
 <h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Preclinical models</h3>
 <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Optical, electrophysiological and behavioural techniques, including optogenetics and high-density electrophysiology.</p>
-<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">OPTOGENETICS · PHOTOMETRY</span>
+<span style="margin-top: auto; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">OPTOGENETICS · PHOTOMETRY</span>
 </div>
 </div>
 <div class="rv" style="background: #0A0D12; color: #ECE8DE; border-radius: 6px; padding: 48px 48px 44px; display: flex; flex-direction: column; gap: 30px">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
 <div style="display: flex; flex-direction: column; gap: 12px">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">RECORDING ACROSS SCALES</span>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">From a single cell to the <em style="font-style: italic; color: #E9A23B">whole brain</em>.</h3>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">RECORDING ACROSS SCALES</span>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 38px; line-height: 1.1">From a single cell to the <em style="font-style: italic; color: #E9A23B">whole brain</em>.</h3>
 </div>
-<span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">APPROXIMATE SPATIAL SCALE</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">APPROXIMATE SPATIAL SCALE</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 18px">
 <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: center">
@@ -347,7 +346,7 @@ section{scroll-margin-top:72px}
 </div>
 <div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; padding-top: 8px">
 <span></span>
-<div style="display: flex; justify-content: space-between; border-top: 1px solid #2A3240; padding-top: 10px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #7F8898">
+<div style="display: flex; justify-content: space-between; border-top: 1px solid #2A3240; padding-top: 10px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; color: #7F8898">
 <span>10 µm</span><span>100 µm</span><span>1 mm</span><span>1 cm</span><span>10 cm</span>
 </div>
 </div>
@@ -358,38 +357,38 @@ section{scroll-margin-top:72px}
 
 <section id="facilities" style="background: #0A0D12; color: #ECE8DE; padding: 150px 40px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>04 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #1E2530"></span>
 <span>FACILITIES</span>
 </div>
-<h2 class="rv" style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">Where the work <em style="font-style: italic; color: #E9A23B">happens</em>.</h2>
+<h2 class="rv" style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">Where the work <em style="font-style: italic; color: #E9A23B">happens</em>.</h2>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
 <div class="rv fx" style="display: flex; flex-direction: column; gap: 22px">
 <div style="position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; border: 1px solid #232B37">
 <div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #141A23; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #9AA3B2; text-align: center; padding: 20px; box-sizing: border-box">
 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#9AA3B2" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#9AA3B2" stroke-width="1.4"></circle></svg>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · KREMBIL BRAIN INSTITUTE</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · KREMBIL BRAIN INSTITUTE</span>
 <span style="font-size: 13px">Pictured: Dr. Taufik Valiante</span>
 </div>
-<span style="position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; border: 1px solid #2A3240; background: rgba(10,13,18,0.72); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #ECE8DE">FIG. 04A</span>
+<span style="position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; border: 1px solid #2A3240; background: rgba(10,13,18,0.72); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #ECE8DE">FIG. 04A</span>
 </div>
-<div style="display: flex; justify-content: space-between; gap: 16px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #9AA3B2"><span>WET &amp; DRY LAB</span><span>TORONTO WESTERN</span></div>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">Krembil Brain Institute</h3>
+<div style="display: flex; justify-content: space-between; gap: 16px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; color: #9AA3B2"><span>WET &amp; DRY LAB</span><span>TORONTO WESTERN</span></div>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 38px; line-height: 1.1">Krembil Brain Institute</h3>
 <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #B8BFCB; font-weight: 300">The TNBS lab operates in state-of-the-art wet and dry lab spaces at the Krembil Brain Institute, Toronto Western Hospital.</p>
 </div>
 <div class="rv fx" style="display: flex; flex-direction: column; gap: 22px">
 <div style="position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; border: 1px solid #232B37">
 <div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #141A23; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #9AA3B2; text-align: center; padding: 20px; box-sizing: border-box">
 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#9AA3B2" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#9AA3B2" stroke-width="1.4"></circle></svg>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · CRANIA NEUROMODULATION SUITE</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · CRANIA NEUROMODULATION SUITE</span>
 <span style="font-size: 13px">Replace with photo from the current site</span>
 </div>
-<span style="position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; border: 1px solid #2A3240; background: rgba(10,13,18,0.72); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #ECE8DE">FIG. 04B</span>
+<span style="position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; border: 1px solid #2A3240; background: rgba(10,13,18,0.72); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #ECE8DE">FIG. 04B</span>
 </div>
-<div style="display: flex; justify-content: space-between; gap: 16px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #9AA3B2"><span>OPERATING THEATRE</span><span>CRANIA</span></div>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">CRANIA Neuromodulation Suite</h3>
+<div style="display: flex; justify-content: space-between; gap: 16px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; color: #9AA3B2"><span>OPERATING THEATRE</span><span>CRANIA</span></div>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 38px; line-height: 1.1">CRANIA Neuromodulation Suite</h3>
 <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #B8BFCB; font-weight: 300">A permanent research fixture within a state-of-the-art operating theatre, where intracranial data are collected during DBS implantation surgeries.</p>
 </div>
 </div>
@@ -408,28 +407,28 @@ section{scroll-margin-top:72px}
 
 <section id="team" style="background: #F3F0E8; padding: 150px 40px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>05 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
 <span>PEOPLE</span>
 </div>
-<h2 class="rv" style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">The <em style="font-style: italic; color: #5A6170">team</em>.</h2>
+<h2 class="rv" style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">The <em style="font-style: italic; color: #5A6170">team</em>.</h2>
 <div class="rv tm" style="display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
 <div style="position: relative; flex: 0 1 400px; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF">
 <div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5C5446">
 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">PORTRAIT · DR. LUKA MILOSEVIC</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em">PORTRAIT · DR. LUKA MILOSEVIC</span>
 </div>
-<span style="position: absolute; bottom: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; background: #11151C; color: #F3F0E8; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em">PI</span>
+<span style="position: absolute; bottom: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; background: #11151C; color: #F3F0E8; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em">PI</span>
 </div>
 <div style="flex: 1 1 440px; display: flex; flex-direction: column; gap: 20px">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">PRINCIPAL INVESTIGATOR</span>
-<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 52px; line-height: 1.02">Luka Milosevic, PhD</h3>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">PRINCIPAL INVESTIGATOR</span>
+<h3 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: 52px; line-height: 1.02">Luka Milosevic, PhD</h3>
 <p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3F4552">Luka received his PhD in Biomedical Engineering from the University of Toronto, followed by a Postdoctoral Fellowship at the University of Tübingen&rsquo;s Institute for Neuromodulation and Neurotechnology. His research sits at the intersection of biomedical engineering and neuroscience, focused on novel data-driven methods of neuromodulation and brain stimulation.</p>
 <p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3F4552">He and his team also play a clinical role, monitoring patients&rsquo; brain activity to guide the placement of DBS devices at Toronto Western Hospital.</p>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 4px">
-<span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170; margin-right: 6px">OUTSIDE THE LAB</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170; margin-right: 6px">OUTSIDE THE LAB</span>
 <span style="padding: 7px 14px; border: 1px solid #CFC8B8; border-radius: 999px; font-size: 13px">Hiking</span>
 <span style="padding: 7px 14px; border: 1px solid #CFC8B8; border-radius: 999px; font-size: 13px">Biking</span>
 <span style="padding: 7px 14px; border: 1px solid #CFC8B8; border-radius: 999px; font-size: 13px">Travel</span>
@@ -443,7 +442,7 @@ section{scroll-margin-top:72px}
 <div style="position: relative; aspect-ratio: 16 / 6; width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF">
 <div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5C5446">
 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#5C5446" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#5C5446" stroke-width="1.4"></circle></svg>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · TNBS TEAM 2026</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · TNBS TEAM 2026</span>
 <span style="font-size: 13px">Replace with group photo from the current site</span>
 </div>
 <span style="position: absolute; top: 14px; left: 14px; width: 14px; height: 14px; border-top: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
@@ -451,7 +450,7 @@ section{scroll-margin-top:72px}
 <span style="position: absolute; bottom: 14px; left: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
 <span style="position: absolute; bottom: 14px; right: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-right: 1.5px solid #11151C"></span>
 </div>
-<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">
+<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">
 <span>FIG. 05 — THE TNBS TEAM, 2026</span>
 <span>KREMBIL BRAIN INSTITUTE</span>
 </div>
@@ -459,26 +458,26 @@ section{scroll-margin-top:72px}
 <div class="rv" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px">
 <div class="tm" style="display: flex; flex-direction: column; gap: 14px">
 <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
-<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">Md Shan</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">01</span></div>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">Md Shan</h4><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">01</span></div>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
 <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">Combines optical and electrophysiological tools to uncover pathological and therapeutic neural circuits across disease models.</p>
 </div>
 <div class="tm" style="display: flex; flex-direction: column; gap: 14px">
 <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
-<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">Aidan [Surname]</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">02</span></div>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">Aidan [Surname]</h4><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">02</span></div>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
 <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">Develops new DBS targets for spinocerebellar ataxia using animal models, looking for stimulation-based motor improvements.</p>
 </div>
 <div class="tm" style="display: flex; flex-direction: column; gap: 14px">
 <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
-<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">[Team member]</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">03</span></div>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">[Team member]</h4><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">03</span></div>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
 <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">[Short research focus from the current team page]</p>
 </div>
 <div class="tm" style="display: flex; flex-direction: column; gap: 14px">
 <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
-<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">[Team member]</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">04</span></div>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">[Team member]</h4><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">04</span></div>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
 <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">[Short research focus from the current team page]</p>
 </div>
 </div>
@@ -487,23 +486,23 @@ section{scroll-margin-top:72px}
 
 <section id="publications" style="background: #FBFAF6; padding: 150px 40px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>06 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #DAD5C9"></span>
 <span>SELECTED PUBLICATIONS</span>
 </div>
 <div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
-<h2 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">Recent <em style="font-style: italic; color: #5A6170">work</em>.</h2>
+<h2 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">Recent <em style="font-style: italic; color: #5A6170">work</em>.</h2>
 <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 14px">
 <div role="group" aria-label="Filter publications by year" style="display: flex; flex-wrap: wrap; gap: 8px">
-<button type="button" class="chip on" aria-pressed="true" data-chip="all" data-on-click="pubf.all" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">ALL</button>
-<button type="button" class="chip" aria-pressed="false" data-chip="y2025" data-on-click="pubf.y2025" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2025</button>
-<button type="button" class="chip" aria-pressed="false" data-chip="y2024" data-on-click="pubf.y2024" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2024</button>
-<button type="button" class="chip" aria-pressed="false" data-chip="y2023" data-on-click="pubf.y2023" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2023</button>
-<button type="button" class="chip" aria-pressed="false" data-chip="y2022" data-on-click="pubf.y2022" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2022</button>
+<button type="button" class="chip on" aria-pressed="true" data-chip="all" data-on-click="pubf.all" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">ALL</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2025" data-on-click="pubf.y2025" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2025</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2024" data-on-click="pubf.y2024" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2024</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2023" data-on-click="pubf.y2023" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2023</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2022" data-on-click="pubf.y2022" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2022</button>
 </div>
-<div style="display: flex; align-items: center; gap: 18px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">
+<div style="display: flex; align-items: center; gap: 18px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">
 <span><span data-bind="pubCount">6 PAPERS</span></span>
 <a class="lk" href="https://pubmed.ncbi.nlm.nih.gov/?term=Milosevic+L%5BAuthor%5D" style="display: inline-flex; align-items: center; gap: 6px; color: #11151C">ALL ON PUBMED
 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -514,50 +513,50 @@ section{scroll-margin-top:72px}
 <div class="rv" style="display: flex; flex-direction: column; border-bottom: 1px solid #DAD5C9">
 <div class="yr" data-show="y2025">
 <a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Modulating+inhibitory+synaptic+plasticity+to+restore+basal+ganglia+dynamics" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">01</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2025</span>
-<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Brain</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">01</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #11151C">2025</span>
+<span style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 21px">Brain</span>
 <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Modulating inhibitory synaptic plasticity to restore basal ganglia dynamics in Parkinson&rsquo;s disease</span><span style="font-size: 14px; color: #5A6170">Spencer KA, Boogers A, Sumarac S, et al., Milosevic L</span></span>
 <svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
 <a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=effects+of+intracranial+stimulation+on+local+neurovascular+responses+in+humans" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">02</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2025</span>
-<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Brain Stimulation</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">02</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #11151C">2025</span>
+<span style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 21px">Brain Stimulation</span>
 <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">The effects of intracranial stimulation on local neurovascular responses in humans</span><span style="font-size: 14px; color: #5A6170">Vetkas A, Sumarac S, Chau S, et al., Milosevic L</span></span>
 <svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
 <a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Harnessing+synaptic+plasticity+for+sustained+motor+improvement+in+Parkinson%27s+disease" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">03</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2025</span>
-<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Neural Regeneration Research</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">03</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #11151C">2025</span>
+<span style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 21px">Neural Regeneration Research</span>
 <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Harnessing synaptic plasticity for sustained motor improvement in Parkinson&rsquo;s disease</span><span style="font-size: 14px; color: #5A6170">Sumarac S, Pouratian N, Gittis AH, Milosevic L</span></span>
 <svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
 </div>
 <div class="yr" data-show="y2024">
 <a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Neural+signatures+of+indirect+pathway+activity+in+Parkinson%27s+disease" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">04</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2024</span>
-<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Nature Communications</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">04</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #11151C">2024</span>
+<span style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 21px">Nature Communications</span>
 <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Neural signatures of indirect pathway activity in Parkinson&rsquo;s disease</span><span style="font-size: 14px; color: #5A6170">Steiner LA, Crompton D, Sumarac S, et al., Milosevic L</span></span>
 <svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
 </div>
 <div class="yr" data-show="y2023">
 <a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=convergent+subcortical+signature+subthalamic+pallidal+deep+brain+stimulation" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">05</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2023</span>
-<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Brain Communications</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">05</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #11151C">2023</span>
+<span style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 21px">Brain Communications</span>
 <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">A convergent subcortical signature to explain the common efficacy of subthalamic and pallidal deep brain stimulation</span><span style="font-size: 14px; color: #5A6170">Steiner LA, Milosevic L</span></span>
 <svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
 </div>
 <div class="yr" data-show="y2022">
 <a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Single-neuron+bursts+encode+pathological+oscillations" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">06</span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2022</span>
-<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">PNAS</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: #5A6170">06</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #11151C">2022</span>
+<span style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-style: italic; font-size: 21px">PNAS</span>
 <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Single-neuron bursts encode pathological oscillations in Parkinson&rsquo;s disease and essential tremor</span><span style="font-size: 14px; color: #5A6170">Scherer M, Steiner LA, Kalia SK, et al., Milosevic L</span></span>
 <svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
@@ -568,7 +567,7 @@ section{scroll-margin-top:72px}
 
 <section id="workshops" style="background: #F3F0E8; padding: 140px 40px">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>07 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
@@ -576,29 +575,29 @@ section{scroll-margin-top:72px}
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start">
 <div class="rv" style="flex: 1 1 440px; display: flex; flex-direction: column; gap: 22px">
-<h2 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">Electrophysiology <em style="font-style: italic; color: #5A6170">Trainee</em> Workshop.</h2>
+<h2 style="margin: 0; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.06; letter-spacing: -0.025em">Electrophysiology <em style="font-style: italic; color: #5A6170">Trainee</em> Workshop.</h2>
 <p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3F4552">A free online workshop covering topics across neuroscience. Each topic opens with fundamentals, then builds toward advanced methods.</p>
 </div>
 <div class="rv" style="flex: 1 1 440px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #D8D2C4; border: 1px solid #D8D2C4; border-radius: 6px; overflow: hidden">
-<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">FORMAT</span><span style="font-size: 20px; font-weight: 500">Online</span></div>
-<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">COST</span><span style="font-size: 20px; font-weight: 500">Free of charge</span></div>
-<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">LENGTH</span><span style="font-size: 20px; font-weight: 500">8 sessions · 1 hour each</span></div>
-<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">LEVEL</span><span style="font-size: 20px; font-weight: 500">Graduate to PhD</span></div>
-<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px; grid-column: span 2"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">HOSTED BY</span><span style="font-size: 20px; font-weight: 500">Maximilian Scherer</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">FORMAT</span><span style="font-size: 20px; font-weight: 500">Online</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">COST</span><span style="font-size: 20px; font-weight: 500">Free of charge</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">LENGTH</span><span style="font-size: 20px; font-weight: 500">8 sessions · 1 hour each</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">LEVEL</span><span style="font-size: 20px; font-weight: 500">Graduate to PhD</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px; grid-column: span 2"><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">HOSTED BY</span><span style="font-size: 20px; font-weight: 500">Maximilian Scherer</span></div>
 </div>
 </div>
 <div class="rv" style="display: flex; flex-direction: column; gap: 14px">
 <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px">
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #E9A23B"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.01</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #BDB5A5"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.02</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #A69E8E"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.03</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #8E8779"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.04</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #737066"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.05</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #585850"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.06</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #3A3D3E"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.07</span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #11151C"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.08</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #E9A23B"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.01</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #BDB5A5"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.02</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #A69E8E"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.03</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #8E8779"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.04</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #737066"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.05</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #585850"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.06</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #3A3D3E"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.07</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #11151C"></span><span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; color: #5A6170">S.08</span></div>
 </div>
-<div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170"><span>FUNDAMENTALS</span><span>ADVANCED METHODS</span></div>
+<div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170"><span>FUNDAMENTALS</span><span>ADVANCED METHODS</span></div>
 </div>
 </div>
 </section>
@@ -606,13 +605,13 @@ section{scroll-margin-top:72px}
 <section id="join" style="position: relative; overflow: hidden; background: #0A0D12; color: #ECE8DE; padding: 160px 40px">
 <svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none"><defs><pattern id="jgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#121821" stroke-width="1"></path></pattern></defs><rect width="100%" height="100%" fill="url(#jgrid)"></rect></svg>
 <div style="position: relative; max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 38px">
-<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
 <span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
 <span>08 / 08</span>
 <span style="flex-grow: 1; height: 1px; background: #1E2530"></span>
 <span>JOIN THE LAB</span>
 </div>
-<h2 class="rv" style="margin: 0; max-width: 17ch; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(48px, 6vw, 92px); line-height: 1; letter-spacing: -0.01em">Build the next generation of <em style="font-style: italic; color: #E9A23B">brain stimulation</em>.</h2>
+<h2 class="rv" style="margin: 0; max-width: 17ch; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(48px, 6vw, 92px); line-height: 1.02; letter-spacing: -0.03em">Build the next generation of <em style="font-style: italic; color: #E9A23B">brain stimulation</em>.</h2>
 <p class="rv" style="margin: 0; max-width: 60ch; font-size: 18px; line-height: 1.7; color: #B8BFCB; font-weight: 300">Prospective students and researchers with experience or interest in any of these areas are welcome to contact Dr. Milosevic at any time.</p>
 <div class="rv" style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: #C9CFD9">
 <span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Neuromodulation</span>
@@ -626,10 +625,10 @@ section{scroll-margin-top:72px}
 <a class="btn" href="mailto:luka.milosevic@mail.utoronto.ca" style="display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 30px; border-radius: 999px; background: #E9A23B; color: #0A0D12; font-weight: 600; font-size: 16px">Email Dr. Milosevic
 <svg class="ar" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0D12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
-<button type="button" class="ghost" data-on-click="copyEmail" style="display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 24px; border-radius: 999px; border: 1px solid #3A4352; color: #ECE8DE; font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer">
+<button type="button" class="ghost" data-on-click="copyEmail" style="display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 24px; border-radius: 999px; border: 1px solid #3A4352; color: #ECE8DE; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 500; cursor: pointer">
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" stroke="#ECE8DE" stroke-width="1.3"></rect><path d="M3 10.5V3.5A1 1 0 0 1 4 2.5h6.5" stroke="#ECE8DE" stroke-width="1.3" stroke-linecap="round"></path></svg>
 <span data-bind="copyLabel">Copy email</span></button>
-<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #9AA3B2; margin-left: 8px">luka.milosevic@mail.utoronto.ca</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #9AA3B2; margin-left: 8px">luka.milosevic@mail.utoronto.ca</span>
 </div>
 </div>
 </section>
@@ -642,16 +641,16 @@ section{scroll-margin-top:72px}
 <span style="font-size: 14px; line-height: 1.6">Translational Neurophysiology &amp; Brain Stimulation Lab, Krembil Brain Institute.</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.6">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">ADDRESS</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">ADDRESS</span>
 <span>Toronto Western Hospital<br>399 Bathurst Street<br>Toronto, ON M5T 2S8</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.6">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">LOCAL TIME</span>
-<span style="color: #ECE8DE; font-family: 'Geist Mono', monospace; font-size: 22px"><span data-bind="clock">--:--</span></span>
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px">43.653° N · 79.405° W</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">LOCAL TIME</span>
+<span style="color: #ECE8DE; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 22px"><span data-bind="clock">--:--</span></span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px">43.653° N · 79.405° W</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px">
-<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">CONNECT</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">CONNECT</span>
 <a class="nl" href="https://twitter.com/lukamneuro">X / Twitter</a>
 <a class="nl" href="https://www.researchgate.net/profile/Luka-Milosevic">ResearchGate</a>
 <a class="nl" href="https://pubmed.ncbi.nlm.nih.gov/?term=Milosevic+L%5BAuthor%5D">PubMed</a>
@@ -661,8 +660,8 @@ section{scroll-margin-top:72px}
 <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4" stroke="#ECE8DE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 </a>
 </div>
-<div aria-hidden="true" style="font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(150px, 25vw, 380px); line-height: 0.78; letter-spacing: -0.02em; color: transparent; -webkit-text-stroke: 1px #2A3240; text-align: center; user-select: none">TNBS</div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 28px; border-top: 1px solid #1A202A; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #7F8898">
+<div aria-hidden="true" style="font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-size: clamp(80px, 21vw, 320px); line-height: 0.8; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1px #2A3240; text-align: center; user-select: none">TNBS</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 28px; border-top: 1px solid #1A202A; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #7F8898">
 <span>© 2026 TNBS Lab · University Health Network</span>
 <span>University of Toronto · Krembil Brain Institute</span>
 </div>
@@ -1117,24 +1116,6 @@ class Component extends DCLogic {
       ctx.beginPath(); ctx.arc(ex1, ey1, 4 + (1 - fireG) * 24, 0, 6.283); ctx.stroke();
     }
 
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.font = '500 10px "Geist Mono", ui-monospace, monospace';
-    ctx.textBaseline = 'middle';
-    const label = (px, py, ddx, ddy, text) => {
-      if (px < 0 || px > w || py < 0 || py > h) return;
-      const lx = px + ddx, ly = py + ddy, dir = ddx >= 0 ? 1 : -1;
-      ctx.strokeStyle = 'rgba(154,163,178,0.5)'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(lx, ly); ctx.lineTo(lx + dir * 16, ly); ctx.stroke();
-      ctx.fillStyle = 'rgba(190,197,209,0.95)';
-      ctx.beginPath(); ctx.arc(px, py, 2, 0, 6.283); ctx.fill();
-      ctx.textAlign = dir > 0 ? 'left' : 'right';
-      ctx.fillText(text, lx + dir * 22, ly);
-    };
-    label(sx, sy, -74, -54, 'SOMA');
-    if (nodeLabel) label(nodeLabel[0], nodeLabel[1], -86, 14, 'NODE OF RANVIER');
-    if (termLabel) label(termLabel[0], termLabel[1], 70, 18, 'AXON TERMINAL');
-    label(ex1, ey1, 64, -46, 'MICROELECTRODE');
-    if (S.dendTip.length) { proj(S.dendTip[0], S.dendTip[1], S.dendTip[2]); label(o[0], o[1], 60, -30, 'DENDRITE'); }
   }
 
   drawScope() {
