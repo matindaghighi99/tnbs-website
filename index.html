@@ -790,90 +790,508 @@ class Component extends DCLogic {
   }
 
   build() {
-    let seed = 7311;
+    // Thick-tufted layer 5 pyramidal neuron. Scene units: k = 0.0018 units per µm.
+    // Soma centre (0,-0.20,0); the apical axis is the rotation axis.
+    let seed = 90173;
     const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
-    const jit = (d, a) => norm([d[0] + (rnd() - 0.5) * a, d[1] + (rnd() - 0.5) * a, d[2] + (rnd() - 0.5) * a]);
-    const turn = (d, ang) => {
-      let r = norm([rnd() - 0.5, rnd() - 0.5, rnd() - 0.5]);
-      const k = r[0] * d[0] + r[1] * d[1] + r[2] * d[2];
-      r = norm([r[0] - k * d[0], r[1] - k * d[1], r[2] - k * d[2]]);
-      const c = Math.cos(ang), s = Math.sin(ang);
-      return norm([d[0] * c + r[0] * s, d[1] * c + r[1] * s, d[2] * c + r[2] * s]);
+    const rr = (a, b) => a + (b - a) * rnd();
+    const K = 0.0018, DEG = Math.PI / 180;
+    const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+    const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const sc = (a, k) => [a[0] * k, a[1] * k, a[2] * k];
+    const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    const crs = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    const nrm = (v) => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
+    const rot = (v, ax, th) => {
+      const c = Math.cos(th), s = Math.sin(th), k = dot(ax, v) * (1 - c), x = crs(ax, v);
+      return [v[0] * c + x[0] * s + ax[0] * k, v[1] * c + x[1] * s + ax[1] * k, v[2] * c + x[2] * s + ax[2] * k];
     };
-    const grow = (T, p, dir, len, w, depth, dist, kind) => {
-      const steps = 7, st = len / steps;
-      let x = p[0], y = p[1], z = p[2], d = dir;
-      for (let i = 0; i < steps; i++) {
-        d = jit(d, 0.32);
-        const nx = x + d[0] * st, ny = y + d[1] * st, nz = z + d[2] * st;
-        T.segs.push(x, y, z, nx, ny, nz, w * (1 - (i / steps) * 0.3), dist + st * (i + 0.5), kind);
-        if (T.spines && depth >= 1) {
-          const k = 1 + Math.floor(rnd() * 3);
-          for (let j = 0; j < k; j++) {
-            const t = rnd(), o = 0.012 + rnd() * 0.022, q = norm([rnd() - 0.5, rnd() - 0.5, rnd() - 0.5]);
-            T.spines.push(x + (nx - x) * t + q[0] * o, y + (ny - y) * t + q[1] * o, z + (nz - z) * t + q[2] * o);
-          }
+    const perp = (d) => nrm(crs(d, Math.abs(d[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]));
+    const randPerp = (d) => rot(perp(d), d, rnd() * 6.2832);
+    const lastDir = (pts) => nrm(sub(pts[pts.length - 1], pts[pts.length - 2]));
+    const K_BAS = 0, K_TRUNK = 1, K_OBL = 2, K_TUFT = 3, K_AIS = 4, K_AX = 5, K_COL = 6;
+
+    // Smooth curve: direction is bent by two low-frequency sinusoidal curvature terms
+    // (wob = angular amplitude, rad) plus an optional steering field. No per-step jitter.
+    // The first segment always leaves exactly along d0 (so a daughter keeps its branch angle):
+    // wobble fades in over 0.03 units, steering over `ramp` units, short sections wobble less,
+    // and the wobble turn per step is capped at 0.3 rad, so there are no hooks or kinks.
+    const curve = (p0, d0, L, wob, steer, step, stop, ramp) => {
+      const n = Math.max(3, Math.round(L / (step || 0.026))), ds = L / n;
+      const f1 = rr(0.55, 1.2), f2 = rr(1.6, 2.6);
+      const q1 = rnd() * 6.2832, q2 = rnd() * 6.2832, q3 = rnd() * 6.2832, q4 = rnd() * 6.2832;
+      const wobE = wob * Math.min(1, L / 0.11);
+      const k1 = wobE * 6.2832 * f1 / L, k2 = 0.4 * wobE * 6.2832 * f2 / L;
+      const rS = ramp === undefined ? 0.03 : ramp;
+      let d = nrm(d0), e = perp(d), pos = p0.slice();
+      const pts = [pos];
+      for (let i = 1; i <= n; i++) {
+        const s = (i - 0.5) / n, run = (i - 1) * ds, env = Math.min(1, run / 0.03);
+        e = nrm(add(e, sc(d, -dot(e, d)))); const e2 = crs(d, e);
+        let c1 = env * (k1 * Math.cos(6.2832 * f1 * s + q1) + k2 * Math.cos(6.2832 * f2 * s + q2));
+        let c2 = env * (k1 * Math.cos(6.2832 * f1 * s + q3) + k2 * Math.cos(6.2832 * f2 * s + q4));
+        const m = Math.hypot(c1, c2) * ds;
+        if (m > 0.3) { c1 *= 0.3 / m; c2 *= 0.3 / m; }
+        d = nrm(add(d, add(sc(e, c1 * ds), sc(e2, c2 * ds))));
+        if (steer) { const st = steer(pos, d); if (st) { const a = Math.min(1, st[1] * ds) * (rS > 0 ? Math.min(1, run / rS) : 1); d = nrm(add(sc(d, 1 - a), sc(st[0], a))); } }
+        pos = add(pos, sc(d, ds));
+        pts.push(pos);
+        if (stop && stop(pos)) break;
+      }
+      return pts;
+    };
+    // diameters along a section: linear taper d0 -> d1, optional point at the tip
+    const taper = (n, d0, d1, tip) => { const a = []; for (let j = 0; j < n; j++) a.push(d0 + (d1 - d0) * (j / (n - 1))); if (tip) a[n - 1] = Math.min(a[n - 1], 0.3); return a; };
+
+    const secs = [];
+    const mk = (pts, dia, kind, parent, pidx, tree) => {
+      const s = { pts, dia, kind, parent, pidx: parent ? (pidx < 0 ? parent.pts.length - 1 : pidx) : -1, tree, kids: [] };
+      if (parent) parent.kids.push(s);
+      secs.push(s); return s;
+    };
+
+    // ---------- soma (surface of revolution) ----------
+    const SC = [0, -0.20, 0], SB = -0.25, HS = 0.10, RB = 0.036;   // soma drawn x2.0 for legibility
+    const prof = [[-0.20, 0.10], [-0.12, 0.22], [-0.06, 0.55], [0, 0.82], [0.15, 1.0], [0.35, 0.95], [0.55, 0.72], [0.75, 0.47], [0.9, 0.40], [1.0, 0.36]];
+    const somaR = (h) => {
+      if (h <= prof[0][0]) return prof[0][1] * RB;
+      for (let i = 1; i < prof.length; i++) if (h <= prof[i][0]) { const a = prof[i - 1], b = prof[i], u = (h - a[0]) / (b[0] - a[0]); return (a[1] + (b[1] - a[1]) * u) * RB; }
+      return prof[prof.length - 1][1] * RB;
+    };
+    const ring = [];
+    for (const [h] of prof) for (let j = 0; j < 12; j++) { const a = j * Math.PI / 6, r = somaR(h); ring.push(Math.cos(a) * r, SB + h * HS - SC[1], Math.sin(a) * r); }
+
+    // composition: azimuth facing the camera at the initial yaw (0.35), and the recurrent-collateral sector
+    const FRONT = Math.PI / 2 + 0.35, PHC = 0.18;
+
+    // ---------- basal dendrites ----------
+    const steerBasal = (p) => { const r = Math.hypot(p[0], p[2]) || 1; return [nrm([p[0] / r, -0.5, p[2] / r]), 1.5]; };
+    const basal = (par, p, d, order, d0, tree) => {
+      let L, term = false;
+      if (order === 1) L = rr(15, 40);
+      else if (order === 2) { term = rnd() < 0.2; L = term ? rr(120, 190) : rr(25, 50); }
+      else if (order === 3) { term = rnd() < 0.72; L = term ? rr(100, 180) : rr(30, 55); }
+      else { term = true; L = rr(90, 150); }
+      const pts = curve(p, d, L * K, order === 1 ? 0.08 : 0.34, order === 1 ? null : steerBasal, 0.031);
+      const n = pts.length, d1 = d0 * rr(0.82, 0.9), dia = taper(n, d0, d1, term);
+      if (order === 1) for (let j = 0; j < n; j++) { const um = (j / (n - 1)) * L + 5; if (um < 8) dia[j] *= 1.5 - 0.5 * um / 8; }
+      const s = mk(pts, dia, K_BAS, par, -1, tree);
+      s.order = order;
+      if (!term) {
+        // split mostly sideways (rotation about a near-vertical axis) so the skirt stays radial
+        const e = pts[n - 1], dd = lastDir(pts), ang = rr(45, 78) * DEG, a = rr(0.42, 0.58), dc = d1 * 0.63;
+        const nv = nrm(sub([0, 1, 0], sc(dd, dd[1]))), nn = rot(nv, dd, rr(-0.7, 0.7));
+        basal(s, e, rot(dd, nn, ang * a), order + 1, dc, tree);
+        basal(s, e, rot(dd, nn, -ang * (1 - a)), order + 1, dc, tree);
+      }
+    };
+    const NB = 7;
+    for (let i = 0; i < NB; i++) {
+      const phi = FRONT + Math.PI / NB + i * 2 * Math.PI / NB + rr(-0.15, 0.15);
+      const up = i === 1 || i === 4;
+      const el = (up ? rr(2, 15) : rr(-48, -14)) * DEG;
+      const h = up ? rr(0.28, 0.40) : rr(-0.04, 0.22);
+      const r0 = somaR(h) * 0.7;
+      const p = [Math.cos(phi) * r0, SB + h * HS, Math.sin(phi) * r0];
+      basal(null, p, [Math.cos(el) * Math.cos(phi), Math.sin(el), Math.cos(el) * Math.sin(phi)], 1, 2.0, i);
+    }
+
+    // ---------- apical trunk with obliques ----------
+    const TAPEX = SB + HS, TLEN = 640, T0 = -16;      // trunk from 16 µm inside the soma apex to the nexus
+    const oblS = [24, 60, 98, 140, 184, 230, 282].map((v) => v + rr(-5, 5)).concat([rr(380, 440), rr(512, 540), rr(578, 606)]);
+    const oblPhi = [];
+    let ph = FRONT + 1.2;
+    for (let k = 0; k < oblS.length; k++) {
+      ph += (137.5 + rr(-25, 25)) * DEG;
+      let dphi = Math.atan2(Math.sin(ph - PHC), Math.cos(ph - PHC));
+      if (k < 7 && Math.abs(dphi) < 40 * DEG) ph += (dphi >= 0 ? 1 : -1) * (40 * DEG - Math.abs(dphi));
+      oblPhi.push(ph);
+    }
+    // Trunk diameter: a linear taper 5.5 µm -> dLin plus a small Rall step at each oblique.
+    // Obliques are drawn at 1.0 µm, but the trunk step uses an effective 0.7 µm daughter so that
+    // the linear term still decreases and the trunk ends at exactly 3.0 µm at the nexus.
+    const dO = 1.0, dOe = Math.pow(0.7, 1.5);
+    const stepAt = (d) => d - Math.pow(Math.max(0.05, Math.pow(d, 1.5) - dOe), 2 / 3);
+    const linD = (s, dL) => (s < 0 ? 7.4 : s < 25 ? 7 - 0.06 * s : 5.5 + (dL - 5.5) * (s - 25) / (TLEN - 25));
+    let dLin = 4.5, steps = [];
+    for (let it = 0; it < 12; it++) {
+      let acc = 0;
+      steps = oblS.map((o) => { const st = stepAt(linD(o, dLin) - acc); acc += st; return st; });
+      dLin = 3.0 + acc;
+    }
+    const trunkD = (s) => { let d = linD(s, dLin); for (let k = 0; k < oblS.length; k++) if (s > oblS[k]) d -= steps[k]; return d; };
+    const tS = [];
+    for (const s0 of [T0, -8, 0, 6, 12, 19]) tS.push(s0);
+    for (let s = 26; s < TLEN - 1; s += 15) if (oblS.every((o) => Math.abs(o - s) > 5)) tS.push(s);
+    for (const o of oblS) tS.push(o);
+    tS.push(TLEN); tS.sort((a, b) => a - b);
+    const tw1 = rnd() * 6.28, tw2 = rnd() * 6.28;
+    const tPts = [], tDia = [], oblIdx = [];
+    for (let j = 0; j < tS.length; j++) {
+      const s = tS[j], q = Math.max(0, s) / TLEN;
+      tPts.push([0.0035 * Math.sin(q * 5.1 + tw1) * q * 2, TAPEX + s * K, 0.0035 * Math.sin(q * 4.3 + tw2) * q * 2]);
+      tDia.push(trunkD(s));
+      const k = oblS.indexOf(s);
+      if (k >= 0) oblIdx.push([j, k]);
+    }
+    const trunk = mk(tPts, tDia, K_TRUNK, null, -1, 7);
+    trunk.sArr = tS;
+    const steerObl = (p, d) => {
+      const r = Math.hypot(p[0], p[2]);
+      return r > 0.2 ? [[0, 1, 0], 2 + 14 * (r - 0.2)] : null;   // gradual upward pull, no snap
+    };
+    const oblique = (par, pidx, p, d, order, d0, Lrem, tree) => {
+      const term = order >= 3 || Lrem < 90 || rnd() < (order === 1 ? 0.15 : 0.6);
+      const L = term ? Lrem : Lrem * rr(0.38, 0.6);
+      const pts = curve(p, d, L * K, 0.32, steerObl, 0.029);
+      const n = pts.length, d1 = d0 * rr(0.82, 0.9);
+      const s = mk(pts, taper(n, d0, d1, term), K_OBL, par, pidx, tree);
+      if (!term) {
+        const dd = lastDir(pts), ang = rr(42, 75) * DEG, a = rr(0.42, 0.58), nn = randPerp(dd);
+        const rem = Lrem - L;
+        oblique(s, -1, pts[n - 1], rot(dd, nn, ang * a), order + 1, d1 * 0.63, rem * rr(0.85, 1.1), tree);
+        oblique(s, -1, pts[n - 1], rot(dd, nn, -ang * (1 - a)), order + 1, d1 * 0.63, rem * rr(0.75, 1.0), tree);
+      }
+    };
+    for (const [j, k] of oblIdx) {
+      const s = oblS[k], phi = oblPhi[k];
+      const th = (s < 300 ? rr(60, 80) : s < 500 ? rr(50, 64) : rr(40, 58)) * DEG;
+      const L = s < 300 ? rr(150, 250) : rr(120, 200);
+      oblique(trunk, j, tPts[j], [Math.sin(th) * Math.cos(phi), Math.cos(th), Math.sin(th) * Math.sin(phi)], 1, dO, L, 20 + k);
+    }
+
+    // ---------- apical tuft ----------
+    // Landing points of the terminal branches are spread over the pia (flat top, inverted cone).
+    // The tree is built by recursively halving that set, so every bifurcation is a clean Y,
+    // each daughter heads for the centroid of the tips it will carry, and branches do not cross.
+    const PIA = 1.70, nexus = tPts[tPts.length - 1];
+    // The pia disc is an ellipse, wide across the screen at the initial yaw and shallower in depth, so the
+    // tuft opens as a fan when the page loads and still turns as a 3D crown.
+    const NT = 18, TRX = 0.41, TRZ = 0.22, th0 = FRONT + Math.PI / 2;
+    const screenX = [Math.cos(0.35), 0, Math.sin(0.35)], depthZ = [-Math.sin(0.35), 0, Math.cos(0.35)];   // screen axes at the initial yaw
+    const land = [];
+    for (let i = 0; i < NT; i++) {
+      const r = Math.sqrt((i + 0.6) / NT) * rr(0.9, 1.05), a = th0 + i * 2.39996 + rr(-0.2, 0.2);
+      const u = Math.cos(a) * r * TRX, v = Math.sin(a) * r * TRZ;
+      land.push([screenX[0] * u + depthZ[0] * v, PIA - rr(0.0, 0.012), screenX[2] * u + depthZ[2] * v]);
+    }
+    const cen = (S) => { const c = [0, 0, 0]; for (const q of S) { c[0] += q[0]; c[1] += q[1]; c[2] += q[2]; } return sc(c, 1 / S.length); };
+    const prin = (S) => {   // principal horizontal axis of a tip set: splitting along it keeps sister branches apart
+      const c = cen(S); let xx = 0, zz = 0, xz = 0;
+      for (const q of S) { const dx = q[0] - c[0], dz = q[2] - c[2]; xx += dx * dx; zz += dz * dz; xz += dx * dz; }
+      const th = 0.5 * Math.atan2(2 * xz, xx - zz); return [Math.cos(th), 0, Math.sin(th)];
+    };
+    const tuft = (par, p, d, S, order, d0, axis, tid) => {
+      const n0 = secs.length;
+      if (S.length === 1) {
+        // terminal: climb to the landing point, then turn and run a short way beneath the pia
+        const tg = S[0], rl = Math.hypot(tg[0], tg[2]) || 1, out = [tg[0] / rl, 0, tg[2] / rl];
+        const tw = rot(out, [0, 1, 0], (rnd() < 0.5 ? -1 : 1) * rr(0.15, 0.6));
+        let run = -1, last = p;
+        const runMax = rr(40, 80) * K;
+        const steer = (q) => (q[1] > PIA - 0.06 ? [nrm([tw[0], (PIA - 0.02 - q[1]) * 3, tw[2]]), 7.5] : [nrm(sub(tg, q)), 3.5]);
+        const stop = (q) => {
+          if (q[1] > PIA - 0.06) run = run < 0 ? 0 : run + Math.hypot(q[0] - last[0], q[1] - last[1], q[2] - last[2]);
+          last = q;
+          return run > runMax || q[1] > PIA + 0.01;
+        };
+        const pts = curve(p, d, Math.hypot(...sub(tg, p)) + 0.25, 0.22, steer, 0.032, stop, 0.04);
+        mk(pts, taper(pts.length, d0, Math.max(0.5, d0 * 0.85), true), K_TUFT, par, -1, tid).order = order;
+        return;
+      }
+      const c = cen(S), dist = Math.hypot(...sub(c, p));
+      const Lum = order === 1 ? rr(120, 160) : Math.min(120, Math.max(40, (dist / K) * rr(0.28, 0.42)));
+      const pts = curve(p, d, Lum * K, 0.22, (q) => [nrm(sub(c, q)), 2.2], 0.032, null, 0.04);
+      const n = pts.length, d1 = Math.max(0.5, d0 * rr(0.84, 0.9));
+      const s = mk(pts, taper(n, d0, d1, false), K_TUFT, par, -1, tid);
+      s.order = order;
+      // split the tip set at the median along the current axis (alternating), aim each half at its centroid
+      const ax = prin(S), sorted = S.slice().sort((a, b) => dot(a, ax) - dot(b, ax)), h = sorted.length >> 1;
+      const SA = sorted.slice(0, h), SB2 = sorted.slice(h), e = pts[n - 1], dd = lastDir(pts);
+      let a1 = nrm(sub(cen(SA), e)), a2 = nrm(sub(cen(SB2), e));
+      const bis = nrm(add(add(a1, a2), sc(dd, 0.6))), nn = nrm(crs(a1, a2));
+      const half = Math.min(30, Math.max(19, Math.acos(Math.max(-1, Math.min(1, dot(a1, a2)))) / DEG / 2)) * DEG;
+      a1 = rot(bis, nn, -half); a2 = rot(bis, nn, half);
+      const nax = nrm(rot(ax, [0, 1, 0], Math.PI / 2 + rr(-0.35, 0.35)));
+      const dc = Math.max(0.5, d1 * 0.63);
+      tuft(s, e, a1, SA, order + 1, dc, nax, tid);
+      tuft(s, e, a2, SB2, order + 1, dc, nax, tid);
+    };
+    {
+      const dT = Math.pow(Math.pow(3.0, 1.5) / 2, 2 / 3);   // Rall: two equal daughters of a 3.0 µm trunk
+      const sorted = land.slice().sort((a, b) => dot(a, screenX) - dot(b, screenX)), h = sorted.length >> 1;
+      const n0 = [Math.cos(FRONT), 0, Math.sin(FRONT)];
+      const nax = [Math.cos(FRONT), 0, Math.sin(FRONT)];
+      tuft(trunk, nexus, rot([0, 1, 0], n0, rr(36, 46) * DEG), sorted.slice(0, h), 1, dT, nax, 30);   // +angle leans to screen-left
+      tuft(trunk, nexus, rot([0, 1, 0], n0, -rr(36, 46) * DEG), sorted.slice(h), 1, dT, nax, 31);
+    }
+
+    // ---------- axon ----------
+    const NODES = [0.171, 0.342, 0.540, 0.756, 0.990, 1.224];   // node x (units below soma base)
+    const MY0 = 0.0936, PRE = 0.04;
+    const aw1 = rnd() * 6.28, aw2 = rnd() * 6.28;
+    const axPos = (x) => { const q = Math.max(0, x); return [0.010 * Math.sin(q * 2.3 + aw1) - 0.010 * Math.sin(aw1), SB - x, 0.010 * Math.sin(q * 1.7 + aw2) - 0.010 * Math.sin(aw2)]; };
+    const axDia = (x) => (x < 0.018 ? 3.0 - (1.6 * x) / 0.018 : x < 0.09 ? 1.4 - (0.3 * (x - 0.018)) / 0.072 : 1.0);
+    const aisX = [-0.022, -0.008, 0.004, 0.011, 0.018, 0.03, 0.042, 0.054, 0.063, 0.072, 0.083, MY0];   // 0.072 = initiation site
+    const ais = mk(aisX.map(axPos), aisX.map((x) => (x < 0 ? 3.6 : axDia(x))), K_AIS, null, -1, 8);
+    ais.xArr = aisX;
+    const myX = [MY0];
+    let prevX = MY0;
+    for (const nx of NODES) { const m = Math.max(1, Math.round((nx - prevX) / 0.028)); for (let j = 1; j <= m; j++) myX.push(prevX + (nx - prevX) * j / m); prevX = nx; }
+    const myel = mk(myX.map(axPos), myX.map(() => 1.0), K_AX, ais, -1, 8);
+    myel.xArr = myX;
+    myel.nodeIdx = NODES.map((nx) => myX.findIndex((x) => Math.abs(x - nx) < 1e-9));
+    const preX = [NODES[5], NODES[5] + PRE / 2, NODES[5] + PRE];
+    const pre = mk(preX.map(axPos), [1.0, 0.9, 0.8], K_AX, myel, -1, 8);
+    pre.xArr = preX;
+
+    // collaterals (unmyelinated, wavy) leave at nodes 2, 3, 4
+    const radial = (p) => { const r = Math.hypot(p[0], p[2]) || 1e-6; return [p[0] / r, 0, p[2] / r, r]; };
+    const colSec = (par, pidx, p, d, L, steer, stop, wob, d0, d1, tree) => {
+      const pts = curve(p, d, L, wob, steer, 0.026, stop);
+      return mk(pts, taper(pts.length, d0, d1, false), K_COL, par, pidx, tree);
+    };
+    const sideBranches = (main, fr, mkDir, Lr, steer, tree, stop) => {
+      for (const f of fr) {
+        const j = Math.max(2, Math.min(main.pts.length - 3, Math.round(f * (main.pts.length - 1))));
+        const dd = nrm(sub(main.pts[j + 1], main.pts[j]));
+        colSec(main, j, main.pts[j], mkDir(main.pts[j], dd), rr(Lr[0], Lr[1]), steer, stop || null, 0.4, 0.4, 0.3, tree);
+      }
+    };
+    // smooth Catmull-Rom spline through control points, resampled every ~step, with a gentle
+    // two-frequency wobble (zero at the origin so the branch leaves its node exactly)
+    const spline = (C, step, amp, cyc, side) => {
+      const dense = [];
+      for (let i = 0; i < C.length - 1; i++) {
+        const p0 = C[Math.max(0, i - 1)], p1 = C[i], p2 = C[i + 1], p3 = C[Math.min(C.length - 1, i + 2)];
+        for (let k = 0; k < 16; k++) {
+          const t = k / 16, t2 = t * t, t3 = t2 * t;
+          dense.push([0, 1, 2].map((c) => 0.5 * (2 * p1[c] + (p2[c] - p0[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (3 * p1[c] - p0[c] - 3 * p2[c] + p3[c]) * t3)));
         }
-        x = nx; y = ny; z = nz;
       }
-      dist += len;
-      if (depth < T.maxDepth) {
-        const n = rnd() < 0.2 ? 3 : 2;
-        for (let b = 0; b < n; b++) grow(T, [x, y, z], turn(d, 0.35 + rnd() * 0.45), len * (0.62 + rnd() * 0.16), w * 0.68, depth + 1, dist, kind);
-      } else {
-        if (T.tips) T.tips.push(x, y, z, dist);
-      }
-    };
-    const soma = [0, 0.45, 0];
-    const N = { segs: [], spines: [], tips: [], maxDepth: 4 };
-    const M = 11;
-    for (let i = 0; i < M; i++) {
-      const yv = 1 - ((i + 0.5) / M) * 2, r = Math.sqrt(1 - yv * yv), th = i * 2.39996;
-      if (yv < -0.45) continue;
-      const d = [Math.cos(th) * r, yv, Math.sin(th) * r];
-      grow(N, [soma[0] + d[0] * 0.12, soma[1] + d[1] * 0.1, soma[2] + d[2] * 0.12], d, 0.4 + rnd() * 0.16, 0.02, 0, 0.12, 0);
-    }
-    const dendTip = N.tips.slice(0, 3);
-    let ax = [soma[0], soma[1] - 0.12, soma[2]], ad = norm([0.06, -1, 0.1]), adist = 0.12;
-    const run = (len, kind, w) => {
-      const steps = 4, st = len / steps;
-      for (let i = 0; i < steps; i++) {
-        ad = jit(ad, 0.1);
-        ad = norm([ad[0], ad[1] - 0.15, ad[2]]);
-        const nx = ax[0] + ad[0] * st, ny = ax[1] + ad[1] * st, nz = ax[2] + ad[2] * st;
-        N.segs.push(ax[0], ax[1], ax[2], nx, ny, nz, w, adist + st * (i + 0.5), kind);
-        ax = [nx, ny, nz];
-      }
-      adist += len;
-    };
-    const nodes = [];
-    run(0.14, 2, 0.012);
-    for (let k = 0; k < 7; k++) { nodes.push(ax[0], ax[1], ax[2], adist); run(0.235, 1, 0.026); }
-    nodes.push(ax[0], ax[1], ax[2], adist);
-    const Tm = { segs: N.segs, spines: null, tips: [], maxDepth: 2 };
-    for (let b = 0; b < 3; b++) grow(Tm, ax, turn(ad, 0.5 + rnd() * 0.4), 0.2, 0.008, 0, adist, 3);
-    const somaPts = [];
-    for (let i = 0; i < 280; i++) {
-      const u = rnd() * 2 - 1, th = rnd() * Math.PI * 2, q = Math.sqrt(1 - u * u);
-      somaPts.push(soma[0] + q * Math.cos(th) * 0.13, soma[1] + u * 0.11, soma[2] + q * Math.sin(th) * 0.13);
-    }
-    const ghost = (off, sc) => {
-      const G = { segs: [], spines: null, tips: null, maxDepth: 2 };
-      for (let i = 0; i < 6; i++) grow(G, [0, 0, 0], norm([rnd() - 0.5, rnd() - 0.3, rnd() - 0.5]), 0.45, 0.012, 0, 0, 0);
+      dense.push(C[C.length - 1].slice());
+      const cum = [0];
+      for (let i = 1; i < dense.length; i++) cum.push(cum[i - 1] + Math.hypot(...sub(dense[i], dense[i - 1])));
+      const L = cum[cum.length - 1], n = Math.max(2, Math.round(L / step)), q1 = rnd() * 6.2832, q2 = rnd() * 6.2832;
       const out = [];
-      for (let i = 0; i < G.segs.length; i += 9) {
-        out.push(off[0] + G.segs[i] * sc, off[1] + G.segs[i + 1] * sc, off[2] + G.segs[i + 2] * sc, off[0] + G.segs[i + 3] * sc, off[1] + G.segs[i + 4] * sc, off[2] + G.segs[i + 5] * sc);
+      for (let i = 0, j = 0; i <= n; i++) {
+        const s = (L * i) / n;
+        while (j < cum.length - 2 && cum[j + 1] < s) j++;
+        const u = (s - cum[j]) / (cum[j + 1] - cum[j] || 1), p = add(dense[j], sc(sub(dense[j + 1], dense[j]), u));
+        const e1 = nrm(crs(nrm(sub(dense[j + 1], dense[j])), side)), env = Math.min(1, s / 0.06);
+        const w1 = amp * env * Math.sin((6.2832 * cyc * s) / L + q1), w2 = 0.6 * amp * env * Math.sin((6.2832 * cyc * 1.7 * s) / L + q2);
+        out.push(add(p, add(sc(e1, w1), sc(side, w2))));
       }
       return out;
     };
-    const ghosts = [].concat(ghost([-2.1, 0.7, -1.8], 0.9), ghost([2.3, -0.5, -2.4], 0.8), ghost([-1.5, -1.3, -2.8], 0.7));
-    const parts = [];
-    for (let i = 0; i < 300; i++) parts.push((rnd() - 0.5) * 6.5, (rnd() - 0.5) * 4.6, (rnd() - 0.5) * 6.5, rnd());
+    // 1. recurrent collateral from node 2: out past the basal skirt, then a smooth ascent outside it
+    //    to above soma level, with three wavy side branches
+    {
+      const n2 = myel.pts[myel.nodeIdx[1]], R = [Math.cos(PHC), 0, Math.sin(PHC)], side = [-Math.sin(PHC), 0, Math.cos(PHC)];
+      const at = (r, y) => [R[0] * r, y, R[2] * r];
+      const C = [n2, at(0.2, n2[1] + 0.005), at(0.41, -0.45), at(0.51, -0.2), at(0.52, 0.04), at(0.49, 0.21)];
+      const pts = spline(C, 0.026, 0.011, 5, side);
+      const rec = mk(pts, taper(pts.length, 0.5, 0.3, false), K_COL, myel, myel.nodeIdx[1], 9);
+      const fr = [0.36, 0.6, 0.84];
+      fr.forEach((f, i) => {
+        const j = Math.round(f * (pts.length - 1)), T = nrm(sub(pts[j + 1], pts[j - 1])), e1 = nrm(crs(T, side));
+        const d = rot(T, e1, (i % 2 ? 1 : -1) * rr(50, 72) * DEG);
+        const L = rr(0.11, 0.17);
+        const sb = curve(pts[j], d, L, 0.4, null, 0.026, (q) => Math.hypot(q[0], q[2]) > 0.635 || q[1] > 0.27);
+        mk(sb, taper(sb.length, 0.4, 0.3, false), K_COL, rec, j, 9);
+      });
+    }
+    // 2. horizontal collateral from node 3
+    const n3 = myel.pts[myel.nodeIdx[2]], ph3 = PHC + 2.55;
+    const steerHor = (p, d) => { const [rx, , rz, r] = radial(p); return [nrm([rx, Math.max(-0.5, Math.min(0.5, (-0.83 - p[1]) * 6)), rz]), r > 0.5 ? 0 : 1.2]; };
+    const hor = colSec(myel, myel.nodeIdx[2], n3, nrm([Math.cos(ph3), -0.12, Math.sin(ph3)]), 0.62, steerHor, (q) => Math.hypot(q[0], q[2]) > 0.53, 0.3, 0.5, 0.3, 10);
+    sideBranches(hor, [0.35, 0.6, 0.85], (p, dd) => rot(dd, [0, 1, 0], (rnd() < 0.5 ? 1 : -1) * rr(50, 80) * DEG), [0.1, 0.2], null, 10, (q) => q[1] > -0.71 || q[1] < -0.94 || Math.hypot(q[0], q[2]) > 0.56);
+    // 3. short down-lateral collateral from node 4
+    const n4 = myel.pts[myel.nodeIdx[3]], ph4 = PHC + 4.35;
+    const steerSh = (p) => { const r = Math.hypot(p[0], p[2]); if (p[1] < -1.12 || r > 0.38) return [nrm([-p[0], 0.3, -p[2]]), 8]; return null; };
+    const sh = colSec(myel, myel.nodeIdx[3], n4, nrm([Math.cos(ph4), -0.75, Math.sin(ph4)]), 0.32, steerSh, (q) => q[1] < -1.14 || Math.hypot(q[0], q[2]) > 0.38, 0.32, 0.5, 0.3, 11);
+    sideBranches(sh, [0.45, 0.8], (p, dd) => rot(dd, perp(dd), (rnd() < 0.5 ? 1 : -1) * rr(50, 75) * DEG), [0.07, 0.13], null, 11, (q) => q[1] < -1.14 || Math.hypot(q[0], q[2]) > 0.39);
+
+    // terminal arbor (compressed long-range target): fine, wavy, a three-way fan built from Y splits
+    // (a short stem carries two of the three main branches, so there is no trifurcation)
+    const arbTips = [];
+    // each branch keeps a preferred horizontal heading (daughters fan out from it), heads outward and gently down,
+    // levels off above the bottom of the arbor and stays inside r 0.31
+    const stopArb = (q) => q[1] < -1.712 || Math.hypot(q[0], q[2]) > 0.312;
+    const arbor = (par, p, az, order, d0, stemL) => {
+      const term = order >= 4 || (order >= 3 && rnd() < 0.6);
+      const L = stemL || (order === 1 ? rr(0.07, 0.1) : term ? rr(0.08, 0.15) : rr(0.06, 0.1));
+      const H = [Math.cos(az), 0, Math.sin(az)];
+      const steer = (q) => {
+        const r = Math.hypot(q[0], q[2]);
+        if (q[1] < -1.68) return [nrm([H[0], 0, H[2]]), 7];
+        const vy = Math.max(-1.2, Math.min(0.2, -0.62 + (-1.515 - 0.62 * r - q[1]) * 10));   // track a shallow cone
+        if (r > 0.29) return [nrm([H[0] - q[0] / r, vy, H[2] - q[2] / r]), 6];
+        return [nrm([H[0], vy, H[2]]), 6];
+      };
+      const d = stemL ? nrm([-H[0] * 0.5, -1, -H[2] * 0.5]) : par === pre || par.stem ? nrm([H[0], -0.7, H[2]]) : null;
+      const d1 = Math.max(0.3, d0 * 0.85);
+      let pts;
+      if (d) pts = curve(p, d, L, stemL ? 0.1 : 0.4, stemL ? null : steer, 0.024, stopArb);
+      else {   // Y split: leave the parent's tip turned toward this daughter's heading
+        const dd = lastDir(par.pts), hz = nrm([H[0], 0, H[2]]), side = sub(hz, sc(dd, dot(hz, dd)));
+        pts = curve(p, nrm(add(add(dd, sc(nrm(side), 0.9)), [0, -0.25, 0])), L, 0.4, steer, 0.024, stopArb);
+      }
+      const s = mk(pts, taper(pts.length, d0, d1, false), K_COL, par, -1, 8);
+      if (stemL) { s.stem = true; return s; }
+      if (term) return s;
+      const sp = rr(22, 34) * DEG, e = pts[pts.length - 1];
+      arbor(s, e, az + sp, order + 1, Math.max(0.3, d1 * 0.75));
+      arbor(s, e, az - sp, order + 1, Math.max(0.3, d1 * 0.75));
+      return s;
+    };
+    {
+      const e = pre.pts[2], az0 = FRONT + Math.PI / 2 + rr(-0.3, 0.3);
+      arbor(pre, e, az0, 1, 0.45);
+      const stem = arbor(pre, e, az0, 1, 0.45, 0.028);   // carries the other two main branches: no trifurcation
+      const se = stem.pts[stem.pts.length - 1];
+      arbor(stem, se, az0 + 2.09 + rr(-0.25, 0.25), 1, 0.4);
+      arbor(stem, se, az0 - 2.09 + rr(-0.25, 0.25), 1, 0.4);
+    }
+
+    // ---------- envelope guard (x/z only, per tree) ----------
+    const rMax = (y, tree) => (tree < 7 ? 0.45 : y > 1.0 ? 0.5 : y > -0.2 ? (tree === 9 && y < 0.3 ? 0.65 : 0.4) : y > -1.0 ? 0.7 : y > -1.5 ? 0.45 : 0.35);
+    const treeRatio = {};
+    for (const s of secs) for (const p of s.pts) {
+      if (p[1] > 1.72) p[1] = 1.72; if (p[1] < -1.72) p[1] = -1.72;
+      const q = Math.hypot(p[0], p[2]) / rMax(p[1], s.tree);
+      if (!(treeRatio[s.tree] >= q)) treeRatio[s.tree] = q;
+    }
+    const seen = new Set();
+    for (const s of secs) {
+      const q = treeRatio[s.tree];
+      if (q > 1) for (const p of s.pts) { if (seen.has(p)) continue; seen.add(p); p[0] /= q; p[2] /= q; }
+    }
+
+    // ---------- flatten, path lengths, delays, amplitudes ----------
+    // V: x, y, z, diameter µm, delay ms, amp, kind
+    const vx = [];
+    const SECA = [];
+    const V_AIS = 2.0, V_MY = 8.6, V_UM = 1.43, V_BAP = 1.14;
+    let nV = 0;
+    for (const s of secs) {
+      s.start = nV;
+      const n = s.pts.length;
+      s.path = new Array(n); s.delay = new Array(n); s.amp = new Array(n);
+      const pv = s.parent ? s.parent.start + s.pidx : -1;
+      for (let j = 0; j < n; j++) {
+        const p = s.pts[j];
+        const seg = j > 0 ? Math.hypot(p[0] - s.pts[j - 1][0], p[1] - s.pts[j - 1][1], p[2] - s.pts[j - 1][2]) : 0;
+        let path, delay, amp;
+        if (s.kind === K_AIS || (s.kind === K_AX && s !== pre)) {
+          const x = s.xArr[j];
+          path = x;
+          if (s.kind === K_AIS) { delay = x < 0.0 ? 36 : (Math.abs(x - 0.072) / V_AIS) * 1000; amp = x < 0 ? 0 : 1; }
+          else { delay = 9 + ((x - 0.090) / V_MY) * 1000; amp = 0; }
+        } else if (s === pre || s.kind === K_COL) {
+          path = j === 0 ? s.parent.path[s.pidx] : s.path[j - 1] + seg;
+          const d0 = j === 0 ? s.parent.delay[s.pidx] : s.delay[j - 1];
+          delay = j === 0 ? d0 : d0 + (seg / V_UM) * 1000; amp = 1;
+        } else if (s.kind === K_TRUNK) {
+          const sm = s.sArr[j];
+          path = Math.max(0, sm) * K;
+          delay = 36 + (path / V_BAP) * 1000; amp = Math.exp(-Math.max(0, sm) / 550);
+        } else {
+          path = j === 0 ? (s.parent ? s.parent.path[s.pidx] : 0) : s.path[j - 1] + seg;
+          delay = 36 + (path / V_BAP) * 1000;
+          const dum = path / K;
+          if (s.kind === K_BAS) amp = Math.exp(-dum / 220);
+          else if (s.kind === K_TUFT) amp = Math.exp(-TLEN / 550) * Math.exp(-(dum - TLEN) / 120);
+          else {   // oblique: attenuate from the trunk amplitude at its origin
+            if (j === 0) { s.oAmp = s.parent.kind === K_TRUNK ? s.parent.amp[s.pidx] : s.parent.oAmp; s.oPath = s.parent.kind === K_TRUNK ? path : s.parent.oPath; }
+            amp = s.oAmp * Math.exp(-(dum - s.oPath / K) / 220);
+          }
+          if (amp < 0.06) amp = 0;
+        }
+        s.path[j] = path; s.delay[j] = delay; s.amp[j] = amp;
+        vx.push(p[0], p[1], p[2], s.dia[j], delay, amp, s.kind);
+      }
+      nV += n;
+      let mn = 1e9, mx = -1e9;
+      for (let j = 0; j < n; j++) if (s.amp[j] > 0) { if (s.delay[j] < mn) mn = s.delay[j]; if (s.delay[j] > mx) mx = s.delay[j]; }
+      s.mn = mn; s.mx = mx;
+      SECA.push(s.start, n, pv, s.kind);
+    }
+    const V = new Float32Array(vx);
+    const SECD = new Float32Array(secs.length * 2);
+    secs.forEach((s, i) => { SECD[i * 2] = s.mx < 0 ? 1e9 : s.mn - 20; SECD[i * 2 + 1] = s.mx < 0 ? -1e9 : s.mx + 450; });
+
+    // ---------- spines (representative sample) ----------
+    const isDend = (k) => k <= K_TUFT;
+    const dens = (s, j) => {
+      if (s.kind === K_TRUNK) { const sm = s.sArr[j]; return sm < 15 ? 0 : sm < 100 ? 0.3 : 0.6; }
+      let own = s.path[j];
+      if (s.kind === K_BAS) own = s.path[j];
+      else if (s.kind === K_OBL) own = s.path[j] - s.oPath;
+      else if (s.kind === K_TUFT) own = 1;
+      if (own < 15 * K) return 0;
+      let d = s.kind === K_TUFT ? 0.7 : 1.0;
+      if (!s.kids.length && s.path[s.pts.length - 1] - s.path[j] < 10 * K) d = 0.5;
+      return d;
+    };
+    let wsum = 0;
+    for (const s of secs) if (isDend(s.kind)) for (let j = 0; j < s.pts.length - 1; j++) wsum += Math.hypot(...sub(s.pts[j + 1], s.pts[j])) * dens(s, j);
+    const spacing = Math.max(0.028, wsum / 760);
+    const SP = [];
+    for (const s of secs) {
+      if (!isDend(s.kind)) continue;
+      let acc = rnd();
+      for (let j = 0; j < s.pts.length - 1; j++) {
+        const dv = sub(s.pts[j + 1], s.pts[j]), L = Math.hypot(...dv);
+        acc += (L * dens(s, j)) / spacing;
+        while (acc >= 1) {
+          acc -= 1;
+          const T = nrm(dv), q = rot(perp(T), T, rnd() * 6.2832);
+          const dir = rot(q, nrm(crs(T, q)), rr(-35, 35) * DEG);
+          const u = rnd(), cls = u < 0.5 ? 0 : u < 0.85 ? 1 : 2;
+          const len = rr(0.012, 0.018) * (cls === 2 ? 0.6 : 1);
+          SP.push(s.start + j, rnd(), dir[0] * len, dir[1] * len, dir[2] * len, cls);
+        }
+      }
+    }
+
+    // spines on basals/obliques that may flicker as synaptic input before a spontaneous spike (P2)
+    const SYN = [];
+    for (let q = 0; q < SP.length / 6; q++) { const k = vx[SP[q * 6] * 7 + 6]; if ((k === K_BAS || k === K_OBL) && SP[q * 6 + 5] !== 2) SYN.push(q); }
+
+    // ---------- nodes, boutons, myelin internodes ----------
+    const NODE = [];
+    myel.nodeIdx.forEach((j) => NODE.push(myel.start + j, myel.delay[j]));
+    const INT = [];   // internodes: start vertex, end vertex, first?
+    let a0 = myel.start;
+    myel.nodeIdx.forEach((j, k) => { INT.push(a0, myel.start + j, k === 0 ? 1 : 0); a0 = myel.start + j; });
+    const BT = [];    // vertex, delay, diameter px, terminal flag
+    for (const s of secs) {
+      if (s.kind !== K_COL) continue;
+      const n = s.pts.length;
+      let next = rr(0.04, 0.06);
+      for (let j = 1; j < n - 1; j++) {
+        if (s.path[j] - s.path[0] >= next) { BT.push(s.start + j, s.delay[j], rr(1.6, 2.0), 0); next = s.path[j] - s.path[0] + rr(0.05, 0.07); }
+      }
+      if (!s.kids.some((k) => k.pidx === n - 1)) BT.push(s.start + n - 1, s.delay[n - 1], s.tree === 8 ? rr(2.5, 3.0) : rr(2.4, 2.8), s.tree === 8 ? 2 : 1);
+    }
+
+    // ---------- waveform lookup tables (1 ms resolution) ----------
+    const LW = new Float32Array(451), LN = new Float32Array(451), LB = new Float32Array(451);
+    for (let u = 0; u <= 450; u++) {
+      LW[u] = u < 18 ? (u / 18) * (u / 18) * (3 - 2 * u / 18) : Math.exp(-(u - 18) / 110);
+      LN[u] = u < 6 ? u / 6 : Math.exp(-(u - 6) / 55);
+      LB[u] = u < 10 ? u / 10 : Math.exp(-(u - 10) / 160);
+    }
+    LW[450] = LN[450] = LB[450] = 0;
+
     return {
-      segs: new Float32Array(N.segs), spines: new Float32Array(N.spines), terms: new Float32Array(Tm.tips),
-      nodes: new Float32Array(nodes), soma: soma, somaPts: new Float32Array(somaPts), dendTip: dendTip,
-      ghosts: new Float32Array(ghosts), parts: new Float32Array(parts)
+      V, nV, SEC: new Int32Array(SECA), SECD, nSec: secs.length,
+      SPN: new Float32Array(SP), nSp: SP.length / 6, SYN: new Int32Array(SYN),
+      NODE: new Float32Array(NODE), INT: new Int32Array(INT), BT: new Float32Array(BT),
+      RING: new Float32Array(ring), SC, RB, LW, LN, LB, INIT: ais.start + aisX.indexOf(0.072),
+      PX: new Float32Array(nV), PY: new Float32Array(nV), PZ: new Float32Array(nV), PS: new Float32Array(nV), PD: new Float32Array(nV), WP: new Float32Array(nV), G: new Float32Array(nV),
+      RP: new Float32Array(ring.length / 3 * 2), HULL: new Int32Array(ring.length / 3 + 2)
     };
   }
 
@@ -946,149 +1364,334 @@ class Component extends DCLogic {
     const yaw = this.yaw + this.cy + this.dYaw, pitch = -0.12 + this.cp + this.dPitch;
     const cyw = Math.cos(yaw), syw = Math.sin(yaw), cpt = Math.cos(pitch), spt = Math.sin(pitch);
     const f = Math.min(w, h * 1.05) * 0.84, D = 4.2, ox = w * 0.52, oy = h * 0.5;
-    const o = this._o || (this._o = new Float32Array(4));
-    const proj = (x, y, z) => {
+    const s0 = f / D, E = 2 * Math.min(1.6, Math.max(1, Math.sqrt(0.30 / (0.0018 * s0))));
+    const phone = s0 < 120, core = phone ? 0.7 : 0.9;
+
+    // palette (premixed over the #0A0D12 ground so tapered strokes join without alpha seams)
+    const acc = String(this.props.accent ?? '#E9A23B');
+    if (!this._pal || this._pal.acc !== acc) {
+      const bg = [10, 13, 18], iv = [236, 232, 222], cool = [205, 208, 212];
+      const mix = (c, a) => 'rgb(' + Math.round(bg[0] + (c[0] - bg[0]) * a) + ',' + Math.round(bg[1] + (c[1] - bg[1]) * a) + ',' + Math.round(bg[2] + (c[2] - bg[2]) * a) + ')';
+      const BA = [0.40, 0.53, 0.66, 0.79, 0.92];
+      const tint = (b) => (b === 0 ? cool : b === 1 ? [220, 220, 217] : iv);
+      this._pal = {
+        acc, rgb: this.accRGB(), bg, iv,
+        st: BA.map((a, b) => mix(tint(b), a)), spn: BA.map((a, b) => mix(tint(b), a * 0.6)),
+        bo: [mix(iv, 0.55), mix(iv, 0.85)]
+      };
+    }
+    const PAL = this._pal, rgb = PAL.rgb;
+    const A = (a) => 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + (a > 0 ? a : 0).toFixed(3) + ')';
+
+    // ---- 1. one projection per vertex ----
+    // PZ = camera depth (occlusion against the soma); PD = depth about the cell's own axis (alpha cueing),
+    // so pitch does not dim the whole tuft just because it is high in the frame.
+    const V = S.V, nV = S.nV, PX = S.PX, PY = S.PY, PZ = S.PZ, PS = S.PS, PD = S.PD, WP = S.WP;
+    const kE = 0.0018 * E;
+    for (let i = 0, j = 0; i < nV; i++, j += 7) {
+      const x = V[j], y = V[j + 1], z = V[j + 2];
       const x1 = x * cyw + z * syw, z1 = -x * syw + z * cyw;
-      const y1 = y * cpt - z1 * spt, z2 = y * spt + z1 * cpt;
-      const s = f / (D - z2);
-      o[0] = ox + x1 * s; o[1] = oy - y1 * s; o[2] = z2; o[3] = s;
-    };
-    const rgb = this.accRGB();
-    const A = (a) => 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + Math.max(0, a).toFixed(3) + ')';
-    const IV = (a) => 'rgba(236,232,222,' + Math.max(0, a).toFixed(3) + ')';
-    const t = this.t, sp = this.spk;
-    const waveD = (d) => {
-      let g = 0;
-      for (let k = 0; k < sp.length; k++) {
-        const x = d - (t - sp[k]) * 2.1;
-        const v = Math.exp(-(x * x) / 0.012) * Math.exp(-d * 0.9);
-        if (v > g) g = v;
+      const z2 = y * spt + z1 * cpt, s = f / (D - z2);
+      PX[i] = ox + x1 * s; PY[i] = oy - (y * cpt - z1 * spt) * s; PZ[i] = z2; PD[i] = z1 * cpt; PS[i] = s;
+      const k = V[j + 6], mn = k === 4 || k === 5 ? core : 0.55, wp = V[j + 3] * kE * s;
+      WP[i] = wp > mn ? wp : mn;
+    }
+    const zS = S.SC[1] * spt;   // camera depth of the soma centre
+
+    // ---- 2. structure paths: [behind/in front of soma] x 5 depth buckets x 12 width classes, + AIS ----
+    const NC = 12, LG = 1 / Math.log(1.2), NF = 48, LGF = 1 / Math.log(1.05);   // the trunk uses 48 fine classes
+    const OA = 10 * NC, FT = 11 * NC;
+    const P = this._P || (this._P = new Array(FT + 10 * NF));
+    for (let k = 0; k < P.length; k++) P[k] = null;
+    const SEC = S.SEC, nSec = S.nSec;
+    for (let si = 0; si < nSec; si++) {
+      const st = SEC[si * 4], end = st + SEC[si * 4 + 1] - 1, kd = SEC[si * 4 + 3], ais = kd === 4, tr = kd === 1;
+      const rootN = SEC[si * 4 + 2] >= 0 ? 0 : kd === 0 ? 2 : kd === 1 ? 4 : 3;   // roots start inside the soma: keep them behind it
+      let prev = -1, pp = null;
+      for (let i = st; i < end; i++) {
+        const wv = (WP[i] + WP[i + 1]) * 0.5, zv = (PD[i] + PD[i + 1]) * 0.5;
+        const b = zv < -0.36 ? 0 : zv < -0.12 ? 1 : zv < 0.12 ? 2 : zv < 0.36 ? 3 : 4;
+        const fb = ((PZ[i] + PZ[i + 1]) * 0.5 > zS && i >= st + rootN ? 5 : 0) + b;
+        let key;
+        if (tr) { let c = (Math.log(wv * 1.818) * LGF) | 0; c = c < 0 ? 0 : c >= NF ? NF - 1 : c; key = FT + fb * NF + c; }
+        else { let c = (Math.log(wv * 1.818) * LG) | 0; c = c < 0 ? 0 : c >= NC ? NC - 1 : c; key = ais ? OA + c : fb * NC + c; }
+        if (key !== prev) { pp = P[key] || (P[key] = new Path2D()); pp.moveTo(PX[i], PY[i]); prev = key; }
+        pp.lineTo(PX[i + 1], PY[i + 1]);
       }
-      return g;
-    };
-    const waveA = (d) => {
-      let g = 0;
-      for (let k = 0; k < sp.length; k++) {
-        const x = d - (t - sp[k]) * 3.4;
-        const v = Math.exp(-(x * x) / 0.006);
-        if (v > g) g = v;
-      }
-      return g;
-    };
-    let fireG = 0;
-    for (let k = 0; k < sp.length; k++) { const a = t - sp[k]; if (a >= 0 && a < 0.35) fireG = Math.max(fireG, 1 - a / 0.35); }
+    }
+
+    // ---- 3. spines: base interpolated on the projected dendrite, tip = base + rotated offset * s ----
+    const SPN = S.SPN, nSp = S.nSp, SQ = this._SQ || (this._SQ = new Array(30));
+    for (let k = 0; k < 30; k++) SQ[k] = null;
+    const minSp = phone ? 1.3 : 0;
+    for (let q = 0; q < nSp; q += phone ? 2 : 1) {
+      const o = q * 6, vi = SPN[o], t = SPN[o + 1];
+      const bx = PX[vi] + (PX[vi + 1] - PX[vi]) * t, by = PY[vi] + (PY[vi + 1] - PY[vi]) * t, bz = PD[vi] + (PD[vi + 1] - PD[vi]) * t;
+      const x = SPN[o + 2], y = SPN[o + 3], z = SPN[o + 4], cls = SPN[o + 5];
+      let s = PS[vi];
+      if (minSp) { const l = Math.sqrt(x * x + y * y + z * z) * s; if (l < minSp) s *= minSp / l; }
+      const x1 = x * cyw + z * syw, z1 = -x * syw + z * cyw;
+      const tx = bx + x1 * s, tyy = by - (y * cpt - z1 * spt) * s;
+      const b = (PZ[vi] > zS ? 5 : 0) + (bz < -0.36 ? 0 : bz < -0.12 ? 1 : bz < 0.12 ? 2 : bz < 0.36 ? 3 : 4);
+      const k = b * 3 + (cls === 2 ? 1 : 0);
+      const pp = SQ[k] || (SQ[k] = new Path2D());
+      pp.moveTo(bx, by); pp.lineTo(tx, tyy);
+      if (cls === 1) { const hp = SQ[b * 3 + 2] || (SQ[b * 3 + 2] = new Path2D()); hp.moveTo(tx, tyy); hp.lineTo(tx + 0.01, tyy); }
+    }
+
+    // ---- activity bookkeeping (only spikes created by fire()) ----
+    const sp = this.spk || [], nS = sp.length, T = this.t;
+    const tau = this._tau || (this._tau = new Float32Array(64)), att = this._att || (this._att = new Float32Array(64));
+    let nA = 0, gS = 0, dim = 0;
+    for (let k = 0, run = 0; k < nS && nA < 64; k++) {
+      run = k > 0 && sp[k] - sp[k - 1] < 0.16 ? run + 1 : 0;
+      const tk = (T - sp[k]) * 1000;
+      if (tk < 0) continue;
+      tau[nA] = tk; att[nA] = Math.pow(0.8, run); nA++;
+      const u = tk - 36;
+      if (u >= 0 && u < 450) { const v = S.LW[u | 0]; if (v > gS) gS = v; }
+      if (u > 250 && u < 600) { const v = 0.2 * Math.sin(Math.PI * (u - 250) / 350); if (v > dim) dim = v; }
+    }
+
+    // P2: synaptic input in the 150 ms before a spontaneous (non-burst) spike: a few spine heads flicker, soma tint ramps (EPSP)
+    let lead = -1, epsp = 0;
+    if (live && this.burstLeft === 0 && this.next > T && this.next - T < 0.15 && (!nS || T - sp[nS - 1] > 0.3)) {
+      lead = 0.15 - (this.next - T); epsp = 0.15 * lead / 0.15;
+    }
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, w, h);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const CW = this._CW || (this._CW = Array.from({ length: NC }, (_, c) => 0.55 * Math.pow(1.2, c + 0.5)));
+    const spW = phone ? 0.5 : 0.6;
+    const somaScale = Math.max(1, 3.5 / (S.RB * s0));
+
+    const layer = (fr) => {
+      for (let b = 0; b < 5; b++) {
+        const fb = fr * 5 + b;
+        // spines sit under their dendrite
+        let q = SQ[fb * 3];
+        if (q) { ctx.lineWidth = spW; ctx.strokeStyle = PAL.spn[b]; ctx.stroke(q); }
+        q = SQ[fb * 3 + 1];
+        if (q) { ctx.lineWidth = 0.9; ctx.strokeStyle = PAL.spn[b]; ctx.stroke(q); }
+        q = SQ[fb * 3 + 2];
+        if (q) { ctx.lineWidth = phone ? 1.1 : 1.3; ctx.strokeStyle = PAL.spn[b]; ctx.stroke(q); }
+        ctx.strokeStyle = PAL.st[b];
+        for (let c = 0; c < NC; c++) { const pp = P[fb * NC + c]; if (pp) { ctx.lineWidth = CW[c]; ctx.stroke(pp); } }
+        for (let c = 0; c < NF; c++) { const pp = P[FT + fb * NF + c]; if (pp) { ctx.lineWidth = 0.55 * Math.pow(1.05, c + 0.5); ctx.stroke(pp); } }
+      }
+    };
+    layer(0);   // everything behind the soma
+    {
+      // hillock + AIS (bare), dimmed during the AHP
+      ctx.strokeStyle = dim > 0 ? 'rgb(' + PAL.st[2].slice(4, -1).split(',').map((v, i) => Math.round(+v - (v - PAL.bg[i]) * dim)).join(',') + ')' : PAL.st[2];
+      for (let c = 0; c < NC; c++) { const pp = P[OA + c]; if (pp) { ctx.lineWidth = CW[c]; ctx.stroke(pp); } }
+
+      // myelin: translucent sleeves with rounded paranodal ends, leaving bare nodes
+      const INT = S.INT, trunkPx = 5.5 * kE * s0;
+      const sw = Math.min(3 * core, 0.85 * trunkPx), gap = Math.max(0.018 * s0, 3.5);
+      const sl = new Path2D();
+      for (let m = 0; m < INT.length; m += 3) {
+        const a = INT[m], e = INT[m + 1];
+        let tot = 0;
+        for (let i = a; i < e; i++) tot += Math.hypot(PX[i + 1] - PX[i], PY[i + 1] - PY[i]);
+        const t0 = (INT[m + 2] ? 0 : gap * 0.5) + sw * 0.5, t1 = tot - gap * 0.5 - sw * 0.5;
+        if (t1 - t0 < 0.5) continue;
+        let accL = 0, started = false;
+        for (let i = a; i < e; i++) {
+          const dx = PX[i + 1] - PX[i], dy = PY[i + 1] - PY[i], L = Math.hypot(dx, dy);
+          const u0 = Math.max(t0, accL), u1 = Math.min(t1, accL + L);
+          if (u1 > u0 && L > 0) {
+            if (!started) { sl.moveTo(PX[i] + dx * (u0 - accL) / L, PY[i] + dy * (u0 - accL) / L); started = true; }
+            sl.lineTo(PX[i] + dx * (u1 - accL) / L, PY[i] + dy * (u1 - accL) / L);
+          }
+          accL += L;
+        }
+      }
+      ctx.lineWidth = sw; ctx.strokeStyle = 'rgba(236,232,222,0.34)'; ctx.stroke(sl);
+
+      // soma: projected rings -> convex hull -> shaded fill (light from upper left)
+      const RING = S.RING, RP = S.RP, nR = RING.length / 3, SC = S.SC;
+      for (let i = 0; i < nR; i++) {
+        const x = RING[i * 3] * somaScale, y = SC[1] + RING[i * 3 + 1] * somaScale, z = RING[i * 3 + 2] * somaScale;
+        const x1 = x * cyw + z * syw, z1 = -x * syw + z * cyw, s = f / (D - (y * spt + z1 * cpt));
+        RP[i * 2] = ox + x1 * s; RP[i * 2 + 1] = oy - (y * cpt - z1 * spt) * s;
+      }
+      const idx = this._idx || (this._idx = Array.from({ length: nR }, (_, i) => i));
+      idx.sort((p, q2) => RP[p * 2] - RP[q2 * 2] || RP[p * 2 + 1] - RP[q2 * 2 + 1]);
+      const HL = S.HULL;
+      let hn = 0;
+      const cr = (o2, a2, b2) => (RP[a2 * 2] - RP[o2 * 2]) * (RP[b2 * 2 + 1] - RP[o2 * 2 + 1]) - (RP[a2 * 2 + 1] - RP[o2 * 2 + 1]) * (RP[b2 * 2] - RP[o2 * 2]);
+      for (let i = 0; i < nR; i++) { while (hn >= 2 && cr(HL[hn - 2], HL[hn - 1], idx[i]) <= 0) hn--; HL[hn++] = idx[i]; }
+      for (let i = nR - 2, lo = hn + 1; i >= 0; i--) { while (hn >= lo && cr(HL[hn - 2], HL[hn - 1], idx[i]) <= 0) hn--; HL[hn++] = idx[i]; }
+      const sy0 = SC[1], z1c = 0, ssc = f / (D - (sy0 * spt + z1c * cpt));
+      const scx = ox, scy = oy - sy0 * cpt * ssc, R = S.RB * ssc * somaScale;
+      const sh = new Path2D();
+      sh.moveTo(RP[HL[0] * 2], RP[HL[0] * 2 + 1]);
+      for (let i = 1; i < hn - 1; i++) sh.lineTo(RP[HL[i] * 2], RP[HL[i] * 2 + 1]);
+      sh.closePath();
+      const sCol = (a) => {
+        let r = PAL.bg[0] + (PAL.iv[0] - PAL.bg[0]) * a, g = PAL.bg[1] + (PAL.iv[1] - PAL.bg[1]) * a, bb = PAL.bg[2] + (PAL.iv[2] - PAL.bg[2]) * a;
+        const m2 = Math.min(0.85, 0.85 * Math.min(1, 1.6 * gS) + epsp); r += (rgb[0] * (0.55 + 0.45 * a) - r) * m2; g += (rgb[1] * (0.55 + 0.45 * a) - g) * m2; bb += (rgb[2] * (0.55 + 0.45 * a) - bb) * m2;
+        r -= (r - PAL.bg[0]) * dim; g -= (g - PAL.bg[1]) * dim; bb -= (bb - PAL.bg[2]) * dim;
+        return 'rgb(' + Math.round(r) + ',' + Math.round(g) + ',' + Math.round(bb) + ')';
+      };
+      const lx = scx - 0.35 * R, ly = scy - 0.35 * R;
+      const grd = ctx.createRadialGradient(lx, ly, 0, lx, ly, R * 1.75);
+      grd.addColorStop(0, sCol(0.97)); grd.addColorStop(1, sCol(0.6));
+      ctx.fillStyle = grd; ctx.fill(sh);
+      ctx.lineWidth = 0.8; ctx.strokeStyle = 'rgba(236,232,222,0.30)'; ctx.stroke(sh);
+      this._somaPx = [scx, scy, R];
+    }
+    layer(1);   // everything in front of the soma
+
+    // nodes of Ranvier at rest: a fine ivory point in each bare gap
+    {
+      const ND = S.NODE, np = new Path2D();
+      for (let m = 0; m < ND.length; m += 2) { const vi = ND[m]; np.moveTo(PX[vi], PY[vi]); np.lineTo(PX[vi] + 0.01, PY[vi]); }
+      ctx.lineWidth = phone ? 1.4 : 1.8; ctx.strokeStyle = PAL.bo[1]; ctx.stroke(np);
+    }
+
+    // boutons (swellings on axon branches and at tips)
+    const BT = S.BT, bs = phone ? 0.85 : 1;
+    const bp = [new Path2D(), new Path2D(), new Path2D(), new Path2D(), new Path2D(), new Path2D()];
+    for (let m = 0; m < BT.length; m += 4) {
+      const vi = BT[m], k = BT[m + 3] * 2 + (PZ[vi] > 0 ? 1 : 0);
+      bp[k].moveTo(PX[vi], PY[vi]); bp[k].lineTo(PX[vi] + 0.01, PY[vi]);
+    }
+    const BW = [1.6, 2.4, 2.7];
+    for (let k = 0; k < 6; k++) { ctx.lineWidth = BW[k >> 1] * bs; ctx.strokeStyle = PAL.bo[k & 1]; ctx.stroke(bp[k]); }
+
+    if (lead >= 0) {
+      ctx.globalCompositeOperation = 'lighter';
+      const SYN = S.SYN, nf = 3 + (this.count % 4);
+      for (let j = 0; j < nf; j++) {
+        const u = lead - j * 0.022;
+        if (u < 0) continue;
+        const a = 0.5 * Math.min(1, u / 0.04) * Math.exp(-Math.max(0, u - 0.04) / 0.06);
+        const q = SYN[(this.count * 37 + j * 101) % SYN.length], o = q * 6, vi = SPN[o], t = SPN[o + 1];
+        const x = SPN[o + 2], y = SPN[o + 3], z = SPN[o + 4], s = PS[vi];
+        const x1 = x * cyw + z * syw, z1 = -x * syw + z * cyw;
+        const tx = PX[vi] + (PX[vi + 1] - PX[vi]) * t + x1 * s, tyy = PY[vi] + (PY[vi + 1] - PY[vi]) * t - (y * cpt - z1 * spt) * s;
+        ctx.fillStyle = A(a); ctx.beginPath(); ctx.arc(tx, tyy, phone ? 1.2 : 1.4, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    if (!nA) return;
+
+    // ---- 4. activity pass (amber, additive) ----
+    const LW = S.LW, LN = S.LN, LB = S.LB, G = S.G, SECD = S.SECD;
+    const AP = this._AP || (this._AP = new Array(24));
+    for (let k = 0; k < 24; k++) AP[k] = null;
+    let under = null;
+    for (let si = 0; si < nSec; si++) {
+      const lo = SECD[si * 2], hi = SECD[si * 2 + 1];
+      let on = false;
+      for (let k = 0; k < nA; k++) if (tau[k] >= lo && tau[k] <= hi) { on = true; break; }
+      if (!on) continue;
+      const st = SEC[si * 4], n = SEC[si * 4 + 1], dend = SEC[si * 4 + 3] <= 3;
+      for (let i = st, j = st * 7; i < st + n; i++, j += 7) {
+        const amp = V[j + 5];
+        let g = 0;
+        if (amp > 0) {
+          const dl = V[j + 4];
+          for (let k = 0; k < nA; k++) {
+            const u = tau[k] - dl;
+            if (u >= 0 && u < 450) { const v = LW[u | 0] * (dend ? att[k] : 1); if (v > g) g = v; }
+          }
+          g *= amp;
+        }
+        G[i] = g;
+      }
+      // root segments inside the soma silhouette are carried by the soma fill, not drawn over it
+      const kd = SEC[si * 4 + 3], i0 = st + (SEC[si * 4 + 2] >= 0 ? 0 : kd === 1 ? 4 : 2);
+      let prev = -1, pp = null;
+      for (let i = i0; i < st + n - 1; i++) {
+        const gm = (G[i] + G[i + 1]) * 0.5;
+        if (gm <= 0.08) { prev = -1; continue; }
+        const lv = gm > 0.65 ? 2 : gm > 0.35 ? 1 : 0, wv = (WP[i] + WP[i + 1]) * 0.5;
+        const cc = wv < 0.7 ? 0 : wv < 1.0 ? 1 : wv < 1.4 ? 2 : wv < 2.0 ? 3 : wv < 2.8 ? 4 : wv < 3.6 ? 5 : wv < 4.4 ? 6 : 7;
+        const key = lv * 8 + cc;
+        if (key !== prev) {
+          pp = AP[key] || (AP[key] = new Path2D()); prev = key;
+          if (i === st && SEC[si * 4 + 2] >= 0) {   // a branch starts just clear of its parent's stroke: no additive bead at the branch point
+            const dx = PX[i + 1] - PX[i], dy = PY[i + 1] - PY[i], L = Math.hypot(dx, dy) || 1, u = Math.min(0.5, (WP[SEC[si * 4 + 2]] * 0.5 + 0.8) / L);
+            pp.moveTo(PX[i] + dx * u, PY[i] + dy * u);
+          } else pp.moveTo(PX[i], PY[i]);
+        }
+        pp.lineTo(PX[i + 1], PY[i + 1]);
+        if (lv === 2) { if (!under) under = new Path2D(); under.moveTo(PX[i], PY[i]); under.lineTo(PX[i + 1], PY[i + 1]); }
+      }
+    }
+    const AW = [0.6, 0.85, 1.2, 1.7, 2.4, 3.2, 4.0, 4.8], ek = phone ? 0.7 : 1, LA = [[0.8 * ek, 0.32], [1.2 * ek, 0.58], [1.6 * ek, 0.85]];
+    // knock the ivory back under the wave first, so additive amber stays amber instead of burning to white
+    const KO = [0.32, 0.58, 0.85];   // equal to the amber alpha: the core becomes a true ivory->amber mix
+    ctx.lineCap = 'butt';   // abutting intensity paths must not double up at their ends
+    for (let lv = 0; lv < 3; lv++) {
+      ctx.strokeStyle = 'rgba(10,13,18,' + KO[lv] + ')';
+      for (let c = 0; c < 8; c++) { const pp = AP[lv * 8 + c]; if (pp) { ctx.lineWidth = AW[c] + 0.4; ctx.stroke(pp); } }
+    }
     ctx.globalCompositeOperation = 'lighter';
+    if (under) { ctx.lineWidth = phone ? 3.5 : 5; ctx.strokeStyle = A(0.10); ctx.stroke(under); }
+    for (let lv = 0; lv < 3; lv++) {
+      ctx.strokeStyle = A(LA[lv][1]);
+      for (let c = 0; c < 8; c++) { const pp = AP[lv * 8 + c]; if (pp) { ctx.lineWidth = AW[c] + LA[lv][0]; ctx.stroke(pp); } }
+    }
     ctx.lineCap = 'round';
 
-    const Pp = S.parts, pp = new Path2D();
-    for (let i = 0; i < Pp.length; i += 4) {
-      if (live) { Pp[i + 1] += dt * (0.03 + Pp[i + 3] * 0.05); if (Pp[i + 1] > 2.3) Pp[i + 1] = -2.3; }
-      proj(Pp[i], Pp[i + 1], Pp[i + 2]);
-      if (D - o[2] < 0.7) continue;
-      const r = 0.5 + Math.max(0, o[2] + 3) * 0.12;
-      pp.rect(o[0] - r, o[1] - r, r * 2, r * 2);
+    // soma depolarisation halo (<= 2.5 R)
+    if (gS > 0.02 && this._somaPx) {
+      const [x, y, R] = this._somaPx, rh = R * 2.5;
+      const hg = ctx.createRadialGradient(x, y, R * 0.4, x, y, rh);
+      hg.addColorStop(0, A(0.30 * gS)); hg.addColorStop(1, A(0));
+      ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(x, y, rh, 0, 6.2832); ctx.fill();
     }
-    ctx.fillStyle = IV(0.2); ctx.fill(pp);
 
-    const G = S.ghosts, gp = new Path2D();
-    for (let i = 0; i < G.length; i += 6) {
-      proj(G[i], G[i + 1], G[i + 2]); const x0 = o[0], y0 = o[1];
-      proj(G[i + 3], G[i + 4], G[i + 5]);
-      gp.moveTo(x0, y0); gp.lineTo(o[0], o[1]);
+    // nodes of Ranvier: saltatory flashes
+    const ND = S.NODE, nr = phone ? 1.7 : 1.8, nh = phone ? 4.8 : 5;
+    for (let m = 0; m < ND.length; m += 2) {
+      let g = 0;
+      for (let k = 0; k < nA; k++) { const u = tau[k] - ND[m + 1]; if (u >= 0 && u < 450) { const v = LN[u | 0]; if (v > g) g = v; } }
+      if (g < 0.03) continue;
+      const vi = ND[m];
+      ctx.fillStyle = A(0.24 * g); ctx.beginPath(); ctx.arc(PX[vi], PY[vi], nh, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = A(0.95 * g); ctx.beginPath(); ctx.arc(PX[vi], PY[vi], nr, 0, 6.2832); ctx.fill();
     }
-    ctx.lineWidth = 0.8; ctx.strokeStyle = IV(0.07); ctx.stroke(gp);
-
-    const Sg = S.segs, B = 4, base = [], my = new Path2D(), glow = [new Path2D(), new Path2D(), new Path2D()];
-    for (let b = 0; b < B * 3; b++) base.push(new Path2D());
-    const waving = sp.length > 0;
-    for (let i = 0; i < Sg.length; i += 9) {
-      proj(Sg[i], Sg[i + 1], Sg[i + 2]); const x0 = o[0], y0 = o[1], z0 = o[2];
-      proj(Sg[i + 3], Sg[i + 4], Sg[i + 5]); const x1 = o[0], y1 = o[1];
-      const kind = Sg[i + 8], wv = Sg[i + 6], d = Sg[i + 7];
-      if (kind === 1) { my.moveTo(x0, y0); my.lineTo(x1, y1); }
-      else {
-        let db = Math.floor(((z0 + 1.6) / 3.2) * B); db = db < 0 ? 0 : (db >= B ? B - 1 : db);
-        const wc = wv > 0.013 ? 2 : (wv > 0.007 ? 1 : 0);
-        const pth = base[db * 3 + wc]; pth.moveTo(x0, y0); pth.lineTo(x1, y1);
-      }
-      if (waving) {
-        const g = kind === 0 ? waveD(d) : waveA(d);
-        if (g > 0.08) { const gi = g > 0.6 ? 2 : (g > 0.3 ? 1 : 0); glow[gi].moveTo(x0, y0); glow[gi].lineTo(x1, y1); }
+    // AP initiation in the distal AIS: a brief flash at the trigger zone, before the soma follows at 36 ms
+    {
+      let g = 0;
+      for (let k = 0; k < nA; k++) { const u = tau[k]; if (u < 140) { const v = u < 4 ? u / 4 : Math.exp(-(u - 4) / 22); if (v > g) g = v; } }
+      if (g > 0.03) {
+        const vi = S.INIT;
+        ctx.fillStyle = A(0.22 * g); ctx.beginPath(); ctx.arc(PX[vi], PY[vi], nh * 0.9, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = A(0.9 * g); ctx.beginPath(); ctx.arc(PX[vi], PY[vi], nr * 0.9, 0, 6.2832); ctx.fill();
       }
     }
-    for (let db = 0; db < B; db++) {
-      for (let wc = 0; wc < 3; wc++) {
-        ctx.lineWidth = [0.6, 1.2, 2.1][wc] * (0.8 + db * 0.14);
-        ctx.strokeStyle = IV(0.2 + db * 0.17);
-        ctx.stroke(base[db * 3 + wc]);
+
+    // boutons: release flash + small puff, batched by alpha level
+    const BC = this._BC || (this._BC = new Array(8));
+    for (let k = 0; k < 8; k++) BC[k] = null;
+    for (let m = 0; m < BT.length; m += 4) {
+      let g = 0, pu = -1;
+      for (let k = 0; k < nA; k++) {
+        const u = tau[k] - BT[m + 1];
+        if (u >= 0 && u < 450) { const v = LB[u | 0]; if (v > g) g = v; if (u < 220 && (pu < 0 || u < pu)) pu = u; }
+      }
+      if (g < 0.05) continue;
+      const vi = BT[m], x = PX[vi], y = PY[vi];
+      const lc = Math.min(3, (g * 4) | 0), cp = BC[lc] || (BC[lc] = new Path2D()), r0 = (BT[m + 3] ? 1.5 : 1.1) * bs;
+      cp.moveTo(x + r0, y); cp.arc(x, y, r0, 0, 6.2832);
+      if (pu >= 0) {
+        const fr = pu / 220, lp = Math.min(3, ((1 - fr) * 4) | 0), pq = BC[4 + lp] || (BC[4 + lp] = new Path2D()), rp = 1 + 4 * fr;
+        pq.moveTo(x + rp, y); pq.arc(x, y, rp, 0, 6.2832);
       }
     }
-    ctx.lineWidth = 4.4; ctx.strokeStyle = 'rgba(150,165,188,0.2)'; ctx.stroke(my);
-    ctx.lineWidth = 1.1; ctx.strokeStyle = IV(0.4); ctx.stroke(my);
-    const gw = [[3, 0.22], [4, 0.5], [5.5, 0.9]];
-    for (let gi = 0; gi < 3; gi++) { ctx.lineWidth = gw[gi][0]; ctx.strokeStyle = A(gw[gi][1]); ctx.stroke(glow[gi]); }
-
-    const Sp = S.spines, spp = [new Path2D(), new Path2D(), new Path2D()];
-    for (let i = 0; i < Sp.length; i += 3) {
-      proj(Sp[i], Sp[i + 1], Sp[i + 2]);
-      let b = Math.floor(((o[2] + 1.6) / 3.2) * 3); b = b < 0 ? 0 : (b > 2 ? 2 : b);
-      spp[b].rect(o[0] - 0.6, o[1] - 0.6, 1.2, 1.2);
+    for (let k = 0; k < 4; k++) {
+      if (BC[4 + k]) { ctx.fillStyle = A(0.35 * (k + 0.5) / 4); ctx.fill(BC[4 + k]); }
+      if (BC[k]) { ctx.fillStyle = A(0.9 * (k + 0.5) / 4); ctx.fill(BC[k]); }
     }
-    for (let b = 0; b < 3; b++) { ctx.fillStyle = IV(0.16 + b * 0.18); ctx.fill(spp[b]); }
-
-    const Nd = S.nodes;
-    let nodeLabel = null;
-    for (let i = 0; i < Nd.length; i += 4) {
-      proj(Nd[i], Nd[i + 1], Nd[i + 2]);
-      if (i === 12) nodeLabel = [o[0], o[1]];
-      const g = waving ? waveA(Nd[i + 3]) : 0;
-      ctx.fillStyle = IV(0.75); ctx.beginPath(); ctx.arc(o[0], o[1], 1.6, 0, 6.283); ctx.fill();
-      if (g > 0.05) {
-        ctx.fillStyle = A(0.25 * g); ctx.beginPath(); ctx.arc(o[0], o[1], 9 * g + 3, 0, 6.283); ctx.fill();
-        ctx.fillStyle = A(0.95 * g); ctx.beginPath(); ctx.arc(o[0], o[1], 2.4, 0, 6.283); ctx.fill();
-      }
-    }
-    const Tr = S.terms;
-    let termLabel = null;
-    for (let i = 0; i < Tr.length; i += 4) {
-      proj(Tr[i], Tr[i + 1], Tr[i + 2]);
-      if (i === 0) termLabel = [o[0], o[1]];
-      const g = waving ? waveA(Tr[i + 3]) : 0;
-      ctx.fillStyle = IV(0.6); ctx.beginPath(); ctx.arc(o[0], o[1], 2, 0, 6.283); ctx.fill();
-      if (g > 0.05) { ctx.fillStyle = A(0.3 * g); ctx.beginPath(); ctx.arc(o[0], o[1], 10 * g + 3, 0, 6.283); ctx.fill(); }
-    }
-
-    proj(S.soma[0], S.soma[1], S.soma[2]);
-    const sx = o[0], sy = o[1], ss = o[3], R = 0.13 * ss;
-    let grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, R * 3.2);
-    grd.addColorStop(0, IV(0.5)); grd.addColorStop(0.35, IV(0.12)); grd.addColorStop(1, IV(0));
-    ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(sx, sy, R * 3.2, 0, 6.283); ctx.fill();
-    if (fireG > 0) {
-      grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, R * 6.5);
-      grd.addColorStop(0, A(0.6 * fireG)); grd.addColorStop(1, A(0));
-      ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(sx, sy, R * 6.5, 0, 6.283); ctx.fill();
-    }
-    const SP = S.somaPts, spath = new Path2D();
-    for (let i = 0; i < SP.length; i += 3) { proj(SP[i], SP[i + 1], SP[i + 2]); spath.rect(o[0] - 0.7, o[1] - 0.7, 1.4, 1.4); }
-    ctx.fillStyle = IV(0.45); ctx.fill(spath);
-
     ctx.globalCompositeOperation = 'source-over';
-    ctx.save();
-    ctx.setLineDash([2, 5]); ctx.lineDashOffset = -t * 12;
-    ctx.strokeStyle = 'rgba(154,163,178,0.4)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(sx, sy, R * 4.4, 0, 6.283); ctx.stroke();
-    ctx.restore();
-    ctx.strokeStyle = 'rgba(154,163,178,0.55)'; ctx.lineWidth = 1;
-    ctx.beginPath();
-    for (let q = 0; q < 4; q++) {
-      const a = q * Math.PI / 2 + t * 0.2, r0 = R * 4.4 - 4, r1 = R * 4.4 + 6;
-      ctx.moveTo(sx + Math.cos(a) * r0, sy + Math.sin(a) * r0); ctx.lineTo(sx + Math.cos(a) * r1, sy + Math.sin(a) * r1);
-    }
-    ctx.stroke();
   }
 
   drawScope() {
