@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TNBS Lab — Translational Neurophysiology &amp; Brain Stimulation</title>
+<meta name="description" content="TNBS Lab at the Krembil Brain Institute, University Health Network and University of Toronto: single-neuron recordings, deep brain stimulation and neuromodulation research.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#0A0D12}
+html{scroll-behavior:smooth}
+a{color:inherit;text-decoration:none}
+::selection{background:#ECE8DE;color:#0A0D12}
+:focus-visible{outline:2px solid currentColor;outline-offset:4px;border-radius:4px}
+section{scroll-margin-top:72px}
+.prog{transform:scaleX(0);transform-origin:left center}
+.nl{position:relative;transition:color .25s ease}
+.nl:hover,.nl.on{color:#FFFFFF}
+.nl.on::after{content:"";position:absolute;left:50%;bottom:-12px;width:4px;height:4px;border-radius:50%;background:#ECE8DE;transform:translateX(-50%)}
+.lk:hover{text-decoration:underline;text-underline-offset:4px}
+.btn{transition:transform .25s ease,box-shadow .25s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -14px rgba(0,0,0,.55)}
+.btn .ar{transition:transform .25s ease}
+.btn:hover .ar{transform:translateX(4px)}
+.ghost{background:transparent;transition:border-color .25s ease,background .25s ease}
+.ghost:hover{border-color:#8993A3;background:rgba(236,232,222,.05)}
+.cv{cursor:grab}
+.cv:active{cursor:grabbing}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.in{animation:up .95s cubic-bezier(.2,.7,.2,1) both}
+.d1{animation-delay:.06s}.d2{animation-delay:.16s}.d3{animation-delay:.28s}.d4{animation-delay:.4s}.d5{animation-delay:.52s}
+@keyframes blink{50%{opacity:.2}}
+.blink{animation:blink 1.4s steps(2,start) infinite}
+@keyframes ring{from{transform:scale(1);opacity:.55}to{transform:scale(1.9);opacity:0}}
+.ring{animation:ring 2.4s cubic-bezier(.2,.6,.3,1) infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq{animation:mq 80s linear infinite}
+.mqw:hover .mq{animation-play-state:paused}
+.rc .bar{transform:scaleX(0);transform-origin:left center;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.rc:hover .bar{transform:scaleX(1)}
+.rc .ic{display:inline-flex;transition:transform .35s ease}
+.rc:hover .ic{transform:translateY(-4px)}
+.pr{position:relative;isolation:isolate}
+.pr::before{content:"";position:absolute;top:0;bottom:0;left:-20px;right:-20px;background:#F1EDE3;opacity:0;transition:opacity .3s ease;z-index:-1;border-radius:6px}
+.pr:hover::before{opacity:1}
+.pr .pa{opacity:0;transform:translate(-6px,6px);transition:opacity .3s ease,transform .3s ease}
+.pr:hover .pa{opacity:1;transform:none}
+.chip{background:transparent;color:#11151C;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.chip:hover{border-color:#11151C}
+.chip.on{background:#11151C;color:#F3F0E8;border-color:#11151C}
+.ph{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.fx:hover .ph,.tm:hover .ph{transform:scale(1.035)}
+.tag{transition:border-color .25s ease,color .25s ease}
+.tag:hover{border-color:#8993A3;color:#FFFFFF}
+@supports (animation-timeline: view()){
+.rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 24%}
+@keyframes rv{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion: reduce){.in,.mq,.ring,.blink,.rv{animation:none !important}html{scroll-behavior:auto}}
+</style>
+<style>.yr{display:contents}.yr[hidden]{display:none}</style>
+</head>
+<body>
+<div data-ref="setRoot" style="width: 100%; background: #F3F0E8; color: #11151C; font-family: 'Geist', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+
+<nav style="position: sticky; top: 0; z-index: 40; background: rgba(10,13,18,0.82); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-bottom: 1px solid #1E2530; color: #AEB6C3">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 40px; height: 72px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<a href="#top" aria-label="TNBS Lab home" style="display: flex; align-items: center; gap: 12px; color: #ECE8DE">
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><path d="M12 18L4.5 10.5M12 18L3.5 21M12 18l2.5 9M12 18l7-2.5M4.5 10.5L3 6.5M4.5 10.5L1.5 11.5" stroke="#ECE8DE" stroke-width="1.2" stroke-linecap="round"></path><circle cx="12" cy="18" r="3.2" fill="#ECE8DE"></circle><path d="M27 2.5L15.2 15.6" stroke="#E9A23B" stroke-width="1.8" stroke-linecap="round"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 3px; line-height: 1">
+<span style="font-weight: 600; font-size: 15px; letter-spacing: 0.18em">TNBS</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.04em; color: #9AA3B2">Neurophysiology &amp; Brain Stimulation</span>
+</span>
+</a>
+<div style="display: flex; align-items: center; gap: 30px; font-size: 14px">
+<a class="nl" data-nav="about" href="#about">About</a>
+<a class="nl" data-nav="research" href="#research">Research</a>
+<a class="nl" data-nav="facilities" href="#facilities">Facilities</a>
+<a class="nl" data-nav="team" href="#team">Team</a>
+<a class="nl" data-nav="publications" href="#publications">Publications</a>
+<a class="nl" data-nav="workshops" href="#workshops">Workshops</a>
+<a class="btn" href="#join" style="display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 20px 0 16px; border-radius: 999px; background: #E9A23B; color: #0A0D12; font-weight: 600">
+<span class="blink" style="width: 6px; height: 6px; border-radius: 50%; background: #0A0D12"></span>Join the lab</a>
+</div>
+</div>
+<span class="prog" data-ref="setProg" style="position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: #E9A23B"></span>
+</nav>
+
+<section id="top" data-ref="setHero" data-on-pointermove="onHeroMove" data-on-pointerleave="onHeroLeave" data-on-pointerdown="onDown" data-on-pointerup="onUp" style="position: relative; overflow: hidden; background: #0A0D12; color: #ECE8DE; min-height: 960px; display: flex; flex-direction: column">
+<svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none"><defs><pattern id="hgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#121821" stroke-width="1"></path></pattern></defs><rect width="100%" height="100%" fill="url(#hgrid)"></rect></svg>
+<canvas class="cv" data-ref="setCanvas" role="img" aria-label="Interactive 3D model of a neuron being recorded by a microelectrode" style="position: absolute; top: 0; right: 0; width: 60%; height: calc(100% - 214px); display: block; touch-action: pan-y; z-index: 1"></canvas>
+<div aria-hidden="true" style="position: absolute; z-index: 2; top: 36px; right: 40px; width: calc(60% - 80px); height: calc(100% - 290px); pointer-events: none; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
+<span style="position: absolute; top: 0; left: 0; width: 18px; height: 18px; border-top: 1px solid #3A4352; border-left: 1px solid #3A4352"></span>
+<span style="position: absolute; top: 0; right: 0; width: 18px; height: 18px; border-top: 1px solid #3A4352; border-right: 1px solid #3A4352"></span>
+<span style="position: absolute; bottom: 0; left: 0; width: 18px; height: 18px; border-bottom: 1px solid #3A4352; border-left: 1px solid #3A4352"></span>
+<span style="position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; border-bottom: 1px solid #3A4352; border-right: 1px solid #3A4352"></span>
+<div style="position: absolute; top: 12px; left: 28px">FIG. 00 — SINGLE NEURON · SIMULATED</div>
+<div style="position: absolute; top: 12px; right: 28px; display: flex; align-items: center; gap: 8px"><span class="blink" style="width: 6px; height: 6px; border-radius: 50%; background: #E5484D"></span>REC · TORONTO <span data-bind="clock">--:--</span></div>
+<div style="position: absolute; bottom: 12px; left: 28px; display: flex; gap: 22px">
+<span>RATE <span style="color: #ECE8DE"><span data-bind="rate">0.0</span></span> HZ</span>
+<span>SPIKES <span style="color: #ECE8DE"><span data-bind="spikes">000</span></span></span>
+<span>AZ <span style="color: #ECE8DE"><span data-bind="az">000</span></span>°</span>
+</div>
+<div style="position: absolute; bottom: 12px; right: 28px; display: flex; align-items: center; gap: 8px"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M2 8l3-3M2 8l3 3M14 8l-3-3M14 8l-3 3" stroke="#7F8898" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>DRAG TO ROTATE</div>
+</div>
+<div style="position: relative; z-index: 3; flex-grow: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: 100px 40px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 28px; pointer-events: none">
+<div class="in d1" style="display: flex; align-items: center; gap: 12px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>KREMBIL BRAIN INSTITUTE · TORONTO WESTERN HOSPITAL</span>
+</div>
+<h1 class="in d2" style="margin: 0; max-width: 11ch; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(56px, 6.8vw, 104px); line-height: 0.96; letter-spacing: -0.015em">Listening to the brain, <em style="font-style: italic; color: #E9A23B">one neuron</em> at a time.</h1>
+<p class="in d3" style="margin: 0; max-width: 44ch; font-size: 18px; line-height: 1.65; color: #B8BFCB; font-weight: 300">The Translational Neurophysiology &amp; Brain Stimulation lab studies human brain function and dysfunction, and develops new brain stimulation methods to improve the lives of people with neurological disease.</p>
+<div class="in d4" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 6px; pointer-events: auto">
+<a class="btn" href="#research" style="display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 26px; border-radius: 999px; background: #E9A23B; color: #0A0D12; font-weight: 600; font-size: 15px">Explore our research
+<svg class="ar" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0D12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+<a class="ghost" href="#join" style="display: inline-flex; align-items: center; height: 54px; padding: 0 26px; border-radius: 999px; border: 1px solid #3A4352; color: #ECE8DE; font-weight: 500; font-size: 15px">Prospective students</a>
+</div>
+<div class="in d5" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #C9CFD9">
+<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">Single-neuron</span>
+<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">Local field potential</span>
+<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">ECoG</span>
+<span style="padding: 8px 14px; border: 1px solid #2A3240; border-radius: 999px">MEG</span>
+</div>
+</div>
+<div style="position: relative; z-index: 3">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 40px 10px; box-sizing: border-box; display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
+<span>CH 01 · EXTRACELLULAR SINGLE-UNIT · SIMULATED</span>
+<span style="display: flex; gap: 20px"><span style="color: #E9A23B">- - THRESHOLD</span><span>5 S WINDOW</span></span>
+</div>
+<canvas data-ref="setScope" aria-hidden="true" style="display: block; width: 100%; height: 96px"></canvas>
+</div>
+<div style="position: relative; z-index: 3; margin-top: 22px; border-top: 1px solid #1E2530">
+<div style="max-width: 1240px; margin: 0 auto; padding: 26px 40px; box-sizing: border-box; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 32px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #8993A3">
+<span>KREMBIL BRAIN INSTITUTE</span>
+<span>UNIVERSITY HEALTH NETWORK</span>
+<span>UNIVERSITY OF TORONTO</span>
+<span>KITE RESEARCH INSTITUTE</span>
+<span>CRANIA</span>
+</div>
+</div>
+<svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.08; mix-blend-mode: overlay; z-index: 4"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence></filter><rect width="100%" height="100%" filter="url(#grain)"></rect></svg>
+</section>
+
+<section id="about" style="position: relative; background: #F3F0E8; padding: 150px 40px 140px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 80px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>01 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
+<span>ABOUT THE LAB</span>
+</div>
+<div class="rv" style="display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start">
+<h2 style="margin: 0; flex: 1 1 540px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04; letter-spacing: -0.01em">Toronto Western Hospital is a pioneering centre for deep brain stimulation. <em style="font-style: italic; color: #5A6170">The operating room is where our research begins.</em></h2>
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 22px; font-size: 17px; line-height: 1.7; color: #3F4552">
+<p style="margin: 0">Deep brain stimulation (DBS) is a standard of care for people with Parkinson&rsquo;s disease, essential tremor and dystonia, and is drawing attention for many other refractory neurological disorders.</p>
+<p style="margin: 0">Our team records the activity of individual neurons deep within the brain during awake neurosurgery. These recordings are part of routine clinical care, generating a &ldquo;map&rdquo; of the brain that ensures each intervention reaches the correct location.</p>
+</div>
+</div>
+<div class="rv" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; border-top: 1px solid #D8D2C4">
+<div style="position: relative; padding-top: 34px; display: flex; flex-direction: column; gap: 14px">
+<span style="position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: #E9A23B"></span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 01</span>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.1">Awake neurosurgery</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Patients undergoing deep brain stimulation surgery remain awake during the procedure.</p>
+</div>
+<div style="position: relative; padding-top: 34px; display: flex; flex-direction: column; gap: 14px">
+<span style="position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: #11151C"></span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 02</span>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.1">Single-neuron recordings</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Microelectrodes record individual neurons from deep within the brain as part of standard clinical care.</p>
+</div>
+<div style="position: relative; padding-top: 34px; display: flex; flex-direction: column; gap: 14px">
+<span style="position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: #11151C"></span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">STEP 03</span>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.1">A map of the brain</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">The recordings confirm each intervention reaches the right location, and open a unique window for research.</p>
+</div>
+</div>
+<div class="rv fx" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 16 / 7; width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF">
+<div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5C5446">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#5C5446" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#5C5446" stroke-width="1.4"></circle></svg>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · DBS IMPLANTATION SURGERY</span>
+<span style="font-size: 13px">Replace with photo from the current site</span>
+</div>
+<span style="position: absolute; top: 14px; left: 14px; width: 14px; height: 14px; border-top: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
+<span style="position: absolute; top: 14px; right: 14px; width: 14px; height: 14px; border-top: 1.5px solid #11151C; border-right: 1.5px solid #11151C"></span>
+<span style="position: absolute; bottom: 14px; left: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
+<span style="position: absolute; bottom: 14px; right: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-right: 1.5px solid #11151C"></span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">
+<span>FIG. 01 — DBS IMPLANTATION SURGERY</span>
+<span>TORONTO WESTERN HOSPITAL</span>
+</div>
+</div>
+</div>
+</section>
+
+<div class="mqw" aria-hidden="true" style="background: #0A0D12; color: #ECE8DE; overflow: hidden; border-bottom: 1px solid #1E2530; padding: 36px 0">
+<div class="mq" style="display: flex; width: max-content; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 46px; line-height: 1; white-space: nowrap">
+<div style="display: flex; align-items: center; gap: 44px; padding-right: 44px">
+<span>Deep brain stimulation</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Single-neuron recordings</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Neuromodulation</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Synaptic plasticity</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Electrocorticography</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Magnetoencephalography</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Machine learning</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Brain–computer interfaces</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+</div>
+<div style="display: flex; align-items: center; gap: 44px; padding-right: 44px">
+<span>Deep brain stimulation</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Single-neuron recordings</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Neuromodulation</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Synaptic plasticity</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Electrocorticography</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Magnetoencephalography</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Machine learning</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>Brain–computer interfaces</span><span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+</div>
+</div>
+</div>
+
+<section id="video" style="background: #0A0D12; color: #ECE8DE; padding: 130px 40px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>02 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #1E2530"></span>
+<span>INSIDE THE OPERATING ROOM</span>
+</div>
+<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
+<h2 style="margin: 0; max-width: 16ch; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">A unique window into the <em style="font-style: italic; color: #E9A23B">living</em> human brain.</h2>
+<p style="margin: 0; max-width: 42ch; font-size: 17px; line-height: 1.7; color: #B8BFCB; font-weight: 300">Recordings from awake, behaving patients let us study human physiology, brain stimulation mechanisms and synaptic plasticity in vivo.</p>
+</div>
+<div class="rv fx" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 16 / 9; width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #232B37">
+<div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #121821"></div>
+<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; color: #9AA3B2">
+<div style="position: relative; width: 92px; height: 92px">
+<span class="ring" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; border: 1px solid #E9A23B"></span>
+<button type="button" aria-label="Play video" style="position: absolute; top: 0; left: 0; width: 92px; height: 92px; border-radius: 50%; border: 1px solid #3A4352; background: rgba(236,232,222,0.06); display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="#ECE8DE"></path></svg>
+</button>
+</div>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">VIDEO · FROM THE CURRENT SITE</span>
+<span style="font-size: 13px">Replace with the lab&rsquo;s video file</span>
+</div>
+<div style="position: absolute; top: 20px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
+<span style="display: flex; align-items: center; gap: 8px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #E5484D"></span>CAM 01</span>
+<span>00:00:00:00</span>
+</div>
+<span style="position: absolute; top: 52px; left: 24px; width: 14px; height: 14px; border-top: 1.5px solid #3A4352; border-left: 1.5px solid #3A4352"></span>
+<span style="position: absolute; top: 52px; right: 24px; width: 14px; height: 14px; border-top: 1.5px solid #3A4352; border-right: 1.5px solid #3A4352"></span>
+<span style="position: absolute; bottom: 24px; left: 24px; width: 14px; height: 14px; border-bottom: 1.5px solid #3A4352; border-left: 1.5px solid #3A4352"></span>
+<span style="position: absolute; bottom: 24px; right: 24px; width: 14px; height: 14px; border-bottom: 1.5px solid #3A4352; border-right: 1.5px solid #3A4352"></span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">
+<span>FIG. 02 — INSIDE THE OPERATING ROOM</span>
+<span>CRANIA NEUROMODULATION SUITE</span>
+</div>
+</div>
+</div>
+</section>
+
+<section id="research" style="background: #F3F0E8; padding: 150px 40px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>03 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
+<span>RESEARCH</span>
+</div>
+<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
+<h2 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">From bench <em style="font-style: italic; color: #5A6170">to</em> bedside.</h2>
+<p style="margin: 0; max-width: 48ch; font-size: 17px; line-height: 1.7; color: #3F4552">Our projects span the complete translational continuum. We apply biomedical signal processing, machine learning and computational modelling to understand how the brain behaves and how it responds to stimulation.</p>
+</div>
+<div class="rv" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D8D2C4; border: 1px solid #D8D2C4; border-radius: 6px; overflow: hidden">
+<div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
+<span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12h4l2-6 3 12 2.5-8 1.5 2h7" stroke="#11151C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.01</span></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Intraoperative neurophysiology</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Single-neuron, local field potential and electrocorticography recordings from patients during awake DBS surgery.</p>
+<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">SUA · LFP · ECOG</span>
+</div>
+<div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
+<span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v13" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M10.5 15.5h3M10.5 18h3M10.5 20.5h3" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><circle cx="12" cy="18" r="5.5" stroke="#11151C" stroke-width="1" stroke-dasharray="2 2"></circle></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.02</span></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Mechanisms of brain stimulation</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">How deep brain stimulation acts on neural circuits, and how those effects can be refined into better therapies.</p>
+<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">DBS · CIRCUITS</span>
+</div>
+<div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
+<span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="7" r="3" stroke="#11151C" stroke-width="1.4"></circle><circle cx="18" cy="17" r="3" stroke="#11151C" stroke-width="1.4"></circle><path d="M8.5 9l3 3M15.5 14.5l-2-2" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M11 13.5l2-2" stroke="#11151C" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1 2"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.03</span></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Synaptic plasticity</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Understanding and harnessing plasticity in basal ganglia circuits for sustained improvement in Parkinson&rsquo;s disease.</p>
+<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">PLASTICITY · PARKINSON&rsquo;S</span>
+</div>
+<div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
+<span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12c2-5 4-5 6 0s4 5 6 0 4-5 6 0" stroke="#11151C" stroke-width="1.4" stroke-linecap="round"></path><path d="M2 18c2-2.5 4-2.5 6 0s4 2.5 6 0 4-2.5 6 0" stroke="#11151C" stroke-width="1" stroke-linecap="round"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.04</span></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Non-invasive brain recordings</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Electroencephalography and magnetoencephalography with patients outside the operating room environment.</p>
+<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">EEG · MEG</span>
+</div>
+<div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
+<span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="5" cy="6" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="5" cy="18" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="12" cy="12" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="19" cy="7" r="2" stroke="#11151C" stroke-width="1.4"></circle><circle cx="19" cy="17" r="2" stroke="#11151C" stroke-width="1.4"></circle><path d="M7 7l3 4M7 17l3-4M14 11l3-3M14 13l3 3" stroke="#11151C" stroke-width="1.2" stroke-linecap="round"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.05</span></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Computational methods</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Signal processing, machine learning and computational modelling to decode neural activity and its responses to stimuli.</p>
+<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">SIGNAL PROCESSING · ML</span>
+</div>
+<div class="rc" style="position: relative; background: #F9F7F2; padding: 40px 36px 36px; display: flex; flex-direction: column; gap: 18px; min-height: 290px; box-sizing: border-box">
+<span class="bar" style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #E9A23B"></span>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 2.5h6M10 2.5v6.5l-5 8.5a2.8 2.8 0 0 0 2.4 4.2h9.2a2.8 2.8 0 0 0 2.4-4.2l-5-8.5V2.5" stroke="#11151C" stroke-width="1.4" stroke-linejoin="round"></path><path d="M7.5 15h9" stroke="#11151C" stroke-width="1.2"></path></svg></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">R.06</span></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 500; letter-spacing: -0.01em">Preclinical models</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A505C">Optical, electrophysiological and behavioural techniques, including optogenetics and high-density electrophysiology.</p>
+<span style="margin-top: auto; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">OPTOGENETICS · PHOTOMETRY</span>
+</div>
+</div>
+<div class="rv" style="background: #0A0D12; color: #ECE8DE; border-radius: 6px; padding: 48px 48px 44px; display: flex; flex-direction: column; gap: 30px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">RECORDING ACROSS SCALES</span>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">From a single cell to the <em style="font-style: italic; color: #E9A23B">whole brain</em>.</h3>
+</div>
+<span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #7F8898">APPROXIMATE SPATIAL SCALE</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: center">
+<span style="font-size: 15px">Single neuron</span>
+<div style="position: relative; height: 10px; border-radius: 999px; background: #141A23"><span style="position: absolute; top: 0; bottom: 0; left: 0%; width: 25%; border-radius: 999px; background: #E9A23B"></span></div>
+</div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: center">
+<span style="font-size: 15px">Local field potential</span>
+<div style="position: relative; height: 10px; border-radius: 999px; background: #141A23"><span style="position: absolute; top: 0; bottom: 0; left: 18%; width: 32%; border-radius: 999px; background: #C9CFD9"></span></div>
+</div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: center">
+<span style="font-size: 15px">Electrocorticography</span>
+<div style="position: relative; height: 10px; border-radius: 999px; background: #141A23"><span style="position: absolute; top: 0; bottom: 0; left: 42%; width: 33%; border-radius: 999px; background: #C9CFD9"></span></div>
+</div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: center">
+<span style="font-size: 15px">EEG · MEG</span>
+<div style="position: relative; height: 10px; border-radius: 999px; background: #141A23"><span style="position: absolute; top: 0; bottom: 0; left: 68%; width: 32%; border-radius: 999px; background: #C9CFD9"></span></div>
+</div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; padding-top: 8px">
+<span></span>
+<div style="display: flex; justify-content: space-between; border-top: 1px solid #2A3240; padding-top: 10px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: #7F8898">
+<span>10 µm</span><span>100 µm</span><span>1 mm</span><span>1 cm</span><span>10 cm</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="facilities" style="background: #0A0D12; color: #ECE8DE; padding: 150px 40px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>04 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #1E2530"></span>
+<span>FACILITIES</span>
+</div>
+<h2 class="rv" style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">Where the work <em style="font-style: italic; color: #E9A23B">happens</em>.</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
+<div class="rv fx" style="display: flex; flex-direction: column; gap: 22px">
+<div style="position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; border: 1px solid #232B37">
+<div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #141A23; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #9AA3B2; text-align: center; padding: 20px; box-sizing: border-box">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#9AA3B2" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#9AA3B2" stroke-width="1.4"></circle></svg>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · KREMBIL BRAIN INSTITUTE</span>
+<span style="font-size: 13px">Pictured: Dr. Taufik Valiante</span>
+</div>
+<span style="position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; border: 1px solid #2A3240; background: rgba(10,13,18,0.72); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #ECE8DE">FIG. 04A</span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 16px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #9AA3B2"><span>WET &amp; DRY LAB</span><span>TORONTO WESTERN</span></div>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">Krembil Brain Institute</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.7; color: #B8BFCB; font-weight: 300">The TNBS lab operates in state-of-the-art wet and dry lab spaces at the Krembil Brain Institute, Toronto Western Hospital.</p>
+</div>
+<div class="rv fx" style="display: flex; flex-direction: column; gap: 22px">
+<div style="position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; border: 1px solid #232B37">
+<div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #141A23; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #9AA3B2; text-align: center; padding: 20px; box-sizing: border-box">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#9AA3B2" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#9AA3B2" stroke-width="1.4"></circle></svg>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · CRANIA NEUROMODULATION SUITE</span>
+<span style="font-size: 13px">Replace with photo from the current site</span>
+</div>
+<span style="position: absolute; top: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; border: 1px solid #2A3240; background: rgba(10,13,18,0.72); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #ECE8DE">FIG. 04B</span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 16px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #9AA3B2"><span>OPERATING THEATRE</span><span>CRANIA</span></div>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 38px; line-height: 1.1">CRANIA Neuromodulation Suite</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.7; color: #B8BFCB; font-weight: 300">A permanent research fixture within a state-of-the-art operating theatre, where intracranial data are collected during DBS implantation surgeries.</p>
+</div>
+</div>
+<div class="rv" style="display: flex; flex-direction: column; gap: 24px; padding-top: 36px; border-top: 1px solid #1E2530">
+<p style="margin: 0; font-size: 15px; line-height: 1.7; color: #9AA3B2; max-width: 82ch">Prof. Milosevic holds appointments at the Krembil Brain Institute, the KITE Research Institute, and the University of Toronto&rsquo;s Institutes of Biomedical Engineering and Medical Sciences. We collaborate with a multidisciplinary team:</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: #C9CFD9">
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Neurosurgeons</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Neurologists</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Engineers</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Computational neuroscientists</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Basic physiologists</span>
+</div>
+</div>
+</div>
+</section>
+
+<section id="team" style="background: #F3F0E8; padding: 150px 40px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>05 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
+<span>PEOPLE</span>
+</div>
+<h2 class="rv" style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">The <em style="font-style: italic; color: #5A6170">team</em>.</h2>
+<div class="rv tm" style="display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div style="position: relative; flex: 0 1 400px; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF">
+<div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5C5446">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">PORTRAIT · DR. LUKA MILOSEVIC</span>
+</div>
+<span style="position: absolute; bottom: 16px; left: 16px; padding: 6px 12px; border-radius: 999px; background: #11151C; color: #F3F0E8; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em">PI</span>
+</div>
+<div style="flex: 1 1 440px; display: flex; flex-direction: column; gap: 20px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #5A6170">PRINCIPAL INVESTIGATOR</span>
+<h3 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 52px; line-height: 1.02">Luka Milosevic, PhD</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3F4552">Luka received his PhD in Biomedical Engineering from the University of Toronto, followed by a Postdoctoral Fellowship at the University of Tübingen&rsquo;s Institute for Neuromodulation and Neurotechnology. His research sits at the intersection of biomedical engineering and neuroscience, focused on novel data-driven methods of neuromodulation and brain stimulation.</p>
+<p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3F4552">He and his team also play a clinical role, monitoring patients&rsquo; brain activity to guide the placement of DBS devices at Toronto Western Hospital.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 4px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170; margin-right: 6px">OUTSIDE THE LAB</span>
+<span style="padding: 7px 14px; border: 1px solid #CFC8B8; border-radius: 999px; font-size: 13px">Hiking</span>
+<span style="padding: 7px 14px; border: 1px solid #CFC8B8; border-radius: 999px; font-size: 13px">Biking</span>
+<span style="padding: 7px 14px; border: 1px solid #CFC8B8; border-radius: 999px; font-size: 13px">Travel</span>
+</div>
+<a class="lk" href="mailto:luka.milosevic@mail.utoronto.ca" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 15px; font-weight: 500; color: #11151C">luka.milosevic@mail.utoronto.ca
+<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+</div>
+<div class="rv fx" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 16 / 6; width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF">
+<div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #5C5446">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="#5C5446" stroke-width="1.4" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.5" stroke="#5C5446" stroke-width="1.4"></circle></svg>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">IMAGE · TNBS TEAM 2026</span>
+<span style="font-size: 13px">Replace with group photo from the current site</span>
+</div>
+<span style="position: absolute; top: 14px; left: 14px; width: 14px; height: 14px; border-top: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
+<span style="position: absolute; top: 14px; right: 14px; width: 14px; height: 14px; border-top: 1.5px solid #11151C; border-right: 1.5px solid #11151C"></span>
+<span style="position: absolute; bottom: 14px; left: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-left: 1.5px solid #11151C"></span>
+<span style="position: absolute; bottom: 14px; right: 14px; width: 14px; height: 14px; border-bottom: 1.5px solid #11151C; border-right: 1.5px solid #11151C"></span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170">
+<span>FIG. 05 — THE TNBS TEAM, 2026</span>
+<span>KREMBIL BRAIN INSTITUTE</span>
+</div>
+</div>
+<div class="rv" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px">
+<div class="tm" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">Md Shan</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">01</span></div>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">Combines optical and electrophysiological tools to uncover pathological and therapeutic neural circuits across disease models.</p>
+</div>
+<div class="tm" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">Aidan [Surname]</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">02</span></div>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">Develops new DBS targets for spinocerebellar ataxia using animal models, looking for stimulation-based motor improvements.</p>
+</div>
+<div class="tm" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">[Team member]</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">03</span></div>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">[Short research focus from the current team page]</p>
+</div>
+<div class="tm" style="display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; border: 1px solid #D5CEBF"><div class="ph" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #E4DED1; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="4" stroke="#5C5446" stroke-width="1.4"></circle><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6" stroke="#5C5446" stroke-width="1.4" stroke-linecap="round"></path></svg></div></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px"><h4 style="margin: 0; font-size: 18px; font-weight: 500">[Team member]</h4><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">04</span></div>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">[ROLE]</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A505C">[Short research focus from the current team page]</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="publications" style="background: #FBFAF6; padding: 150px 40px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>06 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #DAD5C9"></span>
+<span>SELECTED PUBLICATIONS</span>
+</div>
+<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px">
+<h2 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">Recent <em style="font-style: italic; color: #5A6170">work</em>.</h2>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 14px">
+<div role="group" aria-label="Filter publications by year" style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" class="chip on" aria-pressed="true" data-chip="all" data-on-click="pubf.all" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">ALL</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2025" data-on-click="pubf.y2025" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2025</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2024" data-on-click="pubf.y2024" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2024</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2023" data-on-click="pubf.y2023" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2023</button>
+<button type="button" class="chip" aria-pressed="false" data-chip="y2022" data-on-click="pubf.y2022" style="height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #CFC8B8; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; cursor: pointer">2022</button>
+</div>
+<div style="display: flex; align-items: center; gap: 18px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #5A6170">
+<span><span data-bind="pubCount">6 PAPERS</span></span>
+<a class="lk" href="https://pubmed.ncbi.nlm.nih.gov/?term=Milosevic+L%5BAuthor%5D" style="display: inline-flex; align-items: center; gap: 6px; color: #11151C">ALL ON PUBMED
+<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<div class="rv" style="display: flex; flex-direction: column; border-bottom: 1px solid #DAD5C9">
+<div class="yr" data-show="y2025">
+<a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Modulating+inhibitory+synaptic+plasticity+to+restore+basal+ganglia+dynamics" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">01</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2025</span>
+<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Brain</span>
+<span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Modulating inhibitory synaptic plasticity to restore basal ganglia dynamics in Parkinson&rsquo;s disease</span><span style="font-size: 14px; color: #5A6170">Spencer KA, Boogers A, Sumarac S, et al., Milosevic L</span></span>
+<svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+<a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=effects+of+intracranial+stimulation+on+local+neurovascular+responses+in+humans" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">02</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2025</span>
+<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Brain Stimulation</span>
+<span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">The effects of intracranial stimulation on local neurovascular responses in humans</span><span style="font-size: 14px; color: #5A6170">Vetkas A, Sumarac S, Chau S, et al., Milosevic L</span></span>
+<svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+<a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Harnessing+synaptic+plasticity+for+sustained+motor+improvement+in+Parkinson%27s+disease" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">03</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2025</span>
+<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Neural Regeneration Research</span>
+<span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Harnessing synaptic plasticity for sustained motor improvement in Parkinson&rsquo;s disease</span><span style="font-size: 14px; color: #5A6170">Sumarac S, Pouratian N, Gittis AH, Milosevic L</span></span>
+<svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+<div class="yr" data-show="y2024">
+<a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Neural+signatures+of+indirect+pathway+activity+in+Parkinson%27s+disease" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">04</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2024</span>
+<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Nature Communications</span>
+<span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Neural signatures of indirect pathway activity in Parkinson&rsquo;s disease</span><span style="font-size: 14px; color: #5A6170">Steiner LA, Crompton D, Sumarac S, et al., Milosevic L</span></span>
+<svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+<div class="yr" data-show="y2023">
+<a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=convergent+subcortical+signature+subthalamic+pallidal+deep+brain+stimulation" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">05</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2023</span>
+<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">Brain Communications</span>
+<span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">A convergent subcortical signature to explain the common efficacy of subthalamic and pallidal deep brain stimulation</span><span style="font-size: 14px; color: #5A6170">Steiner LA, Milosevic L</span></span>
+<svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+<div class="yr" data-show="y2022">
+<a class="pr" href="https://pubmed.ncbi.nlm.nih.gov/?term=Single-neuron+bursts+encode+pathological+oscillations" style="display: grid; grid-template-columns: 44px 72px 230px minmax(0, 1fr) 24px; gap: 28px; padding: 30px 0; border-top: 1px solid #DAD5C9; align-items: baseline">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #5A6170">06</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #11151C">2022</span>
+<span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 21px">PNAS</span>
+<span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 19px; font-weight: 500; line-height: 1.4">Single-neuron bursts encode pathological oscillations in Parkinson&rsquo;s disease and essential tremor</span><span style="font-size: 14px; color: #5A6170">Scherer M, Steiner LA, Kalia SK, et al., Milosevic L</span></span>
+<svg class="pa" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke="#11151C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="workshops" style="background: #F3F0E8; padding: 140px 40px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #5A6170">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>07 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #D8D2C4"></span>
+<span>TRAINING</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 64px; align-items: flex-start">
+<div class="rv" style="flex: 1 1 440px; display: flex; flex-direction: column; gap: 22px">
+<h2 style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 4.4vw, 64px); line-height: 1.04">Electrophysiology <em style="font-style: italic; color: #5A6170">Trainee</em> Workshop.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3F4552">A free online workshop covering topics across neuroscience. Each topic opens with fundamentals, then builds toward advanced methods.</p>
+</div>
+<div class="rv" style="flex: 1 1 440px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #D8D2C4; border: 1px solid #D8D2C4; border-radius: 6px; overflow: hidden">
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">FORMAT</span><span style="font-size: 20px; font-weight: 500">Online</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">COST</span><span style="font-size: 20px; font-weight: 500">Free of charge</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">LENGTH</span><span style="font-size: 20px; font-weight: 500">8 sessions · 1 hour each</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">LEVEL</span><span style="font-size: 20px; font-weight: 500">Graduate to PhD</span></div>
+<div style="background: #F9F7F2; padding: 28px; display: flex; flex-direction: column; gap: 8px; grid-column: span 2"><span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #5A6170">HOSTED BY</span><span style="font-size: 20px; font-weight: 500">Maximilian Scherer</span></div>
+</div>
+</div>
+<div class="rv" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #E9A23B"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.01</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #BDB5A5"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.02</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #A69E8E"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.03</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #8E8779"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.04</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #737066"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.05</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #585850"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.06</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #3A3D3E"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.07</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="height: 4px; border-radius: 999px; background: #11151C"></span><span style="font-family: 'Geist Mono', monospace; font-size: 11px; color: #5A6170">S.08</span></div>
+</div>
+<div style="display: flex; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5A6170"><span>FUNDAMENTALS</span><span>ADVANCED METHODS</span></div>
+</div>
+</div>
+</section>
+
+<section id="join" style="position: relative; overflow: hidden; background: #0A0D12; color: #ECE8DE; padding: 160px 40px">
+<svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none"><defs><pattern id="jgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#121821" stroke-width="1"></path></pattern></defs><rect width="100%" height="100%" fill="url(#jgrid)"></rect></svg>
+<div style="position: relative; max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 38px">
+<div class="rv" style="display: flex; align-items: center; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #9AA3B2">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #E9A23B"></span>
+<span>08 / 08</span>
+<span style="flex-grow: 1; height: 1px; background: #1E2530"></span>
+<span>JOIN THE LAB</span>
+</div>
+<h2 class="rv" style="margin: 0; max-width: 17ch; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(48px, 6vw, 92px); line-height: 1; letter-spacing: -0.01em">Build the next generation of <em style="font-style: italic; color: #E9A23B">brain stimulation</em>.</h2>
+<p class="rv" style="margin: 0; max-width: 60ch; font-size: 18px; line-height: 1.7; color: #B8BFCB; font-weight: 300">Prospective students and researchers with experience or interest in any of these areas are welcome to contact Dr. Milosevic at any time.</p>
+<div class="rv" style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: #C9CFD9">
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Neuromodulation</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Signal processing</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Machine learning</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Computational neuroscience</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Instrumentation</span>
+<span class="tag" style="padding: 10px 16px; border: 1px solid #2A3240; border-radius: 999px">Brain–machine interfaces</span>
+</div>
+<div class="rv" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 10px">
+<a class="btn" href="mailto:luka.milosevic@mail.utoronto.ca" style="display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 30px; border-radius: 999px; background: #E9A23B; color: #0A0D12; font-weight: 600; font-size: 16px">Email Dr. Milosevic
+<svg class="ar" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="#0A0D12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+<button type="button" class="ghost" data-on-click="copyEmail" style="display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 24px; border-radius: 999px; border: 1px solid #3A4352; color: #ECE8DE; font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" stroke="#ECE8DE" stroke-width="1.3"></rect><path d="M3 10.5V3.5A1 1 0 0 1 4 2.5h6.5" stroke="#ECE8DE" stroke-width="1.3" stroke-linecap="round"></path></svg>
+<span data-bind="copyLabel">Copy email</span></button>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #9AA3B2; margin-left: 8px">luka.milosevic@mail.utoronto.ca</span>
+</div>
+</div>
+</section>
+
+<footer style="background: #06080C; color: #9AA3B2; padding: 80px 40px 40px; overflow: hidden">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 320px">
+<span style="color: #ECE8DE; font-weight: 600; letter-spacing: 0.18em; font-size: 15px">TNBS</span>
+<span style="font-size: 14px; line-height: 1.6">Translational Neurophysiology &amp; Brain Stimulation Lab, Krembil Brain Institute.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.6">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">ADDRESS</span>
+<span>Toronto Western Hospital<br>399 Bathurst Street<br>Toronto, ON M5T 2S8</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.6">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">LOCAL TIME</span>
+<span style="color: #ECE8DE; font-family: 'Geist Mono', monospace; font-size: 22px"><span data-bind="clock">--:--</span></span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px">43.653° N · 79.405° W</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #7F8898">CONNECT</span>
+<a class="nl" href="https://twitter.com/lukamneuro">X / Twitter</a>
+<a class="nl" href="https://www.researchgate.net/profile/Luka-Milosevic">ResearchGate</a>
+<a class="nl" href="https://pubmed.ncbi.nlm.nih.gov/?term=Milosevic+L%5BAuthor%5D">PubMed</a>
+<a class="nl" href="mailto:luka.milosevic@mail.utoronto.ca">Email</a>
+</div>
+<a class="ghost" href="#top" aria-label="Back to top" style="align-self: flex-start; width: 56px; height: 56px; border-radius: 50%; border: 1px solid #2A3240; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4" stroke="#ECE8DE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+<div aria-hidden="true" style="font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(150px, 25vw, 380px); line-height: 0.78; letter-spacing: -0.02em; color: transparent; -webkit-text-stroke: 1px #2A3240; text-align: center; user-select: none">TNBS</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 28px; border-top: 1px solid #1A202A; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #7F8898">
+<span>© 2026 TNBS Lab · University Health Network</span>
+<span>University of Toronto · Krembil Brain Institute</span>
+</div>
+</div>
+</footer>
+
+</div>
+<script>
+class DCLogic {
+  constructor() { this.props = {}; this.state = {}; }
+  setState(patch) { Object.assign(this.state, patch); render(this); }
+}
+class Component extends DCLogic {
+  _bind() {
+    this._b = true;
+    this.mx = 0.5; this.my = 0.5; this.drag = null; this.dYaw = 0; this.dPitch = 0;
+    this._setCanvas = (el) => { this.cv = el; };
+    this._setScope = (el) => { this.sc = el; };
+    this._setHero = (el) => { this.heroEl = el; };
+    this._setRoot = (el) => { this.rootEl = el; };
+    this._setProg = (el) => { this.progEl = el; };
+    this._onMove = (e) => {
+      const el = this.heroEl; if (!el) return;
+      const r = el.getBoundingClientRect();
+      this.mx = (e.clientX - r.left) / Math.max(1, r.width);
+      this.my = (e.clientY - r.top) / Math.max(1, r.height);
+      if (this.drag) {
+        this.dYaw += (e.clientX - this.drag.x) * 0.006;
+        this.dPitch = Math.max(-0.8, Math.min(0.8, this.dPitch + (e.clientY - this.drag.y) * 0.004));
+        this.drag.x = e.clientX; this.drag.y = e.clientY;
+      }
+    };
+    this._onLeave = () => { this.mx = 0.5; this.my = 0.5; this.drag = null; };
+    this._onDown = (e) => {
+      if (!this.cv || e.target !== this.cv) return;
+      this.drag = { x: e.clientX, y: e.clientY };
+      try { this.cv.setPointerCapture(e.pointerId); } catch (err) {}
+    };
+    this._onUp = () => { this.drag = null; };
+    const pf = (v) => () => this.setState({ pub: v });
+    this._pf = { all: pf('all'), y2025: pf('2025'), y2024: pf('2024'), y2023: pf('2023'), y2022: pf('2022') };
+    this._copy = () => {
+      const done = () => {
+        this.setState({ copied: true });
+        clearTimeout(this._ct);
+        this._ct = setTimeout(() => this.setState({ copied: false }), 1800);
+      };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('luka.milosevic@mail.utoronto.ca').then(done, () => {});
+        }
+      } catch (err) {}
+    };
+  }
+
+  renderVals() {
+    if (!this._b) this._bind();
+    const s = this.state || {};
+    const act = s.active || 'top';
+    const on = (id) => (act === id ? 'on' : '');
+    const pub = s.pub || 'all';
+    const show = (y) => pub === 'all' || pub === y;
+    const chip = (y) => (pub === y ? 'chip on' : 'chip');
+    const pr = (y) => (pub === y ? 'true' : 'false');
+    const counts = { all: 6, '2025': 3, '2024': 1, '2023': 1, '2022': 1 };
+    const n = counts[pub] || 6;
+    return {
+      accent: this.props.accent ?? '#E9A23B',
+      setCanvas: this._setCanvas, setScope: this._setScope, setHero: this._setHero, setRoot: this._setRoot, setProg: this._setProg,
+      onHeroMove: this._onMove, onHeroLeave: this._onLeave, onDown: this._onDown, onUp: this._onUp,
+      nav: { about: on('about'), research: on('research'), facilities: on('facilities'), team: on('team'), publications: on('publications'), workshops: on('workshops') },
+      pubf: this._pf,
+      chips: { all: chip('all'), y2025: chip('2025'), y2024: chip('2024'), y2023: chip('2023'), y2022: chip('2022') },
+      pressed: { all: pr('all'), y2025: pr('2025'), y2024: pr('2024'), y2023: pr('2023'), y2022: pr('2022') },
+      show: { y2025: show('2025'), y2024: show('2024'), y2023: show('2023'), y2022: show('2022') },
+      pubCount: n + (n === 1 ? ' PAPER' : ' PAPERS'),
+      clock: s.clock || '--:--',
+      rate: s.rate || '0.0',
+      spikes: String(s.spikes || 0).padStart(3, '0'),
+      az: s.az || '000',
+      copyEmail: this._copy,
+      copyLabel: s.copied ? 'Copied' : 'Copy email'
+    };
+  }
+
+  componentDidMount() {
+    this.t = 0; this.yaw = 0.35; this.cy = 0; this.cp = 0; this.hudT = 0;
+    this.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.scene = this.build();
+    this.spk = []; this.next = 0.8; this.count = 0; this.times = []; this.burstLeft = 0;
+    this.buf = new Float32Array(1500); this.bi = 0; this.sacc = 0; this.pend = []; this.st = 0;
+    this.last = performance.now();
+    const loop = (now) => { this.raf = requestAnimationFrame(loop); this.frame(now); };
+    this.raf = requestAnimationFrame(loop);
+    const tick = () => {
+      try {
+        this.setState({ clock: new Date().toLocaleTimeString('en-CA', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hour12: false }) });
+      } catch (err) {}
+    };
+    tick();
+    this.clk = setInterval(tick, 20000);
+    this.setupIO();
+  }
+
+  setupIO() {
+    if (this.io || !this.rootEl || !window.IntersectionObserver) return;
+    this.io = new IntersectionObserver((es) => {
+      es.forEach((en) => {
+        if (en.isIntersecting && (this.state || {}).active !== en.target.id) this.setState({ active: en.target.id });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    this.rootEl.querySelectorAll('section[id]').forEach((el) => this.io.observe(el));
+  }
+
+  componentWillUnmount() {
+    if (this.raf) cancelAnimationFrame(this.raf);
+    clearInterval(this.clk);
+    clearTimeout(this._ct);
+    if (this.io) this.io.disconnect();
+  }
+
+  accRGB() {
+    const h = String(this.props.accent ?? '#E9A23B').replace('#', '');
+    const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+    return [isNaN(r) ? 233 : r, isNaN(g) ? 162 : g, isNaN(b) ? 59 : b];
+  }
+
+  build() {
+    let seed = 7311;
+    const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    const norm = (v) => { const l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; };
+    const jit = (d, a) => norm([d[0] + (rnd() - 0.5) * a, d[1] + (rnd() - 0.5) * a, d[2] + (rnd() - 0.5) * a]);
+    const turn = (d, ang) => {
+      let r = norm([rnd() - 0.5, rnd() - 0.5, rnd() - 0.5]);
+      const k = r[0] * d[0] + r[1] * d[1] + r[2] * d[2];
+      r = norm([r[0] - k * d[0], r[1] - k * d[1], r[2] - k * d[2]]);
+      const c = Math.cos(ang), s = Math.sin(ang);
+      return norm([d[0] * c + r[0] * s, d[1] * c + r[1] * s, d[2] * c + r[2] * s]);
+    };
+    const grow = (T, p, dir, len, w, depth, dist, kind) => {
+      const steps = 7, st = len / steps;
+      let x = p[0], y = p[1], z = p[2], d = dir;
+      for (let i = 0; i < steps; i++) {
+        d = jit(d, 0.32);
+        const nx = x + d[0] * st, ny = y + d[1] * st, nz = z + d[2] * st;
+        T.segs.push(x, y, z, nx, ny, nz, w * (1 - (i / steps) * 0.3), dist + st * (i + 0.5), kind);
+        if (T.spines && depth >= 1) {
+          const k = 1 + Math.floor(rnd() * 3);
+          for (let j = 0; j < k; j++) {
+            const t = rnd(), o = 0.012 + rnd() * 0.022, q = norm([rnd() - 0.5, rnd() - 0.5, rnd() - 0.5]);
+            T.spines.push(x + (nx - x) * t + q[0] * o, y + (ny - y) * t + q[1] * o, z + (nz - z) * t + q[2] * o);
+          }
+        }
+        x = nx; y = ny; z = nz;
+      }
+      dist += len;
+      if (depth < T.maxDepth) {
+        const n = rnd() < 0.2 ? 3 : 2;
+        for (let b = 0; b < n; b++) grow(T, [x, y, z], turn(d, 0.35 + rnd() * 0.45), len * (0.62 + rnd() * 0.16), w * 0.68, depth + 1, dist, kind);
+      } else {
+        if (T.tips) T.tips.push(x, y, z, dist);
+      }
+    };
+    const soma = [0, 0.45, 0];
+    const N = { segs: [], spines: [], tips: [], maxDepth: 4 };
+    const M = 11;
+    for (let i = 0; i < M; i++) {
+      const yv = 1 - ((i + 0.5) / M) * 2, r = Math.sqrt(1 - yv * yv), th = i * 2.39996;
+      if (yv < -0.45) continue;
+      const d = [Math.cos(th) * r, yv, Math.sin(th) * r];
+      grow(N, [soma[0] + d[0] * 0.12, soma[1] + d[1] * 0.1, soma[2] + d[2] * 0.12], d, 0.4 + rnd() * 0.16, 0.02, 0, 0.12, 0);
+    }
+    const dendTip = N.tips.slice(0, 3);
+    let ax = [soma[0], soma[1] - 0.12, soma[2]], ad = norm([0.06, -1, 0.1]), adist = 0.12;
+    const run = (len, kind, w) => {
+      const steps = 4, st = len / steps;
+      for (let i = 0; i < steps; i++) {
+        ad = jit(ad, 0.1);
+        ad = norm([ad[0], ad[1] - 0.15, ad[2]]);
+        const nx = ax[0] + ad[0] * st, ny = ax[1] + ad[1] * st, nz = ax[2] + ad[2] * st;
+        N.segs.push(ax[0], ax[1], ax[2], nx, ny, nz, w, adist + st * (i + 0.5), kind);
+        ax = [nx, ny, nz];
+      }
+      adist += len;
+    };
+    const nodes = [];
+    run(0.14, 2, 0.012);
+    for (let k = 0; k < 7; k++) { nodes.push(ax[0], ax[1], ax[2], adist); run(0.235, 1, 0.026); }
+    nodes.push(ax[0], ax[1], ax[2], adist);
+    const Tm = { segs: N.segs, spines: null, tips: [], maxDepth: 2 };
+    for (let b = 0; b < 3; b++) grow(Tm, ax, turn(ad, 0.5 + rnd() * 0.4), 0.2, 0.008, 0, adist, 3);
+    const somaPts = [];
+    for (let i = 0; i < 280; i++) {
+      const u = rnd() * 2 - 1, th = rnd() * Math.PI * 2, q = Math.sqrt(1 - u * u);
+      somaPts.push(soma[0] + q * Math.cos(th) * 0.13, soma[1] + u * 0.11, soma[2] + q * Math.sin(th) * 0.13);
+    }
+    const ghost = (off, sc) => {
+      const G = { segs: [], spines: null, tips: null, maxDepth: 2 };
+      for (let i = 0; i < 6; i++) grow(G, [0, 0, 0], norm([rnd() - 0.5, rnd() - 0.3, rnd() - 0.5]), 0.45, 0.012, 0, 0, 0);
+      const out = [];
+      for (let i = 0; i < G.segs.length; i += 9) {
+        out.push(off[0] + G.segs[i] * sc, off[1] + G.segs[i + 1] * sc, off[2] + G.segs[i + 2] * sc, off[0] + G.segs[i + 3] * sc, off[1] + G.segs[i + 4] * sc, off[2] + G.segs[i + 5] * sc);
+      }
+      return out;
+    };
+    const ghosts = [].concat(ghost([-2.1, 0.7, -1.8], 0.9), ghost([2.3, -0.5, -2.4], 0.8), ghost([-1.5, -1.3, -2.8], 0.7));
+    const parts = [];
+    for (let i = 0; i < 300; i++) parts.push((rnd() - 0.5) * 6.5, (rnd() - 0.5) * 4.6, (rnd() - 0.5) * 6.5, rnd());
+    return {
+      segs: new Float32Array(N.segs), spines: new Float32Array(N.spines), terms: new Float32Array(Tm.tips),
+      nodes: new Float32Array(nodes), soma: soma, somaPts: new Float32Array(somaPts), dendTip: dendTip,
+      ghosts: new Float32Array(ghosts), parts: new Float32Array(parts),
+      E0: [1.95, 2.15, 0.95], E1: [0.22, 0.52, 0.16]
+    };
+  }
+
+  fire() {
+    this.spk.push(this.t); this.times.push(this.t); this.count++; this.pend.push(0);
+    if (this.burstLeft > 0) { this.burstLeft--; this.next = this.t + 0.09 + Math.random() * 0.05; }
+    else if (Math.random() < 0.22) { this.burstLeft = 2 + Math.floor(Math.random() * 2); this.next = this.t + 0.09 + Math.random() * 0.05; }
+    else { this.next = this.t + Math.min(2.2, Math.max(0.35, -Math.log(1 - Math.random()) * 0.85)); }
+  }
+
+  sim(dt) {
+    this.t += dt;
+    this.yaw += dt * 0.1;
+    if (this.t >= this.next) this.fire();
+    this.sacc += dt * 300;
+    while (this.sacc >= 1) {
+      this.sacc -= 1; this.st += 1 / 300;
+      let v = (Math.random() + Math.random() + Math.random() - 1.5) * 0.055 + Math.sin(this.st * 2 * Math.PI * 4.5) * 0.035;
+      for (let k = this.pend.length - 1; k >= 0; k--) {
+        const i = this.pend[k];
+        v += -Math.exp(-((i - 2) * (i - 2)) / 1.1) + 0.36 * Math.exp(-((i - 5.5) * (i - 5.5)) / 5);
+        this.pend[k] = i + 1;
+        if (i > 14) this.pend.splice(k, 1);
+      }
+      this.buf[this.bi] = v;
+      this.bi = (this.bi + 1) % this.buf.length;
+    }
+    while (this.spk.length && this.t - this.spk[0] > 2.6) this.spk.shift();
+  }
+
+  frame(now) {
+    const dt = Math.min(0.05, Math.max(0, (now - (this.last || now)) / 1000));
+    this.last = now;
+    if (!this.io) this.setupIO();
+    if (this.rootEl && this.progEl) {
+      const r = this.rootEl.getBoundingClientRect();
+      const span = Math.max(1, r.height - window.innerHeight);
+      const p = Math.max(0, Math.min(1, -r.top / span));
+      this.progEl.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    }
+    if (!this.scene) return;
+    const live = (this.props.motion ?? true) && !this.reduce;
+    if (live) this.sim(dt);
+    if (this.heroEl) {
+      const hr = this.heroEl.getBoundingClientRect();
+      if (hr.bottom < 0 || hr.top > window.innerHeight) return;
+    }
+    this.drawNeuron(dt, live);
+    this.drawScope();
+    this.hudT += dt;
+    if (this.hudT > 0.5) {
+      this.hudT = 0;
+      const cut = this.t - 5;
+      this.times = this.times.filter((x) => x > cut);
+      const deg = Math.round(((((this.yaw + this.cy + this.dYaw) * 180) / Math.PI) % 360 + 360) % 360);
+      this.setState({ rate: (this.times.length / 5).toFixed(1), spikes: this.count, az: String(deg).padStart(3, '0') });
+    }
+  }
+
+  drawNeuron(dt, live) {
+    const cv = this.cv; if (!cv) return;
+    const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = Math.round(w * dpr), H = Math.round(h * dpr);
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    const ctx = cv.getContext('2d'); if (!ctx) return;
+    const S = this.scene;
+    const ty = this.drag ? 0 : (this.mx - 0.5) * 0.7, tp = this.drag ? 0 : (this.my - 0.5) * 0.3;
+    this.cy += (ty - this.cy) * 0.05; this.cp += (tp - this.cp) * 0.05;
+    const yaw = this.yaw + this.cy + this.dYaw, pitch = -0.12 + this.cp + this.dPitch;
+    const cyw = Math.cos(yaw), syw = Math.sin(yaw), cpt = Math.cos(pitch), spt = Math.sin(pitch);
+    const f = Math.min(w, h * 1.05) * 0.84, D = 4.2, ox = w * 0.52, oy = h * 0.5;
+    const o = this._o || (this._o = new Float32Array(4));
+    const proj = (x, y, z) => {
+      const x1 = x * cyw + z * syw, z1 = -x * syw + z * cyw;
+      const y1 = y * cpt - z1 * spt, z2 = y * spt + z1 * cpt;
+      const s = f / (D - z2);
+      o[0] = ox + x1 * s; o[1] = oy - y1 * s; o[2] = z2; o[3] = s;
+    };
+    const rgb = this.accRGB();
+    const A = (a) => 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + Math.max(0, a).toFixed(3) + ')';
+    const IV = (a) => 'rgba(236,232,222,' + Math.max(0, a).toFixed(3) + ')';
+    const t = this.t, sp = this.spk;
+    const waveD = (d) => {
+      let g = 0;
+      for (let k = 0; k < sp.length; k++) {
+        const x = d - (t - sp[k]) * 2.1;
+        const v = Math.exp(-(x * x) / 0.012) * Math.exp(-d * 0.9);
+        if (v > g) g = v;
+      }
+      return g;
+    };
+    const waveA = (d) => {
+      let g = 0;
+      for (let k = 0; k < sp.length; k++) {
+        const x = d - (t - sp[k]) * 3.4;
+        const v = Math.exp(-(x * x) / 0.006);
+        if (v > g) g = v;
+      }
+      return g;
+    };
+    let fireG = 0;
+    for (let k = 0; k < sp.length; k++) { const a = t - sp[k]; if (a >= 0 && a < 0.35) fireG = Math.max(fireG, 1 - a / 0.35); }
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round';
+
+    const Pp = S.parts, pp = new Path2D();
+    for (let i = 0; i < Pp.length; i += 4) {
+      if (live) { Pp[i + 1] += dt * (0.03 + Pp[i + 3] * 0.05); if (Pp[i + 1] > 2.3) Pp[i + 1] = -2.3; }
+      proj(Pp[i], Pp[i + 1], Pp[i + 2]);
+      if (D - o[2] < 0.7) continue;
+      const r = 0.5 + Math.max(0, o[2] + 3) * 0.12;
+      pp.rect(o[0] - r, o[1] - r, r * 2, r * 2);
+    }
+    ctx.fillStyle = IV(0.2); ctx.fill(pp);
+
+    const G = S.ghosts, gp = new Path2D();
+    for (let i = 0; i < G.length; i += 6) {
+      proj(G[i], G[i + 1], G[i + 2]); const x0 = o[0], y0 = o[1];
+      proj(G[i + 3], G[i + 4], G[i + 5]);
+      gp.moveTo(x0, y0); gp.lineTo(o[0], o[1]);
+    }
+    ctx.lineWidth = 0.8; ctx.strokeStyle = IV(0.07); ctx.stroke(gp);
+
+    const Sg = S.segs, B = 4, base = [], my = new Path2D(), glow = [new Path2D(), new Path2D(), new Path2D()];
+    for (let b = 0; b < B * 3; b++) base.push(new Path2D());
+    const waving = sp.length > 0;
+    for (let i = 0; i < Sg.length; i += 9) {
+      proj(Sg[i], Sg[i + 1], Sg[i + 2]); const x0 = o[0], y0 = o[1], z0 = o[2];
+      proj(Sg[i + 3], Sg[i + 4], Sg[i + 5]); const x1 = o[0], y1 = o[1];
+      const kind = Sg[i + 8], wv = Sg[i + 6], d = Sg[i + 7];
+      if (kind === 1) { my.moveTo(x0, y0); my.lineTo(x1, y1); }
+      else {
+        let db = Math.floor(((z0 + 1.6) / 3.2) * B); db = db < 0 ? 0 : (db >= B ? B - 1 : db);
+        const wc = wv > 0.013 ? 2 : (wv > 0.007 ? 1 : 0);
+        const pth = base[db * 3 + wc]; pth.moveTo(x0, y0); pth.lineTo(x1, y1);
+      }
+      if (waving) {
+        const g = kind === 0 ? waveD(d) : waveA(d);
+        if (g > 0.08) { const gi = g > 0.6 ? 2 : (g > 0.3 ? 1 : 0); glow[gi].moveTo(x0, y0); glow[gi].lineTo(x1, y1); }
+      }
+    }
+    for (let db = 0; db < B; db++) {
+      for (let wc = 0; wc < 3; wc++) {
+        ctx.lineWidth = [0.6, 1.2, 2.1][wc] * (0.8 + db * 0.14);
+        ctx.strokeStyle = IV(0.2 + db * 0.17);
+        ctx.stroke(base[db * 3 + wc]);
+      }
+    }
+    ctx.lineWidth = 4.4; ctx.strokeStyle = 'rgba(150,165,188,0.2)'; ctx.stroke(my);
+    ctx.lineWidth = 1.1; ctx.strokeStyle = IV(0.4); ctx.stroke(my);
+    const gw = [[3, 0.22], [4, 0.5], [5.5, 0.9]];
+    for (let gi = 0; gi < 3; gi++) { ctx.lineWidth = gw[gi][0]; ctx.strokeStyle = A(gw[gi][1]); ctx.stroke(glow[gi]); }
+
+    const Sp = S.spines, spp = [new Path2D(), new Path2D(), new Path2D()];
+    for (let i = 0; i < Sp.length; i += 3) {
+      proj(Sp[i], Sp[i + 1], Sp[i + 2]);
+      let b = Math.floor(((o[2] + 1.6) / 3.2) * 3); b = b < 0 ? 0 : (b > 2 ? 2 : b);
+      spp[b].rect(o[0] - 0.6, o[1] - 0.6, 1.2, 1.2);
+    }
+    for (let b = 0; b < 3; b++) { ctx.fillStyle = IV(0.16 + b * 0.18); ctx.fill(spp[b]); }
+
+    const Nd = S.nodes;
+    let nodeLabel = null;
+    for (let i = 0; i < Nd.length; i += 4) {
+      proj(Nd[i], Nd[i + 1], Nd[i + 2]);
+      if (i === 12) nodeLabel = [o[0], o[1]];
+      const g = waving ? waveA(Nd[i + 3]) : 0;
+      ctx.fillStyle = IV(0.75); ctx.beginPath(); ctx.arc(o[0], o[1], 1.6, 0, 6.283); ctx.fill();
+      if (g > 0.05) {
+        ctx.fillStyle = A(0.25 * g); ctx.beginPath(); ctx.arc(o[0], o[1], 9 * g + 3, 0, 6.283); ctx.fill();
+        ctx.fillStyle = A(0.95 * g); ctx.beginPath(); ctx.arc(o[0], o[1], 2.4, 0, 6.283); ctx.fill();
+      }
+    }
+    const Tr = S.terms;
+    let termLabel = null;
+    for (let i = 0; i < Tr.length; i += 4) {
+      proj(Tr[i], Tr[i + 1], Tr[i + 2]);
+      if (i === 0) termLabel = [o[0], o[1]];
+      const g = waving ? waveA(Tr[i + 3]) : 0;
+      ctx.fillStyle = IV(0.6); ctx.beginPath(); ctx.arc(o[0], o[1], 2, 0, 6.283); ctx.fill();
+      if (g > 0.05) { ctx.fillStyle = A(0.3 * g); ctx.beginPath(); ctx.arc(o[0], o[1], 10 * g + 3, 0, 6.283); ctx.fill(); }
+    }
+
+    proj(S.soma[0], S.soma[1], S.soma[2]);
+    const sx = o[0], sy = o[1], ss = o[3], R = 0.13 * ss;
+    let grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, R * 3.2);
+    grd.addColorStop(0, IV(0.5)); grd.addColorStop(0.35, IV(0.12)); grd.addColorStop(1, IV(0));
+    ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(sx, sy, R * 3.2, 0, 6.283); ctx.fill();
+    if (fireG > 0) {
+      grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, R * 6.5);
+      grd.addColorStop(0, A(0.6 * fireG)); grd.addColorStop(1, A(0));
+      ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(sx, sy, R * 6.5, 0, 6.283); ctx.fill();
+    }
+    const SP = S.somaPts, spath = new Path2D();
+    for (let i = 0; i < SP.length; i += 3) { proj(SP[i], SP[i + 1], SP[i + 2]); spath.rect(o[0] - 0.7, o[1] - 0.7, 1.4, 1.4); }
+    ctx.fillStyle = IV(0.45); ctx.fill(spath);
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.save();
+    ctx.setLineDash([2, 5]); ctx.lineDashOffset = -t * 12;
+    ctx.strokeStyle = 'rgba(154,163,178,0.4)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(sx, sy, R * 4.4, 0, 6.283); ctx.stroke();
+    ctx.restore();
+    ctx.strokeStyle = 'rgba(154,163,178,0.55)'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let q = 0; q < 4; q++) {
+      const a = q * Math.PI / 2 + t * 0.2, r0 = R * 4.4 - 4, r1 = R * 4.4 + 6;
+      ctx.moveTo(sx + Math.cos(a) * r0, sy + Math.sin(a) * r0); ctx.lineTo(sx + Math.cos(a) * r1, sy + Math.sin(a) * r1);
+    }
+    ctx.stroke();
+
+    proj(S.E0[0], S.E0[1], S.E0[2]); const ex0 = o[0], ey0 = o[1], es0 = o[3];
+    proj(S.E1[0], S.E1[1], S.E1[2]); const ex1 = o[0], ey1 = o[1], es1 = o[3];
+    const edx = ex1 - ex0, edy = ey1 - ey0, eL = Math.hypot(edx, edy) || 1, nx = -edy / eL, ny = edx / eL;
+    const w0 = 0.03 * es0, w1 = 0.004 * es1, cut = 0.86;
+    const xc = ex0 + edx * cut, yc = ey0 + edy * cut, wc = w0 + (w1 - w0) * cut;
+    let lg = ctx.createLinearGradient(ex0 + nx * w0, ey0 + ny * w0, ex0 - nx * w0, ey0 - ny * w0);
+    lg.addColorStop(0, '#1A2029'); lg.addColorStop(0.42, '#6F7A8B'); lg.addColorStop(0.55, '#AAB4C3'); lg.addColorStop(1, '#1A2029');
+    ctx.fillStyle = lg;
+    ctx.beginPath(); ctx.moveTo(ex0 + nx * w0, ey0 + ny * w0); ctx.lineTo(xc + nx * wc, yc + ny * wc); ctx.lineTo(xc - nx * wc, yc - ny * wc); ctx.lineTo(ex0 - nx * w0, ey0 - ny * w0); ctx.closePath(); ctx.fill();
+    lg = ctx.createLinearGradient(xc + nx * wc, yc + ny * wc, xc - nx * wc, yc - ny * wc);
+    lg.addColorStop(0, '#8C96A6'); lg.addColorStop(0.5, '#F4F6F9'); lg.addColorStop(1, '#8C96A6');
+    ctx.fillStyle = lg;
+    ctx.beginPath(); ctx.moveTo(xc + nx * wc, yc + ny * wc); ctx.lineTo(ex1 + nx * w1, ey1 + ny * w1); ctx.lineTo(ex1 - nx * w1, ey1 - ny * w1); ctx.lineTo(xc - nx * wc, yc - ny * wc); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = 'rgba(236,232,222,0.4)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(xc + nx * wc * 1.1, yc + ny * wc * 1.1); ctx.lineTo(xc - nx * wc * 1.1, yc - ny * wc * 1.1); ctx.stroke();
+    ctx.globalCompositeOperation = 'lighter';
+    const tg = ctx.createRadialGradient(ex1, ey1, 0, ex1, ey1, 28);
+    tg.addColorStop(0, A(0.22 + 0.6 * fireG)); tg.addColorStop(1, A(0));
+    ctx.fillStyle = tg; ctx.beginPath(); ctx.arc(ex1, ey1, 28, 0, 6.283); ctx.fill();
+    if (fireG > 0) {
+      ctx.strokeStyle = A(0.55 * fireG); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(ex1, ey1, 8 + (1 - fireG) * 42, 0, 6.283); ctx.stroke();
+      ctx.beginPath(); ctx.arc(ex1, ey1, 4 + (1 - fireG) * 24, 0, 6.283); ctx.stroke();
+    }
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.font = '500 10px "Geist Mono", ui-monospace, monospace';
+    ctx.textBaseline = 'middle';
+    const label = (px, py, ddx, ddy, text) => {
+      if (px < 0 || px > w || py < 0 || py > h) return;
+      const lx = px + ddx, ly = py + ddy, dir = ddx >= 0 ? 1 : -1;
+      ctx.strokeStyle = 'rgba(154,163,178,0.5)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(lx, ly); ctx.lineTo(lx + dir * 16, ly); ctx.stroke();
+      ctx.fillStyle = 'rgba(190,197,209,0.95)';
+      ctx.beginPath(); ctx.arc(px, py, 2, 0, 6.283); ctx.fill();
+      ctx.textAlign = dir > 0 ? 'left' : 'right';
+      ctx.fillText(text, lx + dir * 22, ly);
+    };
+    label(sx, sy, -74, -54, 'SOMA');
+    if (nodeLabel) label(nodeLabel[0], nodeLabel[1], -86, 14, 'NODE OF RANVIER');
+    if (termLabel) label(termLabel[0], termLabel[1], 70, 18, 'AXON TERMINAL');
+    label(ex1, ey1, 64, -46, 'MICROELECTRODE');
+    if (S.dendTip.length) { proj(S.dendTip[0], S.dendTip[1], S.dendTip[2]); label(o[0], o[1], 60, -30, 'DENDRITE'); }
+  }
+
+  drawScope() {
+    const cv = this.sc; if (!cv) return;
+    const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = Math.round(w * dpr), H = Math.round(h * dpr);
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    const ctx = cv.getContext('2d'); if (!ctx) return;
+    const rgb = this.accRGB();
+    const A = (a) => 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + a + ')';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    const mid = h * 0.5, amp = h * 0.34;
+    ctx.strokeStyle = 'rgba(30,37,48,1)'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = 0; x < w; x += 60) { ctx.moveTo(Math.round(x) + 0.5, 14); ctx.lineTo(Math.round(x) + 0.5, h); }
+    ctx.moveTo(0, Math.round(mid) + 0.5); ctx.lineTo(w, Math.round(mid) + 0.5);
+    ctx.stroke();
+    ctx.setLineDash([4, 6]); ctx.strokeStyle = A(0.5);
+    ctx.beginPath(); ctx.moveTo(0, mid + 0.55 * amp); ctx.lineTo(w, mid + 0.55 * amp); ctx.stroke();
+    ctx.setLineDash([]);
+    const pxs = w / 5;
+    ctx.fillStyle = A(0.95);
+    for (let i = 0; i < this.times.length; i++) {
+      const x = w - (this.t - this.times[i]) * pxs;
+      if (x >= 0 && x <= w) ctx.fillRect(x - 0.75, 2, 1.5, 9);
+    }
+    const N = this.buf.length, step = w / (N - 1);
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const v = this.buf[(this.bi + i) % N];
+      const x = i * step, y = mid - v * amp;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(214,220,230,0.85)'; ctx.lineWidth = 1.2; ctx.lineJoin = 'round';
+    ctx.stroke();
+    const lv = this.buf[(this.bi + N - 1) % N], ly = mid - lv * amp;
+    const hg = ctx.createRadialGradient(w - 3, ly, 0, w - 3, ly, 14);
+    hg.addColorStop(0, A(0.6)); hg.addColorStop(1, A(0));
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(w - 3, ly, 14, 0, 6.283); ctx.fill();
+    ctx.fillStyle = A(1); ctx.beginPath(); ctx.arc(w - 3, ly, 2.4, 0, 6.283); ctx.fill();
+  }
+}
+
+function lookup(vals, path) { return path.split('.').reduce((o, k) => (o == null ? o : o[k]), vals); }
+
+function render(c) {
+  const v = c.renderVals();
+  document.querySelectorAll('[data-bind]').forEach((el) => {
+    const t = String(v[el.dataset.bind]);
+    if (el.textContent !== t) el.textContent = t;
+  });
+  document.querySelectorAll('[data-nav]').forEach((el) => el.classList.toggle('on', v.nav[el.dataset.nav] === 'on'));
+  document.querySelectorAll('[data-chip]').forEach((el) => {
+    el.className = v.chips[el.dataset.chip];
+    el.setAttribute('aria-pressed', v.pressed[el.dataset.chip]);
+  });
+  document.querySelectorAll('[data-show]').forEach((el) => { el.hidden = !v.show[el.dataset.show]; });
+}
+
+(function mount() {
+  const c = new Component();
+  const v = c.renderVals();
+  document.querySelectorAll('[data-ref]').forEach((el) => v[el.dataset.ref](el));
+  document.querySelectorAll('*').forEach((el) => {
+    for (const a of el.attributes) {
+      if (a.name.indexOf('data-on-') === 0) {
+        const fn = lookup(v, a.value);
+        el.addEventListener(a.name.slice(8), (e) => fn(e));
+      }
+    }
+  });
+  render(c);
+  c.componentDidMount();
+})();
+</script>
+</body>
+</html>
