@@ -115,7 +115,7 @@ footer{padding:64px 20px 32px !important}
 
 <section id="top" data-ref="setHero" data-on-pointermove="onHeroMove" data-on-pointerleave="onHeroLeave" data-on-pointerdown="onDown" data-on-pointerup="onUp" style="position: relative; overflow: hidden; background: #0A0D12; color: #ECE8DE; min-height: 960px; display: flex; flex-direction: column">
 <svg aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none"><defs><pattern id="hgrid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#121821" stroke-width="1"></path></pattern></defs><rect width="100%" height="100%" fill="url(#hgrid)"></rect></svg>
-<canvas class="cv" data-ref="setCanvas" role="img" aria-label="Interactive 3D model of a neuron being recorded by a microelectrode" style="position: absolute; top: 0; right: 0; width: 60%; height: calc(100% - 150px); display: block; touch-action: pan-y; z-index: 1"></canvas>
+<canvas class="cv" data-ref="setCanvas" role="img" aria-label="Interactive 3D model of a firing neuron" style="position: absolute; top: 0; right: 0; width: 60%; height: calc(100% - 150px); display: block; touch-action: pan-y; z-index: 1"></canvas>
 <div class="herobody" style="position: relative; z-index: 3; flex-grow: 1; width: 100%; max-width: 1240px; margin: 0 auto; padding: 100px 40px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 28px; pointer-events: none">
 <h1 class="in d2" style="margin: 0; max-width: 11ch; font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif; font-weight: 500; font-size: clamp(44px, 6.4vw, 96px); line-height: 1; letter-spacing: -0.03em">Listening to the brain, <em style="font-style: italic; color: #E9A23B">one neuron</em> at a time.</h1>
 <p class="in d3" style="margin: 0; max-width: 44ch; font-size: 18px; line-height: 1.65; color: #B8BFCB; font-weight: 300">The Translational Neurophysiology &amp; Brain Stimulation lab studies human brain function and dysfunction, and develops new brain stimulation methods to improve the lives of people with neurological disease.</p>
@@ -873,8 +873,7 @@ class Component extends DCLogic {
     return {
       segs: new Float32Array(N.segs), spines: new Float32Array(N.spines), terms: new Float32Array(Tm.tips),
       nodes: new Float32Array(nodes), soma: soma, somaPts: new Float32Array(somaPts), dendTip: dendTip,
-      ghosts: new Float32Array(ghosts), parts: new Float32Array(parts),
-      E0: [1.95, 2.15, 0.95], E1: [0.22, 0.52, 0.16]
+      ghosts: new Float32Array(ghosts), parts: new Float32Array(parts)
     };
   }
 
@@ -1090,32 +1089,6 @@ class Component extends DCLogic {
       ctx.moveTo(sx + Math.cos(a) * r0, sy + Math.sin(a) * r0); ctx.lineTo(sx + Math.cos(a) * r1, sy + Math.sin(a) * r1);
     }
     ctx.stroke();
-
-    proj(S.E0[0], S.E0[1], S.E0[2]); const ex0 = o[0], ey0 = o[1], es0 = o[3];
-    proj(S.E1[0], S.E1[1], S.E1[2]); const ex1 = o[0], ey1 = o[1], es1 = o[3];
-    const edx = ex1 - ex0, edy = ey1 - ey0, eL = Math.hypot(edx, edy) || 1, nx = -edy / eL, ny = edx / eL;
-    const w0 = 0.03 * es0, w1 = 0.004 * es1, cut = 0.86;
-    const xc = ex0 + edx * cut, yc = ey0 + edy * cut, wc = w0 + (w1 - w0) * cut;
-    let lg = ctx.createLinearGradient(ex0 + nx * w0, ey0 + ny * w0, ex0 - nx * w0, ey0 - ny * w0);
-    lg.addColorStop(0, '#1A2029'); lg.addColorStop(0.42, '#6F7A8B'); lg.addColorStop(0.55, '#AAB4C3'); lg.addColorStop(1, '#1A2029');
-    ctx.fillStyle = lg;
-    ctx.beginPath(); ctx.moveTo(ex0 + nx * w0, ey0 + ny * w0); ctx.lineTo(xc + nx * wc, yc + ny * wc); ctx.lineTo(xc - nx * wc, yc - ny * wc); ctx.lineTo(ex0 - nx * w0, ey0 - ny * w0); ctx.closePath(); ctx.fill();
-    lg = ctx.createLinearGradient(xc + nx * wc, yc + ny * wc, xc - nx * wc, yc - ny * wc);
-    lg.addColorStop(0, '#8C96A6'); lg.addColorStop(0.5, '#F4F6F9'); lg.addColorStop(1, '#8C96A6');
-    ctx.fillStyle = lg;
-    ctx.beginPath(); ctx.moveTo(xc + nx * wc, yc + ny * wc); ctx.lineTo(ex1 + nx * w1, ey1 + ny * w1); ctx.lineTo(ex1 - nx * w1, ey1 - ny * w1); ctx.lineTo(xc - nx * wc, yc - ny * wc); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = 'rgba(236,232,222,0.4)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(xc + nx * wc * 1.1, yc + ny * wc * 1.1); ctx.lineTo(xc - nx * wc * 1.1, yc - ny * wc * 1.1); ctx.stroke();
-    ctx.globalCompositeOperation = 'lighter';
-    const tg = ctx.createRadialGradient(ex1, ey1, 0, ex1, ey1, 28);
-    tg.addColorStop(0, A(0.22 + 0.6 * fireG)); tg.addColorStop(1, A(0));
-    ctx.fillStyle = tg; ctx.beginPath(); ctx.arc(ex1, ey1, 28, 0, 6.283); ctx.fill();
-    if (fireG > 0) {
-      ctx.strokeStyle = A(0.55 * fireG); ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(ex1, ey1, 8 + (1 - fireG) * 42, 0, 6.283); ctx.stroke();
-      ctx.beginPath(); ctx.arc(ex1, ey1, 4 + (1 - fireG) * 24, 0, 6.283); ctx.stroke();
-    }
-
   }
 
   drawScope() {
