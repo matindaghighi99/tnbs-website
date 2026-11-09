@@ -6,7 +6,7 @@ A one-page website for the **Translational Neurophysiology & Brain Stimulation (
 
 - `index.html` is the whole site in one self-contained file (HTML, CSS and JavaScript). The only outside request is to Google Fonts.
 - The design is "neural glass": frosted-glass panels over slowly shifting aurora light (amber, violet, teal) that moves to a new arrangement as you scroll from section to section.
-- The type matches the GAINN website: Instrument Serif for headings and large display text (with italic accents), Instrument Sans for body text and card titles, and IBM Plex Mono for small labels.
+- The whole site is set in Barlow (from Google Fonts): bold for headings, with coloured accent words, and regular for body text and labels.
 - The hero shows an interactive 3D layer 5 pyramidal neuron in a glass chamber. You can drag it to rotate it, and the button in the chamber's corner resets the view.
   - A cortical layer gauge (L1 to L6) beside the neuron marks the layer boundaries, using rat barrel-cortex depths.
   - A glass oscilloscope shows the simulated single-unit recording and its firing rate.
