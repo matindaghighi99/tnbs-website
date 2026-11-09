@@ -61,7 +61,7 @@ body[data-section="research"] .p1{translate:12vw 86vh} body[data-section="resear
 body[data-section="facilities"] .p1{translate:86vw 18vh} body[data-section="facilities"] .p2{translate:10vw 50vh} body[data-section="facilities"] .p3{translate:60vw 100vh}
 body[data-section="team"] .p1{translate:30vw 88vh} body[data-section="team"] .p2{translate:92vw 30vh} body[data-section="team"] .p3{translate:6vw 16vh}
 body[data-section="publications"] .p1{translate:94vw 64vh} body[data-section="publications"] .p2{translate:24vw 14vh} body[data-section="publications"] .p3{translate:40vw 100vh}
-body[data-section="workshops"] .p1{translate:18vw 22vh} body[data-section="workshops"] .p2{translate:70vw 92vh} body[data-section="workshops"] .p3{translate:96vw 30vh}
+body[data-section="location"] .p1{translate:18vw 22vh} body[data-section="location"] .p2{translate:70vw 92vh} body[data-section="location"] .p3{translate:96vw 30vh}
 body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2{translate:20vw 70vh} body[data-section="join"] .p3{translate:88vw 12vh}
 .bg-grid{position:absolute;z-index:-1;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:72px 72px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 35%,#000 20%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 50% 35%,#000 20%,transparent 78%)}
 .cursor-glow{position:absolute;left:0;top:0;width:680px;height:680px;margin:-340px 0 0 -340px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,214,150,.11),rgba(95,224,220,.045) 48%,transparent 72%);transform:translate3d(-2000px,-2000px,0);opacity:0;transition:opacity .6s;will-change:transform}
@@ -103,7 +103,7 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 #facilities{--glow:radial-gradient(32% 26% at 78% 30%,rgba(95,224,220,.15),transparent 70%),radial-gradient(30% 24% at 20% 34%,rgba(233,162,59,.13),transparent 70%),radial-gradient(30% 26% at 60% 86%,rgba(233,162,59,.12),transparent 70%)}
 #team{--glow:radial-gradient(30% 20% at 18% 30%,rgba(233,162,59,.16),transparent 70%),radial-gradient(30% 22% at 86% 70%,rgba(244,139,181,.12),transparent 70%),radial-gradient(26% 18% at 50% 92%,rgba(156,140,255,.12),transparent 70%)}
 #publications{--glow:radial-gradient(34% 40% at 86% 42%,rgba(156,140,255,.17),transparent 70%),radial-gradient(26% 30% at 10% 70%,rgba(233,162,59,.1),transparent 70%)}
-#workshops{--glow:radial-gradient(34% 44% at 78% 52%,rgba(233,162,59,.16),transparent 70%),radial-gradient(28% 32% at 10% 34%,rgba(95,224,220,.12),transparent 70%)}
+#location{--glow:radial-gradient(34% 44% at 78% 52%,rgba(233,162,59,.16),transparent 70%),radial-gradient(28% 32% at 10% 34%,rgba(95,224,220,.12),transparent 70%)}
 #join{--glow:radial-gradient(40% 50% at 72% 40%,rgba(233,162,59,.2),transparent 70%),radial-gradient(30% 40% at 20% 70%,rgba(244,139,181,.1),transparent 70%)}
 .sec-head{margin-bottom:clamp(26px,3.6vw,44px)}
 
@@ -321,7 +321,6 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 .avatar{position:relative;z-index:1;width:min(46%,240px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:clamp(34px,4vw,56px);font-weight:600;letter-spacing:-.02em;color:var(--ink);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.22),rgba(255,255,255,.03) 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
 .avatar::before{content:"";position:absolute;inset:-10px;border-radius:50%;padding:2px;background:conic-gradient(from 0deg,transparent 0 50%,rgba(255,197,107,.95) 72%,rgba(95,224,220,.85) 88%,transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .pi:hover .avatar::before,.tm:hover .avatar::before{animation:spin 6s linear infinite}
-.badge{position:absolute;left:16px;bottom:16px;z-index:3;padding:7px 12px;border-radius:999px;font:500 10.5px/1 var(--mono);letter-spacing:.14em;color:#170D02;background:linear-gradient(180deg,#FFD58E,#E9A23B)}
 .pi .ph-chip{top:auto;bottom:16px;left:auto;right:16px;translate:none;padding:8px 12px;border-radius:999px}
 .pi-body{padding:clamp(10px,2.6vw,34px) clamp(8px,2vw,26px) clamp(14px,2.6vw,30px) 0;display:flex;flex-direction:column;gap:18px}
 .pi-name{font-family:var(--serif);font-size:clamp(36px,4.2vw,60px);line-height:1.02;letter-spacing:-.01em;font-weight:700;}
@@ -337,7 +336,6 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 .tm-body{padding:16px 8px 10px;display:flex;flex-direction:column;gap:8px}
 .tm-name{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .tm-name h3{font-size:19px;font-weight:600;letter-spacing:-.018em}
-.tm-name span{font:500 11px/1 var(--mono);color:var(--dim)}
 .role{font:500 11px/1.3 var(--mono);letter-spacing:.12em;color:var(--amber-hi)}
 .tm-body p{color:var(--muted);font-size:14.5px;line-height:1.6}
 .tilt{transform-style:preserve-3d;will-change:transform}
@@ -375,24 +373,21 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 .pub-go{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);transition:background .4s,color .4s,transform .5s var(--spring)}
 .pub:hover .pub-go{background:var(--amber);color:#170D02;transform:rotate(45deg)}
 
-/* ---------- workshops ---------- */
-.ws-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:stretch}
-.ws-intro{display:flex;flex-direction:column;gap:24px}
+/* ---------- location ---------- */
+.loc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,4vw,56px);align-items:stretch}
+.loc-intro{display:flex;flex-direction:column;gap:24px}
+.loc-actions{display:flex;flex-wrap:wrap;gap:12px}
+.loc-card{padding:12px;border-radius:var(--r-xl);display:flex;flex-direction:column;gap:12px}
+.loc-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:10px 12px 0}
+.loc-frame{flex:1;min-height:clamp(340px,36vw,480px)}
+.loc-frame iframe{filter:invert(.92) hue-rotate(180deg) saturate(.8) contrast(.9) brightness(1.04)}
+.loc-frame::after{content:"";position:absolute;inset:0;z-index:5;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 0 90px rgba(5,7,11,.42)}
 .specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-radius:24px;margin-top:8px}
 .specs>div{padding:20px 22px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line)}
 .specs>div:nth-child(odd){border-right:1px solid var(--line)}
 .specs>div:nth-child(-n+2){border-top:0}
 .specs>div.wide{grid-column:span 2;border-right:0}
 .specs dd{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.2;letter-spacing:0;}
-.curve{padding:clamp(22px,3vw,32px);border-radius:var(--r-xl);display:flex;flex-direction:column;gap:18px}
-.curve-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.bars{position:relative;flex:1;min-height:300px;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:clamp(6px,1.2vw,12px);align-items:end;padding-bottom:30px}
-.bars li{position:relative;height:var(--h);border-radius:12px 12px 6px 6px;background:linear-gradient(180deg,rgba(255,206,130,var(--o)),rgba(255,255,255,.035));box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 rgba(255,255,255,.22);transform-origin:bottom;transform:scaleY(0);transition:transform 1s var(--spring) calc(var(--k) * 90ms + 150ms)}
-.curve.in .bars li,.no-js .bars li{transform:scaleY(1)}
-.bars li::before{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#FFE3AE;box-shadow:0 0 0 4px rgba(255,197,107,.18),0 0 16px rgba(255,197,107,.9);animation:seq 4.8s ease-in-out infinite;animation-delay:calc(var(--k) * 600ms)}
-@keyframes seq{0%,100%{opacity:.35;transform:scale(.8)}6%,14%{opacity:1;transform:scale(1.25)}}
-.bars li span{position:absolute;left:50%;bottom:-26px;translate:-50% 0;font:500 10.5px/1 var(--mono);letter-spacing:.06em;color:var(--dim);white-space:nowrap}
-.curve-ends{display:flex;justify-content:space-between;gap:12px}
 
 /* ---------- join ---------- */
 .join{position:relative;padding:clamp(34px,6vw,88px);border-radius:40px;overflow:hidden}
@@ -438,6 +433,7 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 .duo .frame{aspect-ratio:3/2}
 .pi .frame>img{object-position:50% 22%}
 .frame-team{aspect-ratio:3/2}
+.media:has(>.frame-team){width:100%;max-width:860px;margin-inline:auto}
 .frame-team img{object-position:50% 38%}
 .cap-names{padding:0 10px 8px;font-size:13.5px;line-height:1.6;color:var(--muted)}
 .tm .frame img{object-position:50% 28%}
@@ -478,7 +474,7 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 .join-grid{position:relative;z-index:3;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:clamp(28px,4vw,56px);align-items:center}
 .join-photo{padding:10px;border-radius:26px}
 .join-photo .frame{aspect-ratio:4/5;border-radius:18px}
-.funding{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
+.funding{margin-top:clamp(32px,4vw,48px)}
 .funding-card{padding:14px 22px;border-radius:20px;background:rgba(255,255,255,.94);box-shadow:inset 0 1px 0 #fff,0 0 0 1px rgba(255,255,255,.4),0 24px 60px -28px rgba(0,0,0,.8)}
 .funding-card img{display:block;width:100%;height:auto;max-width:980px;margin:0 auto}
 html:has(.lightbox[open]){overflow:hidden}
@@ -528,7 +524,7 @@ html:has(.lightbox[open]){overflow:hidden}
   .chamber-halo{inset:-5% 0}
   .scope{position:relative;left:auto;bottom:auto;width:calc(100% - 28px);margin:-34px auto 0}
   .hero-copy{max-width:none}
-  .about-grid,.split,.collab,.ws-grid{grid-template-columns:minmax(0,1fr)}
+  .about-grid,.split,.collab,.loc-grid{grid-template-columns:minmax(0,1fr)}
   .pi{grid-template-columns:minmax(0,1fr)}
   .pi .frame{aspect-ratio:16/11}
   .pi-body{padding:8px 10px 18px}
@@ -561,7 +557,6 @@ html:has(.lightbox[open]){overflow:hidden}
   .tm .frame{border-radius:14px}
   .tm-body{padding:12px 4px 6px;gap:6px}
   .tm-name h3{font-size:15px}
-  .tm-name span{display:none}
   .tm-body p:last-child{font-size:13px;line-height:1.5}
   .tm-body .role{font-size:9.5px;letter-spacing:.1em}
   .tm-body .award{font-size:11.5px}
@@ -579,7 +574,6 @@ html:has(.lightbox[open]){overflow:hidden}
   .seg{max-width:100%;overflow-x:auto;scrollbar-width:none}
   .seg button{padding:0 12px}
   .specs>div{padding:16px 16px}
-  .bars{min-height:220px}
   .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .foot-brand{grid-column:span 2}
   .cap{flex-direction:column;gap:4px}
@@ -607,7 +601,6 @@ html:has(.lightbox[open]){overflow:hidden}
   .life-head{align-items:flex-start}
   .film-ctl{display:none}
   .film-item{width:78vw}
-  .funding{grid-template-columns:minmax(0,1fr);gap:12px}
   .funding-card{padding:10px 12px}
   .yt-btn{width:76px;height:76px}
   .yt-title{left:16px;right:16px;bottom:14px;font-size:14px}
@@ -619,7 +612,7 @@ html:has(.lightbox[open]){overflow:hidden}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none !important;transition:none !important}
   .js .reveal{opacity:1;transform:none}
-  .sbar,.bars li{transform:none}
+  .sbar{transform:none}
 }
 </style>
 </head>
@@ -650,7 +643,7 @@ html:has(.lightbox[open]){overflow:hidden}
     <a class="nl" data-nav="facilities" href="#facilities">Facilities</a>
     <a class="nl" data-nav="team" href="#team">Team</a>
     <a class="nl" data-nav="publications" href="#publications">Publications</a>
-    <a class="nl" data-nav="workshops" href="#workshops">Workshops</a>
+    <a class="nl" data-nav="location" href="#location">Location</a>
   </nav>
   <a class="btn btn-primary btn-sm magnetic nav-cta" href="#join"><span class="pulse" aria-hidden="true"></span>Join the lab</a>
   <button type="button" class="menu-btn" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span></span><span></span></button>
@@ -664,7 +657,7 @@ html:has(.lightbox[open]){overflow:hidden}
     <a href="#facilities" style="--i:2"><span>Facilities</span></a>
     <a href="#team" style="--i:3"><span>Team</span></a>
     <a href="#publications" style="--i:4"><span>Publications</span></a>
-    <a href="#workshops" style="--i:5"><span>Workshops</span></a>
+    <a href="#location" style="--i:5"><span>Location</span></a>
     <a class="btn btn-primary" href="#join" style="--i:6">Join the lab</a>
   </nav>
 </div>
@@ -903,7 +896,6 @@ html:has(.lightbox[open]){overflow:hidden}
     <article class="pi glass spot reveal">
       <div class="frame">
         <img src="assets/img/team/luka-milosevic.webp" alt="Portrait of Dr. Luka Milosevic" width="768" height="1024" loading="lazy" decoding="async">
-        <span class="badge">PI</span>
       </div>
       <div class="pi-body">
         <p class="lbl">Principal investigator</p>
@@ -915,7 +907,7 @@ html:has(.lightbox[open]){overflow:hidden}
       </div>
     </article>
     <figure class="media glass reveal">
-      <div class="frame frame-team"><button type="button" class="zoom" data-zoom data-group="team-photo" data-full="assets/img/team/tnbs-team-2025-1200.webp" data-cap="The TNBS team, September 2025. Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)" aria-label="Enlarge photo: The TNBS team, September 2025. Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)"><img src="assets/img/team/tnbs-team-2025-640.webp" srcset="assets/img/team/tnbs-team-2025-640.webp 640w, assets/img/team/tnbs-team-2025-1200.webp 1200w" sizes="(max-width: 760px) 92vw, 1240px" alt="The TNBS team. Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)" width="640" height="480" loading="lazy" decoding="async"></button></div>
+      <div class="frame frame-team"><button type="button" class="zoom" data-zoom data-group="team-photo" data-full="assets/img/team/tnbs-team-2025-1200.webp" data-cap="The TNBS team, September 2025. Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)" aria-label="Enlarge photo: The TNBS team, September 2025. Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)"><img src="assets/img/team/tnbs-team-2025-640.webp" srcset="assets/img/team/tnbs-team-2025-640.webp 640w, assets/img/team/tnbs-team-2025-1200.webp 1200w" sizes="(max-width: 760px) 92vw, 860px" alt="The TNBS team. Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)" width="640" height="480" loading="lazy" decoding="async"></button></div>
       <figcaption class="cap"><span>Fig. 05 — The TNBS team, 2026</span><span>Krembil Brain Institute</span></figcaption>
       <p class="cap-names">Back: David Crompton, Luka Zivkovic, Dr. Luka Milosevic, Prerana Keerthi, Alisha Baldwin. Front: Antonio Franco, Srdjan Sumarac, Tristan Lawson, Shan Sohail. Not pictured: Dallas Leavitt, Filip Miščević, Aidan Austin-Day, Shysta Sehgal. (September 2025)</p>
     </figure>
@@ -926,75 +918,75 @@ html:has(.lightbox[open]){overflow:hidden}
     <ul class="team-grid">
       <li class="tm glass spot tilt reveal" data-group="postdoc" style="--d:0">
         <div class="frame"><img src="assets/img/team/lyla-el-fayomi.webp" alt="Portrait of Lyla El-Fayomi" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Lyla El-Fayomi, PhD</h3><span>01</span></div><p class="role">Postdoctoral Fellow</p><p>Applies temporal coding theory to design biomimetic deep brain stimulation patterns that restore healthy firing.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Lyla El-Fayomi, PhD</h3></div><p class="role">Postdoctoral Fellow</p><p>Applies temporal coding theory to design biomimetic deep brain stimulation patterns that restore healthy firing.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="postdoc" style="--d:1">
         <div class="frame"><img src="assets/img/team/david-crompton.webp" alt="Portrait of David Crompton" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>David Crompton, PhD</h3><span>02</span></div><p class="role">Postdoctoral Fellow</p><p>Uses computational modelling to work out how deep brain stimulation acts on the brain.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>David Crompton, PhD</h3></div><p class="role">Postdoctoral Fellow</p><p>Uses computational modelling to work out how deep brain stimulation acts on the brain.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:2">
         <div class="frame"><img src="assets/img/team/luis-antonio-franco-vergara.webp" alt="Portrait of Luis Antonio Franco Vergara" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Luis Antonio Franco Vergara</h3><span>03</span></div><p class="role">PhD Candidate</p><p class="award">CONAHCYT Doctoral Awardee</p><p>Develops closed-loop neuromodulation for Parkinson’s disease driven by brain and wearable-sensor signals.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Luis Antonio Franco Vergara</h3></div><p class="role">PhD Candidate</p><p class="award">CONAHCYT Doctoral Awardee</p><p>Develops closed-loop neuromodulation for Parkinson’s disease driven by brain and wearable-sensor signals.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:3">
         <div class="frame"><img src="assets/img/team/dallas-leavitt.webp" alt="Portrait of Dallas Leavitt" width="599" height="799" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Dallas Leavitt</h3><span>04</span></div><p class="role">PhD Candidate</p><p class="award">DAAD Graduate Scholarship</p><p>Studies reward processing and targeted DBS paradigms for the cognitive symptoms of Parkinson’s disease.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Dallas Leavitt</h3></div><p class="role">PhD Candidate</p><p class="award">DAAD Graduate Scholarship</p><p>Studies reward processing and targeted DBS paradigms for the cognitive symptoms of Parkinson’s disease.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:0">
         <div class="frame"><img src="assets/img/team/luka-zivkovic.webp" alt="Portrait of Luka Zivkovic" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Luka Zivkovic</h3><span>05</span></div><p class="role">PhD Candidate</p><p class="award">Mitacs Accelerate Grant</p><p>Maps cortico-subcortical networks in humans to improve DBS targeting in Parkinson’s disease and for self-injurious behaviour in severe autism.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Luka Zivkovic</h3></div><p class="role">PhD Candidate</p><p class="award">Mitacs Accelerate Grant</p><p>Maps cortico-subcortical networks in humans to improve DBS targeting in Parkinson’s disease and for self-injurious behaviour in severe autism.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:1">
         <div class="frame"><img src="assets/img/team/prerana-keerthi.webp" alt="Portrait of Prerana Keerthi" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Prerana Keerthi</h3><span>06</span></div><p class="role">PhD Candidate</p><p class="award">Branch Out Graduate Grant</p><p>Combines intraoperative recordings and computational models to test closed-loop strategies that target pathological oscillations.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Prerana Keerthi</h3></div><p class="role">PhD Candidate</p><p class="award">Branch Out Graduate Grant</p><p>Combines intraoperative recordings and computational models to test closed-loop strategies that target pathological oscillations.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:2">
         <div class="frame"><img src="assets/img/team/filip-miscevic.webp" alt="Portrait of Filip Miščević" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Filip Miščević</h3><span>07</span></div><p class="role">PhD Candidate</p><p>Builds brain–computer interface devices for speech and audio perception.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Filip Miščević</h3></div><p class="role">PhD Candidate</p><p>Builds brain–computer interface devices for speech and audio perception.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:3">
         <div class="frame"><img src="assets/img/team/muhammad-shan-sohail.webp" alt="Portrait of Muhammad Shan Sohail" width="453" height="604" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Muhammad Shan Sohail</h3><span>08</span></div><p class="role">PhD Candidate</p><p class="award">Parkinson Canada Graduate Student Award</p><p>Combines optical and electrophysiological tools to uncover pathological and therapeutic neural circuits across disease models.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Muhammad Shan Sohail</h3></div><p class="role">PhD Candidate</p><p class="award">Parkinson Canada Graduate Student Award</p><p>Combines optical and electrophysiological tools to uncover pathological and therapeutic neural circuits across disease models.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:0">
         <div class="frame"><img src="assets/img/team/aidan-austin-day.webp" alt="Portrait of Aidan Austin-Day" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Aidan Austin-Day</h3><span>09</span></div><p class="role">PhD Candidate</p><p class="award">Ontario Graduate Scholarship</p><p>Develops new DBS targets for spinocerebellar ataxia using animal models, looking for stimulation-based motor improvements.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Aidan Austin-Day</h3></div><p class="role">PhD Candidate</p><p class="award">Ontario Graduate Scholarship</p><p>Develops new DBS targets for spinocerebellar ataxia using animal models, looking for stimulation-based motor improvements.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:1">
         <div class="frame"><img src="assets/img/team/alisha-baldwin.webp" alt="Portrait of Alisha Baldwin" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Alisha Baldwin</h3><span>10</span></div><p class="role">PhD Candidate</p><p class="award">Percy Edward Hart Award</p><p>Investigates how deep brain stimulation works at the level of neural activity in people with Parkinson’s disease.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Alisha Baldwin</h3></div><p class="role">PhD Candidate</p><p class="award">Percy Edward Hart Award</p><p>Investigates how deep brain stimulation works at the level of neural activity in people with Parkinson’s disease.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:2">
         <div class="frame"><img src="assets/img/team/tristan-lawson.webp" alt="Portrait of Tristan Lawson" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Tristan Lawson</h3><span>11</span></div><p class="role">PhD Candidate</p><p class="award">Ontario Graduate Scholarship</p><p>Investigates how deep brain stimulation relieves depression, using electrophysiology and optogenetics.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Tristan Lawson</h3></div><p class="role">PhD Candidate</p><p class="award">Ontario Graduate Scholarship</p><p>Investigates how deep brain stimulation relieves depression, using electrophysiology and optogenetics.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:3">
         <div class="frame"><img src="assets/img/team/shysta-sehgal.webp" alt="Portrait of Shysta Sehgal" width="514" height="685" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Shysta Sehgal</h3><span>12</span></div><p class="role">PhD Student</p><p class="award">Percy Edward Hart Award</p><p>Uses evoked potentials and diffusion tensor imaging to map the fibre tracts DBS engages in psychiatric disorders.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Shysta Sehgal</h3></div><p class="role">PhD Student</p><p class="award">Percy Edward Hart Award</p><p>Uses evoked potentials and diffusion tensor imaging to map the fibre tracts DBS engages in psychiatric disorders.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="phd" style="--d:0">
         <div class="frame"><img src="assets/img/team/julianna-pijar.webp" alt="Portrait of Julianna Pijar" width="444" height="592" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Julianna Pijar</h3><span>13</span></div><p class="role">PhD Student</p><p class="award">Percy Edward Hart Award</p><p>Studies MEG and fMRI networks to understand deep brain stimulation for depression.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Julianna Pijar</h3></div><p class="role">PhD Student</p><p class="award">Percy Edward Hart Award</p><p>Studies MEG and fMRI networks to understand deep brain stimulation for depression.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="masc" style="--d:1">
         <div class="frame"><img src="assets/img/team/joshua-francis.webp" alt="Portrait of Joshua Francis" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Joshua Francis</h3><span>14</span></div><p class="role">MASc Student</p><p>Records single neurons to study how the subthalamic nucleus encodes grip in Parkinson’s disease.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Joshua Francis</h3></div><p class="role">MASc Student</p><p>Records single neurons to study how the subthalamic nucleus encodes grip in Parkinson’s disease.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="masc" style="--d:2">
         <div class="frame"><img src="assets/img/team/daniel-yu.webp" alt="Portrait of Daniel Yu" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Daniel Yu</h3><span>15</span></div><p class="role">MASc Student</p><p>Works on adaptive, closed-loop deep brain stimulation.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Daniel Yu</h3></div><p class="role">MASc Student</p><p>Works on adaptive, closed-loop deep brain stimulation.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="ugrad" style="--d:3">
         <div class="frame"><img src="assets/img/team/shreya-vishwanarayan.webp" alt="Portrait of Shreya Vishwanarayan" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Shreya Vishwanarayan</h3><span>16</span></div><p class="role">Undergraduate Research Assistant</p><p>Collects and analyses clinical data to improve DBS targeting.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Shreya Vishwanarayan</h3></div><p class="role">Undergraduate Research Assistant</p><p>Collects and analyses clinical data to improve DBS targeting.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="ugrad" style="--d:0">
         <div class="frame"><img src="assets/img/team/alexandra-koch-liu.webp" alt="Portrait of Alexandra Koch-Liu" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Alexandra Koch-Liu</h3><span>17</span></div><p class="role">Undergraduate Research Assistant</p><p class="award">IMS UROP Award</p><p>Studies how synapses and circuits respond to high-frequency deep brain stimulation.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Alexandra Koch-Liu</h3></div><p class="role">Undergraduate Research Assistant</p><p class="award">IMS UROP Award</p><p>Studies how synapses and circuits respond to high-frequency deep brain stimulation.</p></div>
       </li>
       <li class="tm glass spot tilt reveal" data-group="ugrad" style="--d:1">
         <div class="frame"><img src="assets/img/team/meredith-gladish.webp" alt="Portrait of Meredith Gladish" width="600" height="800" loading="lazy" decoding="async"></div>
-        <div class="tm-body"><div class="tm-name"><h3>Meredith Gladish</h3><span>18</span></div><p class="role">Undergraduate Research Assistant</p><p>Interested in neurorehabilitation.</p></div>
+        <div class="tm-body"><div class="tm-name"><h3>Meredith Gladish</h3></div><p class="role">Undergraduate Research Assistant</p><p>Interested in neurorehabilitation.</p></div>
       </li>
     </ul>
     <p class="alumni glass reveal"><span class="lbl">Postdoctoral alumni</span><span>Maximilian Scherer, PhD <i>2022–2024</i></span><span>Leon Amadeus Steiner, MD/PhD <i>2020–2022</i></span></p>
@@ -1115,35 +1107,29 @@ html:has(.lightbox[open]){overflow:hidden}
   </div>
 </section>
 
-<!-- ============ 07 WORKSHOPS ============ -->
-<section id="workshops" class="sec" data-anim>
+<!-- ============ 07 LOCATION ============ -->
+<section id="location" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Training</p></div>
-    <div class="ws-grid">
-      <div class="ws-intro">
-        <h2 class="h2 reveal">Electrophysiology <em class="tg tg-cyan">Trainee</em> Workshop.</h2>
-        <p class="lede reveal" style="--d:1">A free online workshop covering topics across neuroscience. Each topic opens with fundamentals, then builds toward advanced methods.</p>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Location</p></div>
+    <div class="loc-grid">
+      <div class="loc-intro">
+        <h2 class="h2 reveal">Find us at <em class="tg tg-cyan">Toronto</em> Western.</h2>
+        <p class="lede reveal" style="--d:1">The TNBS Lab is part of the Krembil Brain Institute, based at Toronto Western Hospital in downtown Toronto.</p>
         <dl class="specs glass reveal" style="--d:2">
-          <div><dt class="lbl">Format</dt><dd>Online</dd></div>
-          <div><dt class="lbl">Cost</dt><dd>Free of charge</dd></div>
-          <div><dt class="lbl">Length</dt><dd>8 sessions · 1 hour each</dd></div>
-          <div><dt class="lbl">Level</dt><dd>Graduate to PhD</dd></div>
-          <div class="wide"><dt class="lbl">Hosted by</dt><dd>Maximilian Scherer</dd></div>
+          <div><dt class="lbl">Hospital</dt><dd>Toronto Western Hospital</dd></div>
+          <div><dt class="lbl">Institute</dt><dd>Krembil Brain Institute</dd></div>
+          <div class="wide"><dt class="lbl">Address</dt><dd><address>399 Bathurst Street, Toronto, ON M5T&nbsp;2S8</address></dd></div>
         </dl>
+        <div class="loc-actions reveal" style="--d:3">
+          <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=399+Bathurst+St,+Toronto,+ON+M5T+2S8" target="_blank" rel="noopener">Get directions <svg class="ar" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn-glass" href="https://www.google.com/maps/search/?api=1&amp;query=399+Bathurst+St,+Toronto,+ON+M5T+2S8" target="_blank" rel="noopener">Open in Google Maps</a>
+        </div>
       </div>
-      <div class="curve glass clear spot reveal" style="--d:1">
-        <div class="curve-head"><p class="lbl">8 sessions</p><p class="lbl">1 hour each</p></div>
-        <ol class="bars" aria-label="Eight sessions, from fundamentals to advanced methods">
-          <li style="--h:20%;--o:.18;--k:0"><span>S.01</span></li>
-          <li style="--h:28%;--o:.24;--k:1"><span>S.02</span></li>
-          <li style="--h:37%;--o:.31;--k:2"><span>S.03</span></li>
-          <li style="--h:47%;--o:.39;--k:3"><span>S.04</span></li>
-          <li style="--h:58%;--o:.48;--k:4"><span>S.05</span></li>
-          <li style="--h:70%;--o:.58;--k:5"><span>S.06</span></li>
-          <li style="--h:83%;--o:.7;--k:6"><span>S.07</span></li>
-          <li style="--h:97%;--o:.84;--k:7"><span>S.08</span></li>
-        </ol>
-        <div class="curve-ends"><p class="lbl">Fundamentals</p><p class="lbl">Advanced methods</p></div>
+      <div class="loc-card glass clear spot reveal" style="--d:1">
+        <div class="loc-head"><p class="lbl">399 Bathurst St</p><p class="lbl">43.653°&nbsp;N · 79.405°&nbsp;W</p></div>
+        <div class="frame loc-frame">
+          <iframe src="https://www.google.com/maps?q=399+Bathurst+St,+Toronto,+ON+M5T+2S8&amp;z=15&amp;output=embed" title="Map showing Toronto Western Hospital, 399 Bathurst Street, Toronto" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </div>
@@ -1217,7 +1203,7 @@ html:has(.lightbox[open]){overflow:hidden}
         </div>
         <a class="totop glass" href="#top" aria-label="Back to top"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <div class="funding"><p class="lbl">Supported by</p><div class="funding-card"><img src="assets/img/funding/lab-funding-banner.webp" alt="Funders: NSERC, Brain Canada Foundation, CIHR, Banting Research Foundation, Canada Foundation for Innovation, New Frontiers in Research Fund, Dystonia Medical Research Foundation, Parkinson Canada, Max Planck–University of Toronto Centre for Neural Science and Technology, and the Weston Family Foundation" width="1200" height="314" loading="lazy" decoding="async"></div></div>
+      <div class="funding"><div class="funding-card"><img src="assets/img/funding/lab-funding-banner.webp" alt="Funders: NSERC, Brain Canada Foundation, CIHR, Banting Research Foundation, Canada Foundation for Innovation, New Frontiers in Research Fund, Dystonia Medical Research Foundation, Parkinson Canada, Max Planck–University of Toronto Centre for Neural Science and Technology, and the Weston Family Foundation" width="1200" height="314" loading="lazy" decoding="async"></div></div>
       <div class="wordmark" aria-hidden="true">TNBS</div>
       <div class="foot-base"><span>© 2026 TNBS Lab · University Health Network</span><span>University of Toronto · Krembil Brain Institute</span></div>
     </div>
@@ -1291,7 +1277,7 @@ class Component extends DCLogic {
       active: act, pub: pub,
       setCanvas: this._setCanvas, setScope: this._setScope, setHero: this._setHero, setRoot: this._setRoot, setProg: this._setProg, setLayers: this._setLayers,
       onHeroMove: this._onMove, onHeroLeave: this._onLeave, onDown: this._onDown, onUp: this._onUp,
-      nav: { about: on('about'), research: on('research'), facilities: on('facilities'), team: on('team'), publications: on('publications'), workshops: on('workshops') },
+      nav: { about: on('about'), research: on('research'), facilities: on('facilities'), team: on('team'), publications: on('publications'), location: on('location') },
       pubf: this._pf,
       chips: { all: chip('all'), y2025: chip('2025'), y2024: chip('2024'), y2023: chip('2023'), y2022: chip('2022') },
       pressed: { all: pr('all'), y2025: pr('2025'), y2024: pr('2024'), y2023: pr('2023'), y2022: pr('2022') },

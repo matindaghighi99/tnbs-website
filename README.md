@@ -22,7 +22,7 @@ A one-page website for the **Translational Neurophysiology & Brain Stimulation (
   - a full-screen glass menu on phones
   - a sliding year filter for publications
   - an orbiting diagram of collaborating disciplines
-  - a learning curve for the workshop sessions
+  - a dark-styled Google map in the location section
   - copy-email
   - a live Toronto clock
 - Animations are turned off when the visitor's system asks for reduced motion, and decorative animations pause while their section is off screen.
