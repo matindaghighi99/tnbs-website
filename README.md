@@ -9,7 +9,6 @@ A one-page website for the **Translational Neurophysiology & Brain Stimulation (
 - The whole site is set in Barlow (from Google Fonts): bold for headings, with coloured accent words, and regular for body text and labels.
 - The hero shows an interactive 3D layer 5 pyramidal neuron in a glass chamber. You can drag it to rotate it, and the button in the chamber's corner resets the view.
   - The chamber is styled as an EEG recording: each cortical layer boundary (L1 to L6, at rat barrel-cortex depths) is a live, scrolling EEG trace with a montage label (FP1–F7, F7–T3, T3–T5, T5–O1, C3–P3), over green chart-paper divisions. The two deepest traces show a sharp transient each time the neuron fires.
-  - A glass oscilloscope shows the simulated single-unit recording and its firing rate.
   - The chamber glows each time the cell fires.
 - Each research card has a small live visual:
   - spike, LFP and ECoG traces
