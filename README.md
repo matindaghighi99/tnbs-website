@@ -27,24 +27,31 @@ A one-page website for the **Translational Neurophysiology & Brain Stimulation (
   - a live Toronto clock
 - Animations are turned off when the visitor's system asks for reduced motion, and decorative animations pause while their section is off screen.
 
-## Adding the lab's photos and video
+## Photos and video
 
-The photo and video spots show a "coming soon" placeholder. Each one is marked in `index.html` with an HTML comment such as `<!-- Photo: DBS implantation surgery ... -->`. Put an `<img>` (or a `<video>`) right after that comment, inside the same `<div class="frame">`, and it fills the frame and covers the placeholder:
+All photos come from the lab's current website (torontotnbs.com). They are stored in `assets/` as web-sized WebP files, with a 640 px version for phones where a photo is shown large.
 
-```html
-<img src="images/dbs-surgery.jpg" alt="DBS implantation surgery at Toronto Western Hospital">
-```
+| Folder | What's in it | Where it appears |
+|---|---|---|
+| `assets/img/logo/` | The TNBS logo and favicons | Nav, footer, browser tab |
+| `assets/img/about/` | DBS implantation surgery | About (Fig. 01A) |
+| `assets/img/life/` | 20 lab-life photos, 2022–2026, named after their captions | About (Fig. 01B), Facilities (Fig. 04B), and the lab-life filmstrip in Team |
+| `assets/img/facilities/` | Fluorescent microscopy, Krembil Discovery Tower | Facilities (Fig. 04A) |
+| `assets/img/team/` | Dr. Milosevic's portrait, the team photo and 18 lab-member portraits | Team |
+| `assets/img/pubs/` | One figure for each publication | Publications |
+| `assets/img/join/` | King's College Circle, University of Toronto | Join the lab |
+| `assets/img/funding/` | The funders banner (CIHR's lettering is darkened so it reads on the white card) | Footer |
+| `assets/video/` | Poster frame for the video | Inside the operating room |
 
-| Spot | Section |
-|---|---|
-| DBS implantation surgery | About |
-| Operating-room video (`<video src="..." controls playsinline>`) | Inside the operating room |
-| Krembil Brain Institute (pictured: Dr. Taufik Valiante) | Facilities |
-| CRANIA Neuromodulation Suite | Facilities |
-| Portrait of Dr. Luka Milosevic | Team |
-| The TNBS team, 2026 | Team |
+The video is **Meet Prof. Luka Milosevic: Advancing Brain Stimulation Research** from U of T Biomedical Engineering on YouTube. It shows a local poster frame, and the YouTube player (from youtube-nocookie.com) loads only after someone presses play.
 
-The team member names and roles marked `[ ]` are still placeholders from the old site's team page.
+Photos marked as enlargeable open in a photo viewer: the About and Facilities photos, the team photo, King's College Circle and the lab-life filmstrip. Arrow keys step through the photos in the same group.
+
+To update the media:
+
+- **Replace a photo:** save the new image over the old file. Keep the same name and roughly the same shape, or edit the matching `<img>` in `index.html`.
+- **Add a lab member:** copy one `<li class="tm">` card in the team list. Change its photo, name, role and one-line focus, and set its `data-group` to `postdoc`, `phd`, `masc` or `ugrad` so the role filter counts it.
+- **Add a lab-life photo:** copy one `<li class="film-item">` in the filmstrip.
 
 ## Run it locally
 
