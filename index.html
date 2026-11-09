@@ -152,7 +152,7 @@ body[data-section="join"] .p1{translate:62vw 46vh} body[data-section="join"] .p2
 .mnav-panel{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:30px;opacity:0;transform:translateY(-14px) scale(.98);transition:opacity .4s var(--ease),transform .5s var(--spring)}
 .mnav.open .mnav-panel{opacity:1;transform:none}
 .mnav-panel a{display:flex;align-items:baseline;justify-content:space-between;padding:12px 14px;border-radius:16px;font-family:var(--serif);font-size:clamp(28px,7.4vw,36px);font-weight:600;letter-spacing:-.005em;opacity:0;transform:translateY(10px);transition:opacity .45s var(--ease),transform .5s var(--spring),background .3s}
-.mnav-panel a span:last-child{font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--dim)}
+.mnav-panel a span + span{font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--dim)}
 .mnav-panel a:hover{background:rgba(255,255,255,.06)}
 .mnav.open .mnav-panel a{opacity:1;transform:none;transition-delay:calc(var(--i) * 45ms)}
 .mnav-panel a.btn{margin-top:12px;width:100%;height:56px;align-items:center;justify-content:center;padding:0 24px;font:600 16px/1 var(--sans);letter-spacing:-.005em}
@@ -659,12 +659,12 @@ html:has(.lightbox[open]){overflow:hidden}
 
 <div class="mnav" id="mnav" aria-hidden="true" inert>
   <nav class="mnav-panel glass" aria-label="Sections">
-    <a href="#about" style="--i:0"><span>About</span><span>01</span></a>
-    <a href="#research" style="--i:1"><span>Research</span><span>03</span></a>
-    <a href="#facilities" style="--i:2"><span>Facilities</span><span>04</span></a>
-    <a href="#team" style="--i:3"><span>Team</span><span>05</span></a>
-    <a href="#publications" style="--i:4"><span>Publications</span><span>06</span></a>
-    <a href="#workshops" style="--i:5"><span>Workshops</span><span>07</span></a>
+    <a href="#about" style="--i:0"><span>About</span></a>
+    <a href="#research" style="--i:1"><span>Research</span></a>
+    <a href="#facilities" style="--i:2"><span>Facilities</span></a>
+    <a href="#team" style="--i:3"><span>Team</span></a>
+    <a href="#publications" style="--i:4"><span>Publications</span></a>
+    <a href="#workshops" style="--i:5"><span>Workshops</span></a>
     <a class="btn btn-primary" href="#join" style="--i:6">Join the lab</a>
   </nav>
 </div>
@@ -720,7 +720,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 01 ABOUT ============ -->
 <section id="about" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">01 / 08</span><span class="sep"></span>About the lab</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>About the lab</p></div>
     <div class="about-grid">
       <h2 class="h2 reveal">Toronto Western Hospital is a pioneering centre for deep brain stimulation. <em class="tg tg-amber">The operating room is where our research begins.</em></h2>
       <div class="about-copy glass spot reveal" style="--d:1">
@@ -772,7 +772,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 02 OPERATING ROOM ============ -->
 <section id="video" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">02 / 08</span><span class="sep"></span>Inside the operating room</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Inside the operating room</p></div>
     <div class="split">
       <h2 class="h2 reveal">A unique window into the <em class="tg tg-cyan">living</em> human brain.</h2>
       <p class="lede reveal" style="--d:1">Recordings from awake, behaving patients let us study human physiology, brain stimulation mechanisms and synaptic plasticity in vivo.</p>
@@ -790,7 +790,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 03 RESEARCH ============ -->
 <section id="research" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">03 / 08</span><span class="sep"></span>Research</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Research</p></div>
     <div class="split">
       <h2 class="h2 reveal">From bench <em class="tg tg-amber">to</em> bedside.</h2>
       <p class="lede reveal" style="--d:1">Our projects span the complete translational continuum. We apply biomedical signal processing, machine learning and computational modelling to understand how the brain behaves and how it responds to stimulation.</p>
@@ -858,7 +858,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 04 FACILITIES ============ -->
 <section id="facilities" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">04 / 08</span><span class="sep"></span>Facilities</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Facilities</p></div>
     <h2 class="h2 reveal">Where the work <em class="tg tg-amber">happens</em>.</h2>
     <div class="fac-grid">
       <article class="fac glass spot tilt reveal">
@@ -898,7 +898,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 05 TEAM ============ -->
 <section id="team" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">05 / 08</span><span class="sep"></span>People</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>People</p></div>
     <h2 class="h2 reveal">The <em class="tg tg-amber">team</em>.</h2>
     <article class="pi glass spot reveal">
       <div class="frame">
@@ -1032,7 +1032,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 06 PUBLICATIONS ============ -->
 <section id="publications" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">06 / 08</span><span class="sep"></span>Selected publications</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Selected publications</p></div>
     <div class="pubs-head">
       <h2 class="h2 reveal">Recent <em class="tg tg-violet">work</em>.</h2>
       <div class="pubs-ctl reveal" style="--d:1">
@@ -1118,7 +1118,7 @@ html:has(.lightbox[open]){overflow:hidden}
 <!-- ============ 07 WORKSHOPS ============ -->
 <section id="workshops" class="sec" data-anim>
   <div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span><span class="num">07 / 08</span><span class="sep"></span>Training</p></div>
+    <div class="sec-head reveal"><p class="eyebrow"><span class="dot"></span>Training</p></div>
     <div class="ws-grid">
       <div class="ws-intro">
         <h2 class="h2 reveal">Electrophysiology <em class="tg tg-cyan">Trainee</em> Workshop.</h2>
@@ -1157,7 +1157,7 @@ html:has(.lightbox[open]){overflow:hidden}
       <span class="join-border" aria-hidden="true"></span>
       <div class="join-grid">
       <div class="join-inner">
-        <p class="eyebrow"><span class="dot"></span><span class="num">08 / 08</span><span class="sep"></span>Join the lab</p>
+        <p class="eyebrow"><span class="dot"></span>Join the lab</p>
         <h2 class="h-join">Build the next generation of <em class="tg tg-amber">brain stimulation</em>.</h2>
         <p class="lede">Prospective students and researchers with experience or interest in any of these areas are welcome to contact Dr. Milosevic at any time.</p>
         <ul class="chips">
